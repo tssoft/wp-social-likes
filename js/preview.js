@@ -48,21 +48,7 @@ jQuery(document).ready(function ($) {
 		}
 	}
 	
-	sort_buttons();
-	
-	$('form').on('change', '#counters', function () {
-		if (wpsl_ul.attr('data-counters')) {
-			wpsl_ul.removeAttr('data-counters');
-		} else {
-			wpsl_ul.attr('data-counters', 'no');
-		}
-	});	
-	
-	if ($('input[name=look]:checked').val() == 's') {
-		single = true;
-	}
-	
-	$('form').on('change', '#h_look, #v_look, #s_look', function () {
+	function rebuild() {
 		if (single) {
 			wpsl_ul.unwrap();
 			$('div.social-likes__button_single').remove();
@@ -88,7 +74,24 @@ jQuery(document).ready(function ($) {
 			wpsl_ul.removeClass('social-likes_vertical');
 			wpsl_ul.removeAttr('data-single-title');
 		}
-	});
+	}
+	
+	rebuild();
+	sort_buttons();
+	
+	$('form').on('change', '#counters', function () {
+		if (wpsl_ul.attr('data-counters')) {
+			wpsl_ul.removeAttr('data-counters');
+		} else {
+			wpsl_ul.attr('data-counters', 'no');
+		}
+	});	
+	
+	if ($('input[name=look]:checked').val() == 's') {
+		single = true;
+	}
+	
+	$('form').on('change', '#h_look, #v_look, #s_look', rebuild);
 	
 	$('form').on('click', 'div.social-likes_single-w', function (event) {
 		event.stopPropagation();

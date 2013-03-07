@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: WP Social Likes
+Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes (http://sapegin.me/projects/social-likes)
-Version: 0.2
+Version: 1.0
 Author: TS Soft
 
 Copyright 2013 TS Soft (email: dev@ts-soft.ru )
@@ -50,12 +50,13 @@ class wpsociallikes
 		add_option('pos8', 'mm_btn');
 		add_option('sociallikes_twitter_via');	
 		add_option('sociallikes_twitter_rel');	
-		add_option('sociallikes_img_url');	
 		add_option('sociallikes_ul', '<ul class="social-likes"><li class="vkontakte" title="Поделиться ссылкой во Вконтакте">Вконтакте</li><li class="facebook" title="Поделиться ссылкой на Фейсбуке">Facebook</li><li class="twitter" title="Поделиться ссылкой в Твиттере">Twitter</li><li class="plusone" title="Поделиться ссылкой в Гугл-плюсе">Google+</li></ul>');
+		
+		add_option('sociallikes_post', true);	
+		add_option('sociallikes_page', false);	
 		
 		add_action('wp_head', array(&$this, 'header_content'));
 		add_action('admin_menu', array(&$this, 'wpsociallikes_menu'));
-		add_action('admin_head', array(&$this, 'admin_menu_css'));
 		add_action('save_post', array(&$this, 'save_post_meta'));
 		add_action('admin_enqueue_scripts', array(&$this, 'wpsociallikes_admin_scripts'));
 		add_filter('the_content', array(&$this, 'add_social_likes'));
@@ -73,17 +74,58 @@ class wpsociallikes
 	}
 	
 	function wpsociallikes_menu() {
-		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'post', 'normal');
-		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'page', 'normal');
+		$post_opt = get_option('sociallikes_post');
+		$page_opt = get_option('sociallikes_page');
+		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'post', 'normal', 'default', array('default'=>$post_opt));
+		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'page', 'normal', 'default', array('default'=>$page_opt));
 		
-		add_options_page('WP Social Likes', 'WP Social Likes', 10, basename(__FILE__), array (&$this, 'admin_form'));
+		$plugin_page = add_options_page('Social Likes', 'Social Likes', 10, basename(__FILE__), array (&$this, 'admin_form'));
+		add_action('admin_head-' . $plugin_page, array(&$this, 'admin_menu_head'));
 	}
 	
-	function wpsociallikes_meta($post) {
-		$checked = get_post_meta($post->ID, 'sociallikes', true);
+	function wpsociallikes_meta($post, $metabox) {
+		if (!strstr($_SERVER['REQUEST_URI'], '-new.php')) {
+			$checked = get_post_meta($post->ID, 'sociallikes', true);
+		} else {
+			$checked = $metabox['args']['default'];
+		}
+		
+		if ($checked) {
+			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
+		} else {
+			$img_url = '';
+		}
+		
 		?>
-			<input type="checkbox" name="wpsociallikes" id="wpsociallikes" <?php if ($checked) echo 'checked' ?> />
-			<label for="wpsociallikes">Add social buttons to the post</label>
+			<div id="social-likes">
+				<div style="padding: 5px 0">
+					<input type="checkbox" name="wpsociallikes" id="wpsociallikes" <?php if ($checked) echo 'checked class="checked"' ?> title="<?php echo get_permalink($post->ID); ?>" />
+					<label for="wpsociallikes">Add social buttons</label>
+				</div>
+				
+				<table>
+					<tr>
+						<td><label for="image_url" style="padding-right:5px">Image&nbspURL:</label></td>
+						<td style="width:100%">
+							<input name="image_url" id="image_url" value="<?php echo $img_url ?>" <?php if (!$checked) echo 'disabled' ?> type="text" placeholder="Image URL for Pinterest (required)" style="width:100%" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<script>
+				(function($) {
+					$('input#wpsociallikes').change(function () {
+						$(this).toggleClass('checked');
+						if ($(this).hasClass('checked')) {
+							$('#image_url').removeAttr('disabled');
+						} else {
+							$('#image_url').attr('value', '');
+							$('#image_url').attr('disabled', 'disabled');
+						}
+					});	
+				})( jQuery );
+			</script>	
 		<?php
 	}
 	
@@ -109,6 +151,7 @@ class wpsociallikes
 		}
 
 		update_post_meta($post_id, 'sociallikes', isset($_POST['wpsociallikes']));
+		update_post_meta($post_id, 'sociallikes_img_url', $_POST['image_url']);
 	}
 	
 	function add_social_likes($content='') {
@@ -117,12 +160,17 @@ class wpsociallikes
 		if ((is_page() || is_single()) && get_post_meta($post->ID, 'sociallikes', true))
 		{
 			$buttons = get_option('sociallikes_ul');
+			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
+			if ($img_url != '') {
+				$parts = explode('data-media="', $buttons);
+				$buttons = $parts[0] . 'data-media="' . $img_url . $parts[1];
+			}
 			$content .= $buttons;
 		}
 		return $content;
 	}
 	
-	function admin_menu_css() {
+	function admin_menu_head() {
 		?>			
 			<link href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes.css" rel="stylesheet">
 			<link href="<?php echo plugin_dir_url(__FILE__) ?>css/admin-page.css" rel="stylesheet">
@@ -141,8 +189,7 @@ class wpsociallikes
 			$li['twitter_btn_part1'] = '<li class="twitter" ';
 			$li['twitter_btn_part2'] = 'title="Share link on Twitter">Twitter</li>';
 			$li['google_btn'] = '<li class="plusone" title="Share link on Google+">Google+</li>';
-			$li['pinterest_btn_part1'] = '<li class="pinterest" title="Share image on Pinterest" data-media="';
-			$li['pinterest_btn_part2'] = '">Pinterest</li>';
+			$li['pinterest_btn'] = '<li class="pinterest" title="Share image on Pinterest" data-media="">Pinterest</li>';
 			$li['lj_btn'] = '<li class="livejournal" title="Share link on LiveJournal">LiveJournal</li>';
 			$li['odn_btn'] = '<li class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Одноклассники</li>';
 			$li['mm_btn'] = '<li class="mailru" title="Поделиться ссылкой в Моём мире">Мой мир</li>';
@@ -189,9 +236,6 @@ class wpsociallikes
 						$new_ul .= 'data-related="' . $twitter_rel . '" ';
 					}
 					$new_ul .= $li['twitter_btn_part2'];
-				} elseif ($value == 'pinterest_btn') {
-					$img_url = $_POST['img_url'];
-					$new_ul .= $li['pinterest_btn_part1'] . $img_url . $li['pinterest_btn_part2'];
 				} else {
 					$new_ul .= $li[$value];	
 				}
@@ -202,7 +246,8 @@ class wpsociallikes
 			update_option('sociallikes_ul', $new_ul);
 			update_option('sociallikes_twitter_via', $twitter_via);
 			update_option('sociallikes_twitter_rel', $twitter_rel);
-			update_option('sociallikes_img_url', $img_url);
+			update_option('sociallikes_post', isset($_POST['post_chb']));
+			update_option('sociallikes_page', isset($_POST['page_chb']));
 		}	
 	
 		$wpsl_ul = get_option('sociallikes_ul');
@@ -212,6 +257,9 @@ class wpsociallikes
 		$single = strstr($wpsl_ul, 'single');
 		
 		$counters = !strstr($wpsl_ul, 'data-counters="no"');
+		
+		$post = get_option('sociallikes_post');
+		$page = get_option('sociallikes_page');
 
 		$label["vk_btn"] = "VK";
 		$label["facebook_btn"] = "Facebook";
@@ -224,7 +272,7 @@ class wpsociallikes
 		
 		?>
 			<div class="wrap">
-				<h2>WP Social Buttons Settings</h2>
+				<h2>Social Likes Settings</h2>
 				
 				<form name="wpsociallikes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=wp-social-likes.php&amp;updated=true">
 					
@@ -285,6 +333,20 @@ class wpsociallikes
 							<td>
 								<input type="text" name="twitter_rel" placeholder="Username:Description" class="wpsl-field" 
 									value="<?php echo get_option('sociallikes_twitter_rel'); ?>"/>
+							</td>
+						</tr>
+						<tr valign="top">
+							<th scope="row"></th>
+							<td>
+								<input type="checkbox" name="post_chb" id="post_chb" <?php if ($post) echo 'checked' ?> />					
+								<label for="post_chb">By default for posts</label>
+							</td>
+						</tr>
+						<tr valign="top">
+							<th scope="row"></th>
+							<td>
+								<input type="checkbox" name="page_chb" id="page_chb" <?php if ($page) echo 'checked' ?> />					
+								<label for="page_chb">By default for pages</label>
 							</td>
 						</tr>
 		
