@@ -20,5 +20,8 @@ WordPress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/pr
 
 == Changelog ==
 
+= 1.1 =
+* Commands for adding buttons to existing posts and/or pages
+
 = 1.0 =
 * First release

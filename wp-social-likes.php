@@ -2,7 +2,7 @@
 /*
 Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes)
-Version: 1.0
+Version: 1.1
 Author: TS Soft
 Author URI: http://ts-soft.ru/en/
 License: MIT
@@ -115,7 +115,7 @@ class wpsociallikes
 					<tr>
 						<td><label for="image_url" style="padding-right:5px">Image&nbspURL:</label></td>
 						<td style="width:100%">
-							<input name="image_url" id="image_url" value="<?php echo $img_url ?>" <?php if (!$checked) echo 'disabled' ?> type="text" placeholder="Image URL for Pinterest (required)" style="width:100%" />
+							<input name="image_url" id="image_url" value="<?php echo $img_url ?>" <?php if (!$checked) echo 'disabled' ?> type="text" placeholder="Image URL (required for Pinterest)" style="width:100%" />
 						</td>
 					</tr>
 				</table>
