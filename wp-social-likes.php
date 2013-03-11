@@ -58,6 +58,7 @@ class wpsociallikes
 		add_option('sociallikes_page', false);	
 		
 		add_action('wp_head', array(&$this, 'header_content'));
+		add_action('wp_enqueue_scripts', array(&$this, 'header_scripts'));
 		add_action('admin_menu', array(&$this, 'wpsociallikes_menu'));
 		add_action('save_post', array(&$this, 'save_post_meta'));
 		add_action('admin_enqueue_scripts', array(&$this, 'wpsociallikes_admin_scripts'));
@@ -70,8 +71,13 @@ class wpsociallikes
 			<script src="<?php echo plugin_dir_url(__FILE__) ?>js/social-likes.min.js"></script>
 		<?php
 	}
-		
+	
+	function header_scripts() {
+		wp_enqueue_script('jquery');
+	}
+	
 	function wpsociallikes_admin_scripts() {
+		wp_enqueue_script('jquery');
 		wp_enqueue_script('jquery-ui-sortable');
 	}
 	
@@ -182,7 +188,7 @@ class wpsociallikes
 	}
 	
 	function admin_form() {
-		if (isset($_POST['submit'])) {
+		if (isset($_POST['submit']) || isset($_POST['apply_to_posts']) || isset($_POST['apply_to_pages'])) {
 			$positions	= $_POST['site'];
 			$buttons = array('vk_btn', 'facebook_btn', 'twitter_btn', 'google_btn', 'pinterest_btn', 'lj_btn', 'odn_btn', 'mm_btn');
 		
@@ -250,7 +256,21 @@ class wpsociallikes
 			update_option('sociallikes_twitter_rel', $twitter_rel);
 			update_option('sociallikes_post', isset($_POST['post_chb']));
 			update_option('sociallikes_page', isset($_POST['page_chb']));
+		}
+		if (isset($_POST['apply_to_posts'])) {
+			$args = array('numberposts' => -1, 'post_type' => 'post', 'post_status' => 'any');
+			$result = get_posts($args);
+			foreach ($result as $post) {
+				update_post_meta($post->ID, 'sociallikes', isset($_POST['post_chb']));
+			}
 		}	
+		if (isset($_POST['apply_to_pages'])) {
+			$args = array('post_type' => 'page');
+			$result = get_pages($args);
+			foreach ($result as $post) {
+				update_post_meta($post->ID, 'sociallikes', isset($_POST['page_chb']));
+			}
+		}
 	
 		$wpsl_ul = get_option('sociallikes_ul');
 		
@@ -341,14 +361,16 @@ class wpsociallikes
 							<th scope="row"></th>
 							<td>
 								<input type="checkbox" name="post_chb" id="post_chb" <?php if ($post) echo 'checked' ?> />					
-								<label for="post_chb">By default for posts</label>
+								<label for="post_chb" class="wpsl-label">Add by default for new posts</label>
+								<input type="submit" name="apply_to_posts" id="apply_to_posts" value="Apply to existing posts" class="button-secondary"/>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row"></th>
 							<td>
 								<input type="checkbox" name="page_chb" id="page_chb" <?php if ($page) echo 'checked' ?> />					
-								<label for="page_chb">By default for pages</label>
+								<label for="page_chb" class="wpsl-label">Add by default for new pages</label>
+								<input type="submit" name="apply_to_pages" id="apply_to_pages" value="Apply to existing pages" class="button-secondary" />
 							</td>
 						</tr>
 		

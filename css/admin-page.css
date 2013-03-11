@@ -4,6 +4,8 @@
 
 .wpsl-label {
 	padding-right: 15px;
+	position: relative;
+	bottom: 2px;
 }
 
 input.wpsl-field {
@@ -42,7 +44,7 @@ input.wpsl-field:focus {
 }
 
 .plugin-setup th {
-	width: 100px;
+	width: 75px;
 }
 
 .plugin-setup td, .plugin-setup th {
@@ -119,7 +121,7 @@ td.switch-button-row {
 
 .show-counters {
 	float: left; 
-	margin-left: 5px;
+	margin-left: 15px;
 	line-height: 15px;
 }
 
@@ -135,7 +137,3 @@ td.switch-button-row {
 .wpsl-field {
 	width: 200px;
 }
-
-
-	
-
