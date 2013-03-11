@@ -169,7 +169,7 @@ class wpsociallikes
 		{
 			$buttons = get_option('sociallikes_ul');
 			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
-			if ($img_url != '') {
+			if (strstr($buttons, 'Pinterest') && $img_url != '') {
 				$parts = explode('data-media="', $buttons);
 				$buttons = $parts[0] . 'data-media="' . $img_url . $parts[1];
 			}
