@@ -192,15 +192,15 @@ class wpsociallikes
 			$positions	= $_POST['site'];
 			$buttons = array('vk_btn', 'facebook_btn', 'twitter_btn', 'google_btn', 'pinterest_btn', 'lj_btn', 'odn_btn', 'mm_btn');
 		
-			$li['vk_btn'] = '<li class="vkontakte" title="Поделиться ссылкой во Вконтакте">Вконтакте</li>';
+			$li['vk_btn'] = '<li class="vkontakte" title="Share link on VK">Вконтакте</li>';
 			$li['facebook_btn'] = '<li class="facebook" title="Share link on Facebook">Facebook</li>';
 			$li['twitter_btn_part1'] = '<li class="twitter" ';
 			$li['twitter_btn_part2'] = 'title="Share link on Twitter">Twitter</li>';
 			$li['google_btn'] = '<li class="plusone" title="Share link on Google+">Google+</li>';
 			$li['pinterest_btn'] = '<li class="pinterest" title="Share image on Pinterest" data-media="">Pinterest</li>';
 			$li['lj_btn'] = '<li class="livejournal" title="Share link on LiveJournal">LiveJournal</li>';
-			$li['odn_btn'] = '<li class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Одноклассники</li>';
-			$li['mm_btn'] = '<li class="mailru" title="Поделиться ссылкой в Моём мире">Мой мир</li>';
+			$li['odn_btn'] = '<li class="odnoklassniki" title="Share link on Odnoklassniki.ru">Одноклассники</li>';
+			$li['mm_btn'] = '<li class="mailru" title="Share link on Mail.ru">Мой мир</li>';
 
 			$pos_count = count($positions);
 			
