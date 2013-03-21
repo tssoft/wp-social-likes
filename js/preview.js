@@ -27,14 +27,24 @@ jQuery(document).ready(function ($) {
 	var single = false;
 	
 	var li = {};
-	li['vk_btn'] = '<li class="social-likes__widget social-likes__widget_vkontakte" title="Поделиться ссылкой во Вконтакте"><span class="social-likes__button social-likes__button_vkontakte"><span class="social-likes__icon social-likes__icon_vkontakte"></span>Вконтакте</span></li>';
-	li['facebook_btn'] = '<li class="social-likes__widget social-likes__widget_facebook" title="Share link on Facebook"><span class="social-likes__button social-likes__button_facebook"><span class="social-likes__icon social-likes__icon_facebook"></span>Facebook</span></li>';
-	li['twitter_btn'] = '<li class="social-likes__widget social-likes__widget_twitter" title="Share link on Twitter"><span class="social-likes__button social-likes__button_twitter"><span class="social-likes__icon social-likes__icon_twitter"></span>Twitter</span></li>';
-	li['google_btn'] = '<li class="social-likes__widget social-likes__widget_plusone" title="Share link on Google+"><span class="social-likes__button social-likes__button_plusone"><span class="social-likes__icon social-likes__icon_plusone"></span>Google+</span></li>';
-	li['pinterest_btn'] = '<li class="social-likes__widget social-likes__widget_pinterest" title="Share image on Pinterest" data-media=""><span class="social-likes__button social-likes__button_pinterest"><span class="social-likes__icon social-likes__icon_pinterest"></span>Pinterest</span></li>';
-	li['lj_btn'] = '<li class="social-likes__widget social-likes__widget_livejournal" title="Share link on LiveJournal"><span class="social-likes__button social-likes__button_livejournal"><span class="social-likes__icon social-likes__icon_livejournal"></span>LiveJournal</span></li>';
-	li['odn_btn'] = '<li class="social-likes__widget social-likes__widget_odnoklassniki" title="Поделиться ссылкой в Одноклассниках"><span class="social-likes__button social-likes__button_odnoklassniki"><span class="social-likes__icon social-likes__icon_odnoklassniki"></span>Одноклассники</span></li>';
-	li['mm_btn'] = '<li class="social-likes__widget social-likes__widget_mailru" title="Поделиться ссылкой в Моём мире"><span class="social-likes__button social-likes__button_mailru"><span class="social-likes__icon social-likes__icon_mailru"></span>Мой мир</span></li>';
+
+	if ($('#preview').attr('language') == 'ru') {
+		li['vk_btn'] = '<li class="social-likes__widget social-likes__widget_vkontakte" title="Поделиться ссылкой во Вконтакте"><span class="social-likes__button social-likes__button_vkontakte"><span class="social-likes__icon social-likes__icon_vkontakte"></span>Вконтакте</span></li>';
+		li['facebook_btn'] = '<li class="social-likes__widget social-likes__widget_facebook" title="Поделиться ссылкой на Фейсбуке"><span class="social-likes__button social-likes__button_facebook"><span class="social-likes__icon social-likes__icon_facebook"></span>Facebook</span></li>';
+		li['twitter_btn'] = '<li class="social-likes__widget social-likes__widget_twitter" title="Поделиться ссылкой в Твиттере"><span class="social-likes__button social-likes__button_twitter"><span class="social-likes__icon social-likes__icon_twitter"></span>Twitter</span></li>';
+		li['google_btn'] = '<li class="social-likes__widget social-likes__widget_plusone" title="Поделиться ссылкой в Гугл-плюсе"><span class="social-likes__button social-likes__button_plusone"><span class="social-likes__icon social-likes__icon_plusone"></span>Google+</span></li>';
+		li['pinterest_btn'] = '<li class="social-likes__widget social-likes__widget_pinterest" title="Поделиться картинкой на Пинтересте" data-media=""><span class="social-likes__button social-likes__button_pinterest"><span class="social-likes__icon social-likes__icon_pinterest"></span>Pinterest</span></li>';
+		li['lj_btn'] = '<li class="social-likes__widget social-likes__widget_livejournal" title="Поделиться ссылкой в ЖЖ"><span class="social-likes__button social-likes__button_livejournal"><span class="social-likes__icon social-likes__icon_livejournal"></span>LiveJournal</span></li>';
+		li['odn_btn'] = '<li class="social-likes__widget social-likes__widget_odnoklassniki" title="Поделиться ссылкой в Одноклассниках"><span class="social-likes__button social-likes__button_odnoklassniki"><span class="social-likes__icon social-likes__icon_odnoklassniki"></span>Одноклассники</span></li>';
+		li['mm_btn'] = '<li class="social-likes__widget social-likes__widget_mailru" title="Поделиться ссылкой в Моём мире"><span class="social-likes__button social-likes__button_mailru"><span class="social-likes__icon social-likes__icon_mailru"></span>Мой мир</span></li>';
+	} else {
+		li['vk_btn'] = '<li class="social-likes__widget social-likes__widget_vkontakte" title="Share link on VK"><span class="social-likes__button social-likes__button_vkontakte"><span class="social-likes__icon social-likes__icon_vkontakte"></span>Вконтакте</span></li>';
+		li['facebook_btn'] = '<li class="social-likes__widget social-likes__widget_facebook" title="Share link on Facebook"><span class="social-likes__button social-likes__button_facebook"><span class="social-likes__icon social-likes__icon_facebook"></span>Facebook</span></li>';
+		li['twitter_btn'] = '<li class="social-likes__widget social-likes__widget_twitter" title="Share link on Twitter"><span class="social-likes__button social-likes__button_twitter"><span class="social-likes__icon social-likes__icon_twitter"></span>Twitter</span></li>';
+		li['google_btn'] = '<li class="social-likes__widget social-likes__widget_plusone" title="Share link on Google+"><span class="social-likes__button social-likes__button_plusone"><span class="social-likes__icon social-likes__icon_plusone"></span>Google+</span></li>';
+		li['pinterest_btn'] = '<li class="social-likes__widget social-likes__widget_pinterest" title="Share image on Pinterest" data-media=""><span class="social-likes__button social-likes__button_pinterest"><span class="social-likes__icon social-likes__icon_pinterest"></span>Pinterest</span></li>';
+		li['lj_btn'] = '<li class="social-likes__widget social-likes__widget_livejournal" title="Share link on LiveJournal"><span class="social-likes__button social-likes__button_livejournal"><span class="social-likes__icon social-likes__icon_livejournal"></span>LiveJournal</span></li>';
+	}
 	
 	function sort_buttons() {
 		wpsl_ul.empty();
