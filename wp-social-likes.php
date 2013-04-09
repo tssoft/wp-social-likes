@@ -168,15 +168,18 @@ class wpsociallikes
 	}
 	
 	function add_social_likes($content='') {
-		global $post;
-		
-		if ((is_page() || is_single()) && get_post_meta($post->ID, 'sociallikes', true))
+		global $post, $page, $pages;
+		$post_content = $pages[$page-1];
+		if ((is_page() || is_single() || !preg_match('/<!--more(.*?)?-->/', $post_content, $matches)) && get_post_meta($post->ID, 'sociallikes', true))
 		{
 			$buttons = get_option('sociallikes_ul');
 			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
 			if (strstr($buttons, 'Pinterest') && $img_url != '') {
 				$parts = explode('data-media="', $buttons);
 				$buttons = $parts[0] . 'data-media="' . $img_url . $parts[1];
+			}
+			if (!is_single() && !is_page()) {
+				$buttons = str_replace('class="social-likes"', 'class="social-likes" data-url="'.get_permalink( $post->ID ).'"', $buttons);
 			}
 			$content .= $buttons;
 		}
