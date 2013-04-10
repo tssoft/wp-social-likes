@@ -200,6 +200,10 @@ class wpsociallikes
 			{
 				$buttons = str_replace($this->ru_titles, $this->en_titles, $buttons);
 			}
+			else
+			{
+				$buttons = str_replace($this->en_titles, $this->ru_titles, $buttons);
+			}
 			$content .= $buttons;
 		}
 		return $content;
