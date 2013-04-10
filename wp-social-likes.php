@@ -32,6 +32,26 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class wpsociallikes
 {
+	var $ru_titles = array(
+		"Поделиться ссылкой во Вконтакте", 
+		"Поделиться ссылкой на Фейсбуке", 
+		"Поделиться ссылкой в Твиттере",
+		"Поделиться ссылкой в Гугл-плюсе",
+		"Поделиться картинкой на Пинтересте",
+		"Поделиться ссылкой в ЖЖ",
+		"Поделиться ссылкой в Одноклассниках",
+		"Поделиться ссылкой в Моём мире"
+	);
+					
+	var $en_titles = array(
+		"Share link on VK",
+		"Share link on Facebook",
+		"Share link on Twitter",
+		"Share link on Google+",
+		"Share image on Pinterest",
+		"Share link on LiveJournal"
+	);
+					
 	function wpsociallikes() 
 	{	
 		add_option('vk_btn', true);		
@@ -51,13 +71,8 @@ class wpsociallikes
 		add_option('pos7', 'odn_btn');
 		add_option('pos8', 'mm_btn');
 		add_option('sociallikes_twitter_via');	
-		add_option('sociallikes_twitter_rel');	
-		if (get_bloginfo('language') == 'ru-RU') {
-			add_option('sociallikes_ul', '<ul class="social-likes"><li class="vkontakte" title="Поделиться ссылкой во Вконтакте">Вконтакте</li><li class="facebook" title="Поделиться ссылкой на Фейсбуке">Facebook</li><li class="twitter" title="Поделиться ссылкой в Твиттере">Twitter</li><li class="plusone" title="Поделиться ссылкой в Гугл-плюсе">Google+</li></ul>');
-		} else {
-			add_option('sociallikes_ul', '<ul class="social-likes"><li class="vkontakte" title="Share link on VK">Вконтакте</li><li class="facebook" title="Share link on Facebook">Facebook</li><li class="twitter" title="Share link on Twitter">Twitter</li><li class="plusone" title="Share link on Google+">Google+</li></ul>');	
-		}
-		
+		add_option('sociallikes_twitter_rel');
+		add_option('sociallikes_ul', '<ul class="social-likes"><li class="vkontakte">Вконтакте</li><li class="facebook">Facebook</li><li class="twitter">Twitter</li><li class="plusone">Google+</li></ul>');
 		
 		add_option('sociallikes_post', true);	
 		add_option('sociallikes_page', false);	
@@ -181,6 +196,10 @@ class wpsociallikes
 			if (!is_single() && !is_page()) {
 				$buttons = str_replace('class="social-likes"', 'class="social-likes" data-url="'.get_permalink( $post->ID ).'"', $buttons);
 			}
+			if ( get_bloginfo('language') != 'ru-RU')
+			{
+				$buttons = str_replace($this->ru_titles, $this->en_titles, $buttons);
+			}
 			$content .= $buttons;
 		}
 		return $content;
@@ -199,25 +218,26 @@ class wpsociallikes
 		if (isset($_POST['submit']) || isset($_POST['apply_to_posts']) || isset($_POST['apply_to_pages'])) {
 			$positions	= $_POST['site'];
 			$buttons = array('vk_btn', 'facebook_btn', 'twitter_btn', 'google_btn', 'pinterest_btn', 'lj_btn', 'odn_btn', 'mm_btn');
-		
+			$ru_titles = $this -> ru_titles;
+			$en_titles = $this -> en_titles;
 			if (get_bloginfo('language') == 'ru-RU') {
-				$li['vk_btn'] = '<li class="vkontakte" title="Поделиться ссылкой во Вконтакте">Вконтакте</li>';
-				$li['facebook_btn'] = '<li class="facebook" title="Поделиться ссылкой на Фейсбуке">Facebook</li>';
+				$li['vk_btn'] = '<li class="vkontakte" title="'.$ru_titles[0].'">Вконтакте</li>';
+				$li['facebook_btn'] = '<li class="facebook" title="'.$ru_titles[1].'">Facebook</li>';
 				$li['twitter_btn_part1'] = '<li class="twitter" ';
-				$li['twitter_btn_part2'] = 'title="Поделиться ссылкой в Твиттере">Twitter</li>';
-				$li['google_btn'] = '<li class="plusone" title="Поделиться ссылкой в Гугл-плюсе">Google+</li>';
-				$li['pinterest_btn'] = '<li class="pinterest" title="Поделиться картинкой на Пинтересте" data-media="">Pinterest</li>';
-				$li['lj_btn'] = '<li class="livejournal" title="Поделиться ссылкой в ЖЖ">LiveJournal</li>';
-				$li['odn_btn'] = '<li class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Одноклассники</li>';
-				$li['mm_btn'] = '<li class="mailru" title="Поделиться ссылкой в Моём мире">Мой мир</li>';
+				$li['twitter_btn_part2'] = 'title="'.$ru_titles[2].'">Twitter</li>';
+				$li['google_btn'] = '<li class="plusone" title="'.$ru_titles[3].'">Google+</li>';
+				$li['pinterest_btn'] = '<li class="pinterest" title="'.$ru_titles[4].'" data-media="">Pinterest</li>';
+				$li['lj_btn'] = '<li class="livejournal" title="'.$ru_titles[5].'">LiveJournal</li>';
+				$li['odn_btn'] = '<li class="odnoklassniki" title="'.$ru_titles[6].'">Одноклассники</li>';
+				$li['mm_btn'] = '<li class="mailru" title="'.$ru_titles[7].'">Мой мир</li>';
 			} else {
-				$li['vk_btn'] = '<li class="vkontakte" title="Share link on VK">Вконтакте</li>';
-				$li['facebook_btn'] = '<li class="facebook" title="Share link on Facebook">Facebook</li>';
+				$li['vk_btn'] = '<li class="vkontakte" title="'.$en_titles[0].'">Вконтакте</li>';
+				$li['facebook_btn'] = '<li class="facebook" title="'.$en_titles[1].'">Facebook</li>';
 				$li['twitter_btn_part1'] = '<li class="twitter" ';
-				$li['twitter_btn_part2'] = 'title="Share link on Twitter">Twitter</li>';
-				$li['google_btn'] = '<li class="plusone" title="Share link on Google+">Google+</li>';
-				$li['pinterest_btn'] = '<li class="pinterest" title="Share image on Pinterest" data-media="">Pinterest</li>';
-				$li['lj_btn'] = '<li class="livejournal" title="Share link on LiveJournal">LiveJournal</li>';	
+				$li['twitter_btn_part2'] = 'title="'.$en_titles[2].'">Twitter</li>';
+				$li['google_btn'] = '<li class="plusone" title="'.$en_titles[3].'">Google+</li>';
+				$li['pinterest_btn'] = '<li class="pinterest" title="'.$en_titles[4].'" data-media="">Pinterest</li>';
+				$li['lj_btn'] = '<li class="livejournal" title="'.$en_titles[5].'">LiveJournal</li>';	
 			}
 			
 			$pos_count = count($positions);
