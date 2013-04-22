@@ -188,6 +188,7 @@ class wpsociallikes
 		if ((is_page() || is_single() || !preg_match('/<!--more(.*?)?-->/', $post_content, $matches)) && get_post_meta($post->ID, 'sociallikes', true))
 		{
 			$buttons = get_option('sociallikes_ul');
+			$buttons = str_replace('class="social-likes"', 'class="social-likes" data-title="'.$post->post_title.'"', $buttons);
 			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
 			if (strstr($buttons, 'Pinterest') && $img_url != '') {
 				$parts = explode('data-media="', $buttons);
