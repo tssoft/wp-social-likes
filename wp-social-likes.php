@@ -72,6 +72,7 @@ class wpsociallikes
 		add_option('pos8', 'mm_btn');
 		add_option('sociallikes_twitter_via');	
 		add_option('sociallikes_twitter_rel');
+		add_option('sociallikes_pinterest_img');
 		add_option('sociallikes_ul', '<ul class="social-likes"><li class="vkontakte">Вконтакте</li><li class="facebook">Facebook</li><li class="twitter">Twitter</li><li class="plusone">Google+</li></ul>');
 		
 		add_option('sociallikes_post', true);	
@@ -179,7 +180,16 @@ class wpsociallikes
 		}
 
 		update_post_meta($post_id, 'sociallikes', isset($_POST['wpsociallikes']));
-		update_post_meta($post_id, 'sociallikes_img_url', $_POST['image_url']);
+		if ( ($_POST['image_url'] == "") & get_option('sociallikes_pinterest_img') ) {
+			//get first image
+			$img_url = "";
+			$post = get_post($post_id);
+			$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+			$img_url = $matches [1] [0];
+			update_post_meta($post_id, 'sociallikes_img_url', $img_url);
+		}
+		else
+			update_post_meta($post_id, 'sociallikes_img_url', $_POST['image_url']);
 	}
 	
 	function add_social_likes($content='') {
@@ -301,6 +311,7 @@ class wpsociallikes
 			update_option('sociallikes_ul', $new_ul);
 			update_option('sociallikes_twitter_via', $twitter_via);
 			update_option('sociallikes_twitter_rel', $twitter_rel);
+			update_option('sociallikes_pinterest_img', isset($_POST['pinterest_img']));
 			update_option('sociallikes_post', isset($_POST['post_chb']));
 			update_option('sociallikes_page', isset($_POST['page_chb']));
 		}
@@ -402,6 +413,13 @@ class wpsociallikes
 							<td>
 								<input type="text" name="twitter_rel" placeholder="Username:Description" class="wpsl-field" 
 									value="<?php echo get_option('sociallikes_twitter_rel'); ?>"/>
+							</td>
+						</tr>
+						<tr valign="top">
+							<th scope="row"></th>
+							<td scope="row">
+								<input type="checkbox" name="pinterest_img" id="pinterest_img" <?php if (get_option('sociallikes_pinterest_img')) echo 'checked' ?> />
+								<label for="pinterest_img" class="wpsl-label">Automatically place first image in the post/page to the Image URL field</label>
 							</td>
 						</tr>
 						<tr valign="top">
