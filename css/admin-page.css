@@ -92,7 +92,6 @@ input.view-state {
 }
 
 input:checked.view-state + .switch-button {
-
 	background: -moz-linear-gradient(center top , #606060, #A4A4A4) repeat scroll 0 0 transparent;
 	background: -webkit-linear-gradient(top, #606060, #a4a4a4);
 	background: -moz-linear-gradient(top, #606060, #a4a4a4);
@@ -136,4 +135,11 @@ td.switch-button-row {
 
 .wpsl-field {
 	width: 200px;
+}
+
+.more-websites {
+	margin-left: 17px;
+	border-bottom: 1px dotted;
+	cursor: pointer;
+	color: #6b6b6b
 }

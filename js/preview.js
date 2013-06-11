@@ -19,8 +19,6 @@ jQuery(document).ready(function ($) {
 	}
 
 	sortableContainer.changeView();
-	
-	$('.view-state').on('change', sortableContainer.changeView);
 
 	var wpsl_ul = $('<ul class="social-likes"></ul>');
 	var parent = '<div class="social-likes_single-w"></div>';	
@@ -35,8 +33,6 @@ jQuery(document).ready(function ($) {
 		li['google_btn'] = '<li class="social-likes__widget social-likes__widget_plusone" title="Поделиться ссылкой в Гугл-плюсе"><span class="social-likes__button social-likes__button_plusone"><span class="social-likes__icon social-likes__icon_plusone"></span>Google+</span></li>';
 		li['pinterest_btn'] = '<li class="social-likes__widget social-likes__widget_pinterest" title="Поделиться картинкой на Пинтересте" data-media=""><span class="social-likes__button social-likes__button_pinterest"><span class="social-likes__icon social-likes__icon_pinterest"></span>Pinterest</span></li>';
 		li['lj_btn'] = '<li class="social-likes__widget social-likes__widget_livejournal" title="Поделиться ссылкой в ЖЖ"><span class="social-likes__button social-likes__button_livejournal"><span class="social-likes__icon social-likes__icon_livejournal"></span>LiveJournal</span></li>';
-		li['odn_btn'] = '<li class="social-likes__widget social-likes__widget_odnoklassniki" title="Поделиться ссылкой в Одноклассниках"><span class="social-likes__button social-likes__button_odnoklassniki"><span class="social-likes__icon social-likes__icon_odnoklassniki"></span>Одноклассники</span></li>';
-		li['mm_btn'] = '<li class="social-likes__widget social-likes__widget_mailru" title="Поделиться ссылкой в Моём мире"><span class="social-likes__button social-likes__button_mailru"><span class="social-likes__icon social-likes__icon_mailru"></span>Мой мир</span></li>';
 	} else {
 		li['vk_btn'] = '<li class="social-likes__widget social-likes__widget_vkontakte" title="Share link on VK"><span class="social-likes__button social-likes__button_vkontakte"><span class="social-likes__icon social-likes__icon_vkontakte"></span>Вконтакте</span></li>';
 		li['facebook_btn'] = '<li class="social-likes__widget social-likes__widget_facebook" title="Share link on Facebook"><span class="social-likes__button social-likes__button_facebook"><span class="social-likes__icon social-likes__icon_facebook"></span>Facebook</span></li>';
@@ -45,16 +41,20 @@ jQuery(document).ready(function ($) {
 		li['pinterest_btn'] = '<li class="social-likes__widget social-likes__widget_pinterest" title="Share image on Pinterest" data-media=""><span class="social-likes__button social-likes__button_pinterest"><span class="social-likes__icon social-likes__icon_pinterest"></span>Pinterest</span></li>';
 		li['lj_btn'] = '<li class="social-likes__widget social-likes__widget_livejournal" title="Share link on LiveJournal"><span class="social-likes__button social-likes__button_livejournal"><span class="social-likes__icon social-likes__icon_livejournal"></span>LiveJournal</span></li>';
 	}
+
+	li['odn_btn'] = '<li class="social-likes__widget social-likes__widget_odnoklassniki" title="Поделиться ссылкой в Одноклассниках"><span class="social-likes__button social-likes__button_odnoklassniki"><span class="social-likes__icon social-likes__icon_odnoklassniki"></span>Одноклассники</span></li>';
+	li['mm_btn'] = '<li class="social-likes__widget social-likes__widget_mailru" title="Поделиться ссылкой в Моём мире"><span class="social-likes__button social-likes__button_mailru"><span class="social-likes__icon social-likes__icon_mailru"></span>Мой мир</span></li>';
 	
 	function sort_buttons() {
 		wpsl_ul.empty();
 		$('input[type="checkbox"]:checked').each(function () {
 			wpsl_ul.append(li[$(this).attr('id')]);		
 		});
+		var preview = $('#preview');
 		if (!single) {
-			$('#preview').append(wpsl_ul);
+			preview.append(wpsl_ul);
 		} else {
-			$('#preview').append(wpsl_ul.parent());
+			preview.append(wpsl_ul.parent());
 		}
 	}
 	
@@ -66,12 +66,13 @@ jQuery(document).ready(function ($) {
 		}
 		wpsl_ul.css('display', 'block');
 		
-		if ($('input[name=look]:checked').val() == 'v') {
+		var radio = $('input[name=look]:checked').val();
+		if (radio == 'v') {
 			wpsl_ul.addClass('social-likes_vertical');
 			wpsl_ul.removeClass('social-likes_single');
 			wpsl_ul.removeAttr('data-single-title');
 			
-		} else if ($('input[name=look]:checked').val() == 's') {
+		} else if (radio == 's') {
 			single = true;
 			wpsl_ul.addClass('social-likes_single');
 			wpsl_ul.addClass('social-likes_vertical');
@@ -88,6 +89,8 @@ jQuery(document).ready(function ($) {
 	
 	rebuild();
 	sort_buttons();
+
+	$('.view-state').on('change', sortableContainer.changeView);
 	
 	$('form').on('change', '#counters', function () {
 		if (wpsl_ul.attr('data-counters')) {
@@ -108,14 +111,19 @@ jQuery(document).ready(function ($) {
 		wpsl_ul.css('display', 'block');
 	});
 	
+	$('form').on('change', 'input:checkbox', function () {
+		sort_buttons();
+	});
+
 	$('body').on('click', 'form', function () {
 		if (single) {
 			wpsl_ul.css('display', 'none');	
 		}
 	});
-	
-	$('form').on('change', 'input:checkbox', function () {
-		sort_buttons();
+
+	$(document).on('click', '.more-websites', function () {
+		$('li[hidden="true"]').prop('hidden', false);
+		$(this).hide();
 	});
 });
 

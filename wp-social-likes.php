@@ -2,7 +2,7 @@
 /*
 Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes)
-Version: 1.1
+Version: 1.3
 Author: TS Soft
 Author URI: http://ts-soft.ru/en/
 License: MIT
@@ -49,9 +49,13 @@ class wpsociallikes
 		"Share link on Twitter",
 		"Share link on Google+",
 		"Share image on Pinterest",
-		"Share link on LiveJournal"
+		"Share link on LiveJournal",
+		"Поделиться ссылкой в Одноклассниках",
+		"Поделиться ссылкой в Моём мире"
 	);
-					
+
+	var $lang;
+	
 	function wpsociallikes() 
 	{	
 		add_option('vk_btn', true);		
@@ -70,11 +74,11 @@ class wpsociallikes
 		add_option('pos6', 'lj_btn');
 		add_option('pos7', 'odn_btn');
 		add_option('pos8', 'mm_btn');
+		add_option('sociallikes_counters');
+		add_option('sociallikes_look', 'h');
 		add_option('sociallikes_twitter_via');	
 		add_option('sociallikes_twitter_rel');
 		add_option('sociallikes_pinterest_img');
-		add_option('sociallikes_ul', '<ul class="social-likes"><li class="vkontakte">Вконтакте</li><li class="facebook">Facebook</li><li class="twitter">Twitter</li><li class="plusone">Google+</li></ul>');
-		
 		add_option('sociallikes_post', true);	
 		add_option('sociallikes_page', false);	
 		
@@ -108,7 +112,7 @@ class wpsociallikes
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'post', 'normal', 'default', array('default'=>$post_opt));
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'page', 'normal', 'default', array('default'=>$page_opt));
 		
-		$plugin_page = add_options_page('Social Likes', 'Social Likes', 10, basename(__FILE__), array (&$this, 'admin_form'));
+		$plugin_page = add_options_page('Social Likes', 'Social Likes', 10, basename(__FILE__), array (&$this, 'display_admin_form'));
 		add_action('admin_head-' . $plugin_page, array(&$this, 'admin_menu_head'));
 	}
 	
@@ -159,28 +163,22 @@ class wpsociallikes
 	}
 	
 	function save_post_meta($post_id) {
-		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-		{
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
 			return;
 		}
 
-		if ('page' == $_POST['post_type']) 
-		{
-			if (!current_user_can('edit_page', $post_id))
-			{
+		if ('page' == $_POST['post_type']) {
+			if (!current_user_can('edit_page', $post_id)) {
 				return;
 			}
-		}
-		else
-		{
-			if (!current_user_can('edit_post', $post_id))
-			{
+		} else {
+			if (!current_user_can('edit_post', $post_id)) {
 				return;
 			}
 		}
 
 		update_post_meta($post_id, 'sociallikes', isset($_POST['wpsociallikes']));
-		if ( ($_POST['image_url'] == "") & get_option('sociallikes_pinterest_img') ) {
+		if (($_POST['image_url'] == "") & get_option('sociallikes_pinterest_img')) {
 			//get first image
 			$img_url = "";
 			$post = get_post($post_id);
@@ -192,12 +190,13 @@ class wpsociallikes
 			update_post_meta($post_id, 'sociallikes_img_url', $_POST['image_url']);
 	}
 	
-	function add_social_likes($content='') {
+	function add_social_likes($content = '') {
 		global $post, $page, $pages;
 		$post_content = $pages[$page-1];
+		$this->lang = get_bloginfo('language');
 		if ((is_page() || is_single() || !preg_match('/<!--more(.*?)?-->/', $post_content, $matches)) && get_post_meta($post->ID, 'sociallikes', true))
 		{
-			$buttons = get_option('sociallikes_ul');
+			$buttons = $this->build_ul();
 			$buttons = str_replace('class="social-likes"', 'class="social-likes" data-title="'.$post->post_title.'"', $buttons);
 			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
 			if (strstr($buttons, 'Pinterest') && $img_url != '') {
@@ -207,17 +206,73 @@ class wpsociallikes
 			if (!is_single() && !is_page()) {
 				$buttons = str_replace('class="social-likes"', 'class="social-likes" data-url="'.get_permalink( $post->ID ).'"', $buttons);
 			}
-			if ( get_bloginfo('language') != 'ru-RU')
-			{
+			if ($this->lang != 'ru-RU') {
 				$buttons = str_replace($this->ru_titles, $this->en_titles, $buttons);
-			}
-			else
-			{
+			} else {
 				$buttons = str_replace($this->en_titles, $this->ru_titles, $buttons);
 			}
 			$content .= $buttons;
 		}
 		return $content;
+	}
+
+	function build_ul() {
+		if ($this->lang == 'ru-RU') {
+			$titles = $this->ru_titles;
+		} else {
+			$titles = $this->en_titles;
+		}
+
+		$twitter_via = get_option('sociallikes_twitter_via');
+		$twitter_via = get_option('sociallikes_twitter_rel');
+		$look = get_option('sociallikes_look');
+		
+		$li['vk_btn'] = '<li class="vkontakte" title="'.$titles[0].'">Вконтакте</li>';
+		$li['facebook_btn'] = '<li class="facebook" title="'.$titles[1].'">Facebook</li>';
+		$li['twitter_btn'] = '<li class="twitter" ';
+		if ($twitter_via != '') {
+			$li['twitter_btn'] .= 'data-via="' . $twitter_via . '" ';
+		}
+		if ($twitter_rel != '') {
+			$li['twitter_btn'] .= 'data-related="' . $twitter_rel . '" ';
+		}
+		$li['twitter_btn'] .= 'title="'.$titles[2].'">Twitter</li>';
+		$li['google_btn'] = '<li class="plusone" title="'.$titles[3].'">Google+</li>';
+		$li['pinterest_btn'] = '<li class="pinterest" title="'.$titles[4].'" data-media="">Pinterest</li>';
+		$li['lj_btn'] = '<li class="livejournal" title="'.$titles[5].'">LiveJournal</li>';
+		$li['odn_btn'] = '<li class="odnoklassniki" title="'.$titles[6].'">Одноклассники</li>';
+		$li['mm_btn'] = '<li class="mailru" title="'.$titles[7].'">Мой мир</li>';
+
+		$new_ul = '<ul class="social-likes';
+
+		if ($look == 'h') {
+			$new_ul .= '"';
+		} elseif ($look == 'v') {
+			$new_ul .= ' social-likes_vertical"';
+		} else {
+			$new_ul .= ' social-likes_single" data-single-title="';
+			if ($this->lang == 'ru-RU') {
+				$new_ul .= 'Поделиться"';
+			} else {
+				$new_ul .= 'Share"';
+			}
+		}
+
+		if (!get_option('sociallikes_counters')) {
+			$new_ul .= ' data-counters="no"';
+		} 
+		$new_ul .= '>';
+
+		for ($i = 1; $i <= count($li); $i++) {
+			$option = 'pos' . $i;
+			$btn = get_option($option);
+			if (get_option($btn)) {
+				$new_ul .= $li[$btn];		
+			}
+		}
+		$new_ul .= '</ul>';
+
+		return $new_ul;
 	}
 	
 	function admin_menu_head() {
@@ -229,91 +284,9 @@ class wpsociallikes
 		<?php
 	}
 	
-	function admin_form() {
+	function display_admin_form() {
 		if (isset($_POST['submit']) || isset($_POST['apply_to_posts']) || isset($_POST['apply_to_pages'])) {
-			$positions	= $_POST['site'];
-			$buttons = array('vk_btn', 'facebook_btn', 'twitter_btn', 'google_btn', 'pinterest_btn', 'lj_btn', 'odn_btn', 'mm_btn');
-			$ru_titles = $this -> ru_titles;
-			$en_titles = $this -> en_titles;
-			if (get_bloginfo('language') == 'ru-RU') {
-				$li['vk_btn'] = '<li class="vkontakte" title="'.$ru_titles[0].'">Вконтакте</li>';
-				$li['facebook_btn'] = '<li class="facebook" title="'.$ru_titles[1].'">Facebook</li>';
-				$li['twitter_btn_part1'] = '<li class="twitter" ';
-				$li['twitter_btn_part2'] = 'title="'.$ru_titles[2].'">Twitter</li>';
-				$li['google_btn'] = '<li class="plusone" title="'.$ru_titles[3].'">Google+</li>';
-				$li['pinterest_btn'] = '<li class="pinterest" title="'.$ru_titles[4].'" data-media="">Pinterest</li>';
-				$li['lj_btn'] = '<li class="livejournal" title="'.$ru_titles[5].'">LiveJournal</li>';
-				$li['odn_btn'] = '<li class="odnoklassniki" title="'.$ru_titles[6].'">Одноклассники</li>';
-				$li['mm_btn'] = '<li class="mailru" title="'.$ru_titles[7].'">Мой мир</li>';
-			} else {
-				$li['vk_btn'] = '<li class="vkontakte" title="'.$en_titles[0].'">Вконтакте</li>';
-				$li['facebook_btn'] = '<li class="facebook" title="'.$en_titles[1].'">Facebook</li>';
-				$li['twitter_btn_part1'] = '<li class="twitter" ';
-				$li['twitter_btn_part2'] = 'title="'.$en_titles[2].'">Twitter</li>';
-				$li['google_btn'] = '<li class="plusone" title="'.$en_titles[3].'">Google+</li>';
-				$li['pinterest_btn'] = '<li class="pinterest" title="'.$en_titles[4].'" data-media="">Pinterest</li>';
-				$li['lj_btn'] = '<li class="livejournal" title="'.$en_titles[5].'">LiveJournal</li>';	
-			}
-			
-			$pos_count = count($positions);
-			
-			foreach ($buttons as $value) {
-				if (in_array($value, $positions)) {
-					update_option($value, true);	
-					$position = array_search($value, $positions) + 1;
-				} else {
-					update_option($value, false);
-					$position = $pos_count + 1;
-					++$pos_count;
-				}
-				$option_name = 'pos'.$position; 
-				update_option($option_name, $value);	
-			}
-
-			$new_ul = '<ul class="social-likes';
-			
-			if ($_POST['look'] == 'h') {
-				$new_ul .= '"';
-			} elseif ($_POST['look'] == 'v') {
-				$new_ul .= ' social-likes_vertical"';
-			} else {
-				if (get_bloginfo('language') == 'ru-RU') {
-					$new_ul .= ' social-likes_single" data-single-title="Поделиться"';
-				} else {
-					$new_ul .= ' social-likes_single" data-single-title="Share"';
-				}
-			}
-			
-			if (!isset($_POST['counters'])) {
-				$new_ul .= ' data-counters="no"';
-			} 
-			$new_ul .= '>';
-
-			foreach ($positions as $value) {
-				if ($value == 'twitter_btn') {
-					$new_ul .= $li['twitter_btn_part1'];
-					$twitter_via = $_POST['twitter_via'];
-					if ($twitter_via != '') {
-						$new_ul .= 'data-via="' . $twitter_via . '" ';
-					}
-					$twitter_rel = $_POST['twitter_rel'];
-					if ($twitter_rel != '') {
-						$new_ul .= 'data-related="' . $twitter_rel . '" ';
-					}
-					$new_ul .= $li['twitter_btn_part2'];
-				} else {
-					$new_ul .= $li[$value];	
-				}
-			}
-			
-			$new_ul .= '</ul>';
-			
-			update_option('sociallikes_ul', $new_ul);
-			update_option('sociallikes_twitter_via', $twitter_via);
-			update_option('sociallikes_twitter_rel', $twitter_rel);
-			update_option('sociallikes_pinterest_img', isset($_POST['pinterest_img']));
-			update_option('sociallikes_post', isset($_POST['post_chb']));
-			update_option('sociallikes_page', isset($_POST['page_chb']));
+			$this->submit_admin_form();
 		}
 		if (isset($_POST['apply_to_posts'])) {
 			$args = array('numberposts' => -1, 'post_type' => 'post', 'post_status' => 'any');
@@ -330,14 +303,8 @@ class wpsociallikes
 			}
 		}
 	
-		$wpsl_ul = get_option('sociallikes_ul');
-		
-		$horisontal = (!strstr($wpsl_ul, 'vertical') && !strstr($wpsl_ul, 'single'));
-		$vertical = strstr($wpsl_ul, 'vertical');
-		$single = strstr($wpsl_ul, 'single');
-		
-		$counters = !strstr($wpsl_ul, 'data-counters="no"');
-		
+		$look = get_option('sociallikes_look');
+		$counters = get_option('sociallikes_counters');
 		$post = get_option('sociallikes_post');
 		$page = get_option('sociallikes_page');
 
@@ -347,15 +314,14 @@ class wpsociallikes
 		$label["google_btn"] = "Google+";
 		$label["pinterest_btn"] = "Pinterest";
 		$label["lj_btn"] = "LiveJournal";
-		if (get_bloginfo('language') == 'ru-RU') { 
-			$label["odn_btn"] = "Одноклассники";
-			$label["mm_btn"] = "Moй мир";
-		}
-		
+		$label["odn_btn"] = "Одноклассники";
+		$label["mm_btn"] = "Moй мир";
+
+		$this->lang = get_bloginfo('language');
 		?>
 			<div class="wrap">
 				<h2>Social Likes Settings</h2>
-				
+
 				<form name="wpsociallikes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=wp-social-likes.php&amp;updated=true">
 					
 					<?php wp_nonce_field('update-options'); ?>
@@ -365,13 +331,13 @@ class wpsociallikes
 							<th scope="row">Look</th>
 							<td class="switch-button-row">
 								<div style="float: left;">
-									<input type="radio" name="look" id="h_look" class="view-state" value="h" <?php if ($horisontal) echo 'checked' ?> />
+									<input type="radio" name="look" id="h_look" class="view-state" value="h" <?php if ($look == 'h') echo 'checked' ?> />
 									<label class="switch-button" for="h_look" class="wpsl-label">Horizontal</label>
 
-									<input type="radio" name="look" id="v_look" class="view-state" value="v" <?php if ($vertical) echo 'checked' ?> />
+									<input type="radio" name="look" id="v_look" class="view-state" value="v" <?php if ($look == 'v') echo 'checked' ?> />
 									<label class="switch-button" for="v_look" class="wpsl-label">Vertical</label>
 
-									<input type="radio" name="look" id="s_look" class="view-state" value="s" <?php if ($single) echo 'checked' ?> />
+									<input type="radio" name="look" id="s_look" class="view-state" value="s" <?php if ($look == 's') echo 'checked' ?> />
 									<label class="switch-button" for="s_look" class="wpsl-label">Single button</label>
 								</div>
 								<div class="show-counters">
@@ -384,21 +350,26 @@ class wpsociallikes
 							<th class="valign-top" scope="row">Websites</th>
 							<td>
 								<ul class="sortable-container">	
-
 									<?php 
 										for ($i = 1; $i <= count($label); $i++) {
 											$option = 'pos' . $i;
 											$btn = get_option($option);
 											$checked = get_option($btn);
+											$hidden = ($this->lang != 'ru-RU') && !$checked && ($btn == 'odn_btn' || $btn == 'mm_btn');
 											?>
-											<li class="sortable-item">
+											<li class="sortable-item" <?php if ($hidden) echo ' hidden="true"' ?>>
 												<input type="checkbox" name="site[]" id="<?php echo $btn ?>" value="<?php echo $btn ?>" <?php if ($checked) echo 'checked' ?> />					
 												<label for="<?php echo $btn ?>" class="wpsl-label"><?php echo $label[$btn] ?></label>
 											</li>				
 											<?php
 										}
-									?>							
+									?>			
 								</ul>
+								<?php 
+									if ($this->lang != 'ru-RU' && !(get_option('odn_btn') && get_option('mm_btn'))) {
+										?><span class="more-websites">More websites</span><?php		
+									}
+								?>
 							</td>
 						</tr>
 						<tr valign="top">
@@ -441,15 +412,40 @@ class wpsociallikes
 		
 					</table>
 					<div class="row">
-						<div id="preview" class="shadow-border" <?php if (get_bloginfo('language') == 'ru-RU') echo 'language="ru"' ?> ></div>
+						<div id="preview" class="shadow-border" <?php if ($this->lang == 'ru-RU') echo 'language="ru"' ?> ></div>
 					</div>
-					<input type="hidden" name="action" value="update" />
-					<input type="hidden" name="page_options" value="sociallikes_ul" />
 					
 					<?php submit_button(); ?>
 				</form>
 			</div>
 		<?php
+	}
+
+	function submit_admin_form() {
+		$positions	= $_POST['site'];
+		$buttons = array('vk_btn', 'facebook_btn', 'twitter_btn', 'google_btn', 'pinterest_btn', 'lj_btn', 'odn_btn', 'mm_btn');
+		$pos_count = count($positions);
+
+		foreach ($buttons as $value) {
+			if (in_array($value, $positions)) {
+				update_option($value, true);	
+				$position = array_search($value, $positions) + 1;
+			} else {
+				update_option($value, false);
+				$position = $pos_count + 1;
+				++$pos_count;
+			}
+			$option_name = 'pos'.$position; 
+			update_option($option_name, $value);	
+		}
+
+		update_option('sociallikes_counters', isset($_POST['counters']));
+		update_option('sociallikes_look', $_POST['look']);
+		update_option('sociallikes_twitter_via', $_POST['twitter_via']);
+		update_option('sociallikes_twitter_rel', $_POST['twitter_rel']);
+		update_option('sociallikes_pinterest_img', isset($_POST['pinterest_img']));
+		update_option('sociallikes_post', isset($_POST['post_chb']));
+		update_option('sociallikes_page', isset($_POST['page_chb']));
 	}
 }
 
