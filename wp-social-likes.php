@@ -2,7 +2,7 @@
 /*
 Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes)
-Version: 1.3
+Version: 1.4
 Author: TS Soft
 Author URI: http://ts-soft.ru/en/
 License: MIT
@@ -50,8 +50,8 @@ class wpsociallikes
 		"Share link on Google+",
 		"Share image on Pinterest",
 		"Share link on LiveJournal",
-		"Поделиться ссылкой в Одноклассниках",
-		"Поделиться ссылкой в Моём мире"
+		"Share link on Odnoklassniki",
+		"Share link on Mail.ru"
 	);
 
 	var $lang;
