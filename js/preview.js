@@ -62,6 +62,7 @@ jQuery(document).ready(function ($) {
 		if (single) {
 			wpsl_ul.unwrap();
 			$('div.social-likes__button_single').remove();
+			$('.social-likes__close').hide();
 			single = false;
 		}
 		wpsl_ul.css('display', 'block');
@@ -71,15 +72,13 @@ jQuery(document).ready(function ($) {
 			wpsl_ul.addClass('social-likes_vertical');
 			wpsl_ul.removeClass('social-likes_single');
 			wpsl_ul.removeAttr('data-single-title');
-			
 		} else if (radio == 's') {
 			single = true;
 			wpsl_ul.addClass('social-likes_single');
 			wpsl_ul.addClass('social-likes_vertical');
 			wpsl_ul.attr('data-single-title', 'Share');
-
 			wpsl_ul.wrap(parent);
-			$('div.social-likes_single-w').append('<div class="social-likes__button social-likes__button_single"><span class="social-likes__icon social-likes__icon_single"></span>Share</div>');
+			$('ul.social-likes').after('<div class="social-likes__button social-likes__button_single"><span class="social-likes__icon social-likes__icon_single"></span>Share</div>');
 		} else {
 			wpsl_ul.removeClass('social-likes_single');
 			wpsl_ul.removeClass('social-likes_vertical');
@@ -122,8 +121,13 @@ jQuery(document).ready(function ($) {
 	});
 
 	$(document).on('click', '.more-websites', function () {
-		$('li[hidden="true"]').prop('hidden', false);
+		$('li.sortable-item.hidden').show();
 		$(this).hide();
+	});
+
+	$(document).on('click', 'input[type="radio"]', function () {
+		$('input[type="radio"]').removeClass('checked');
+		$(this).addClass('checked');
 	});
 });
 

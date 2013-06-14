@@ -74,7 +74,7 @@ class wpsociallikes
 		add_option('pos6', 'lj_btn');
 		add_option('pos7', 'odn_btn');
 		add_option('pos8', 'mm_btn');
-		add_option('sociallikes_counters');
+		add_option('sociallikes_counters', true);
 		add_option('sociallikes_look', 'h');
 		add_option('sociallikes_twitter_via');	
 		add_option('sociallikes_twitter_rel');
@@ -331,13 +331,13 @@ class wpsociallikes
 							<th scope="row">Look</th>
 							<td class="switch-button-row">
 								<div style="float: left;">
-									<input type="radio" name="look" id="h_look" class="view-state" value="h" <?php if ($look == 'h') echo 'checked' ?> />
+									<input type="radio" name="look" id="h_look" class="view-state<?php if ($look == 'h') echo ' checked' ?>" value="h" <?php if ($look == 'h') echo 'checked' ?> />
 									<label class="switch-button" for="h_look" class="wpsl-label">Horizontal</label>
 
-									<input type="radio" name="look" id="v_look" class="view-state" value="v" <?php if ($look == 'v') echo 'checked' ?> />
+									<input type="radio" name="look" id="v_look" class="view-state<?php if ($look == 'v') echo ' checked' ?>" value="v" <?php if ($look == 'v') echo ' checked' ?> />
 									<label class="switch-button" for="v_look" class="wpsl-label">Vertical</label>
 
-									<input type="radio" name="look" id="s_look" class="view-state" value="s" <?php if ($look == 's') echo 'checked' ?> />
+									<input type="radio" name="look" id="s_look" class="view-state<?php if ($look == 's') echo ' checked' ?>" value="s" <?php if ($look == 's') echo ' checked' ?> />
 									<label class="switch-button" for="s_look" class="wpsl-label">Single button</label>
 								</div>
 								<div class="show-counters">
@@ -357,7 +357,7 @@ class wpsociallikes
 											$checked = get_option($btn);
 											$hidden = ($this->lang != 'ru-RU') && !$checked && ($btn == 'odn_btn' || $btn == 'mm_btn');
 											?>
-											<li class="sortable-item" <?php if ($hidden) echo ' hidden="true"' ?>>
+											<li class="sortable-item<?php if ($hidden) echo ' hidden' ?>">
 												<input type="checkbox" name="site[]" id="<?php echo $btn ?>" value="<?php echo $btn ?>" <?php if ($checked) echo 'checked' ?> />					
 												<label for="<?php echo $btn ?>" class="wpsl-label"><?php echo $label[$btn] ?></label>
 											</li>				
