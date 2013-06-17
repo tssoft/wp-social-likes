@@ -5,9 +5,9 @@ Requires at least: 3.0
 Tested Up To: 3.5.1
 Stable tag: trunk
 License: MIT
-License URI: https://raw.github.com/tssoft/wp-social-likes/master/README.md
+License URI: https://raw.github.com/tssoft/wp-social-likes/master/license.md
 
-Single style buttons with like counters: Facebook, Twitter, Google+, LiveJournal and also popular Russian social networks.
+Single style buttons with like counters: Facebook, Twitter, Google+, Pinterest, LiveJournal and also popular Russian social networks.
 
 == Description ==
 
@@ -19,6 +19,9 @@ WordPress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/pr
 2. Option in editor allows to control appereance of buttons for every post or page 
 
 == Changelog ==
+
+= 1.5 =
+ * Fixed bug with appearance of websites on settings page for English version of WordPress
 
 = 1.4 =
  * Option to place first image in the post/page to the Image URL field (required by Pinterest)
