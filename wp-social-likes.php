@@ -2,7 +2,7 @@
 /*
 Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes)
-Version: 1.5
+Version: 1.6
 Author: TS Soft
 Author URI: http://ts-soft.ru/en/
 License: MIT
@@ -56,8 +56,7 @@ class wpsociallikes
 
 	var $lang;
 	
-	function wpsociallikes() 
-	{	
+	function wpsociallikes() {	
 		add_option('vk_btn', true);		
 		add_option('facebook_btn', true);
 		add_option('twitter_btn', true);
@@ -88,6 +87,10 @@ class wpsociallikes
 		add_action('save_post', array(&$this, 'save_post_meta'));
 		add_action('admin_enqueue_scripts', array(&$this, 'wpsociallikes_admin_scripts'));
 		add_filter('the_content', array(&$this, 'add_social_likes'));
+
+		// https://github.com/tssoft/wp-social-likes/issues/7
+		add_filter('the_excerpt_rss', array(&$this, 'exclude_UL_in_RSS_description'));
+		add_filter('the_content_feed', array(&$this, 'exclude_UL_in_RSS_content'));
 	}
 	
 	function header_content() {
@@ -446,6 +449,23 @@ class wpsociallikes
 		update_option('sociallikes_pinterest_img', isset($_POST['pinterest_img']));
 		update_option('sociallikes_post', isset($_POST['post_chb']));
 		update_option('sociallikes_page', isset($_POST['page_chb']));
+	}
+
+	function exclude_UL_in_RSS_description($content) {
+		global $post;
+		if (get_post_meta($post->ID, 'sociallikes', true)) {
+			$index = strripos($content, ' ');
+			$content = substr_replace($content, '', $index);
+		}
+	    return $content;
+	}
+
+	function exclude_UL_in_RSS_content($content) {
+	    if (is_feed()) {
+	    	$content = preg_replace("/<ul.*(class)=(\"|')social-likes(\"|').*>.*<\/ul>/smUi", '', $content);
+	    }
+
+	    return $content;
 	}
 }
 
