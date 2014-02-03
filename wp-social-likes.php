@@ -32,17 +32,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class wpsociallikes
 {
-	var $titles = array(
-		__("Share link on VK"),
-		__("Share link on Facebook"),
-		__("Share link on Twitter"),
-		__("Share link on Google+"),
-		__("Share image on Pinterest"),
-		__("Share link on LiveJournal"),
-		__("Share link on Odnoklassniki"),
-		__("Share link on Mail.ru")
-	);
-
 	var $lang;
 	
 	function wpsociallikes() {	
@@ -84,7 +73,7 @@ class wpsociallikes
 	}
 	
 	function ap_action_init() {
-		load_plugin_textdomain('social-likes', false, dirname(plugin_basename(__FILE__)).'/languages/');
+		load_plugin_textdomain('wp-social-likes', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/');
 	}
 	
 	function header_content() {
@@ -130,14 +119,14 @@ class wpsociallikes
 			<div id="social-likes">
 				<div style="padding: 5px 0">
 					<input type="checkbox" name="wpsociallikes" id="wpsociallikes" <?php if ($checked) echo 'checked class="checked"' ?> title="<?php echo get_permalink($post->ID); ?>" />
-					<label for="wpsociallikes"><?php _e('Add social buttons') ?></label>
+					<label for="wpsociallikes"><?php _e('Add social buttons', 'wp-social-likes') ?></label>
 				</div>
 				
 				<table>
 					<tr>
-						<td><label for="image_url" style="padding-right:5px"><?php _e('Image&nbspURL:') ?></label></td>
+						<td><label for="image_url" style="padding-right:5px"><?php _e('Image&nbspURL:', 'wp-social-likes') ?></label></td>
 						<td style="width:100%">
-							<input name="image_url" id="image_url" value="<?php echo $img_url ?>" <?php if (!$checked) echo 'disabled' ?> type="text" placeholder="<?php _e('Image URL (required for Pinterest)') ?>" style="width:100%" />
+							<input name="image_url" id="image_url" value="<?php echo $img_url ?>" <?php if (!$checked) echo 'disabled' ?> type="text" placeholder="<?php _e('Image URL (required for Pinterest)', 'wp-social-likes') ?>" style="width:100%" />
 						</td>
 					</tr>
 				</table>
@@ -215,8 +204,8 @@ class wpsociallikes
 		$twitter_via = get_option('sociallikes_twitter_rel');
 		$look = get_option('sociallikes_look');
 		
-		$li['vk_btn'] = '<li class="vkontakte" title="'.$titles[0].'">'.__('Vkontakte').'</li>';
-		$li['facebook_btn'] = '<li class="facebook" title="'.$titles[1].'">Facebook</li>';
+		$li['vk_btn'] = '<li class="vkontakte" title="'.__('Share link on VK', 'wp-social-likes').'">'.__('Vkontakte', 'wp-social-likes').'</li>';
+		$li['facebook_btn'] = '<li class="facebook" title="'.__('Share link on Facebook', 'wp-social-likes').'">Facebook</li>';
 		$li['twitter_btn'] = '<li class="twitter" ';
 		if ($twitter_via != '') {
 			$li['twitter_btn'] .= 'data-via="' . $twitter_via . '" ';
@@ -224,12 +213,12 @@ class wpsociallikes
 		if ($twitter_rel != '') {
 			$li['twitter_btn'] .= 'data-related="' . $twitter_rel . '" ';
 		}
-		$li['twitter_btn'] .= 'title="'.$titles[2].'">Twitter</li>';
-		$li['google_btn'] = '<li class="plusone" title="'.$titles[3].'">Google+</li>';
-		$li['pinterest_btn'] = '<li class="pinterest" title="'.$titles[4].'" data-media="">Pinterest</li>';
-		$li['lj_btn'] = '<li class="livejournal" title="'.$titles[5].'">LiveJournal</li>';
-		$li['odn_btn'] = '<li class="odnoklassniki" title="'.$titles[6].'">'.__('Odnoklassniki').'</li>';
-		$li['mm_btn'] = '<li class="mailru" title="'.$titles[7].'">'.__('Mail.ru').'</li>';
+		$li['twitter_btn'] .= 'title="'.__('Share link on Twitter', 'wp-social-likes').'">Twitter</li>';
+		$li['google_btn'] = '<li class="plusone" title="'.__('Share link on Google+', 'wp-social-likes').'">Google+</li>';
+		$li['pinterest_btn'] = '<li class="pinterest" title="'.__('Share image on Pinterest', 'wp-social-likes').'" data-media="">Pinterest</li>';
+		$li['lj_btn'] = '<li class="livejournal" title="'.__('Share link on LiveJournal', 'wp-social-likes').'">LiveJournal</li>';
+		$li['odn_btn'] = '<li class="odnoklassniki" title="'.__('Share link on Odnoklassniki', 'wp-social-likes').'">'.__('Odnoklassniki', 'wp-social-likes').'</li>';
+		$li['mm_btn'] = '<li class="mailru" title="'.__('Share link on Mail.ru', 'wp-social-likes').'">'.__('Mail.ru', 'wp-social-likes').'</li>';
 
 		$new_ul = '<ul class="social-likes';
 
@@ -238,7 +227,7 @@ class wpsociallikes
 		} elseif ($look == 'v') {
 			$new_ul .= ' social-likes_vertical"';
 		} else {
-			$new_ul .= ' social-likes_single" data-single-title="'.__('Share').'"';
+			$new_ul .= ' social-likes_single" data-single-title="'.__('Share', 'wp-social-likes').'"';
 		}
 
 		if (!get_option('sociallikes_counters')) {
@@ -297,13 +286,13 @@ class wpsociallikes
 		$label["google_btn"] = "Google+";
 		$label["pinterest_btn"] = "Pinterest";
 		$label["lj_btn"] = "LiveJournal";
-		$label["odn_btn"] = __("Odnoklassniki");
-		$label["mm_btn"] = __("Mail.ru");
+		$label["odn_btn"] = __("Odnoklassniki", 'wp-social-likes');
+		$label["mm_btn"] = __("Mail.ru", 'wp-social-likes');
 
 		$this->lang = get_bloginfo('language');
 		?>
 			<div class="wrap">
-				<h2><?php _e('Social Likes Settings') ?></h2>
+				<h2><?php _e('Social Likes Settings', 'wp-social-likes') ?></h2>
 
 				<form name="wpsociallikes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=wp-social-likes.php&amp;updated=true">
 					
@@ -311,26 +300,26 @@ class wpsociallikes
 				
 					<table class="plugin-setup">
 						<tr valign="top">
-							<th scope="row"><?php _e('Look') ?></th>
+							<th scope="row"><?php _e('Look', 'wp-social-likes') ?></th>
 							<td class="switch-button-row">
 								<div style="float: left;">
 									<input type="radio" name="look" id="h_look" class="view-state<?php if ($look == 'h') echo ' checked' ?>" value="h" <?php if ($look == 'h') echo 'checked' ?> />
-									<label class="switch-button" for="h_look" class="wpsl-label"><?php _e('Horizontal') ?></label>
+									<label class="switch-button" for="h_look" class="wpsl-label"><?php _e('Horizontal', 'wp-social-likes') ?></label>
 
 									<input type="radio" name="look" id="v_look" class="view-state<?php if ($look == 'v') echo ' checked' ?>" value="v" <?php if ($look == 'v') echo ' checked' ?> />
-									<label class="switch-button" for="v_look" class="wpsl-label"><?php _e('Vertical') ?></label>
+									<label class="switch-button" for="v_look" class="wpsl-label"><?php _e('Vertical', 'wp-social-likes') ?></label>
 
 									<input type="radio" name="look" id="s_look" class="view-state<?php if ($look == 's') echo ' checked' ?>" value="s" <?php if ($look == 's') echo ' checked' ?> />
-									<label class="switch-button" for="s_look" class="wpsl-label"><?php _e('Single button') ?></label>
+									<label class="switch-button" for="s_look" class="wpsl-label"><?php _e('Single button', 'wp-social-likes') ?></label>
 								</div>
 								<div class="show-counters">
 									<input type="checkbox" name="counters" id="counters" <?php if ($counters) echo 'checked' ?> />
-									<label for="counters" class="wpsl-label"><?php _e('Show counters') ?></label>
+									<label for="counters" class="wpsl-label"><?php _e('Show counters', 'wp-social-likes') ?></label>
 								</div>
 							</td>
 						</tr>
 						<tr valign="top">
-							<th class="valign-top" scope="row"><?php _e('Websites') ?></th>
+							<th class="valign-top" scope="row"><?php _e('Websites', 'wp-social-likes') ?></th>
 							<td>
 								<ul class="sortable-container">	
 									<?php 
@@ -350,22 +339,22 @@ class wpsociallikes
 								</ul>
 								<?php 
 									if ($this->lang != 'ru-RU' && !(get_option('odn_btn') && get_option('mm_btn'))) {
-										?><span class="more-websites"><?php _e('More websites') ?></span><?php		
+										?><span class="more-websites"><?php _e('More websites', 'wp-social-likes') ?></span><?php		
 									}
 								?>
 							</td>
 						</tr>
 						<tr valign="top">
-							<th scope="row"><?php _e('Twitter Via') ?></th>
+							<th scope="row"><?php _e('Twitter Via', 'wp-social-likes') ?></th>
 							<td>
-								<input type="text" name="twitter_via" placeholder="<?php _e('Username') ?>" class="wpsl-field" 
+								<input type="text" name="twitter_via" placeholder="<?php _e('Username', 'wp-social-likes') ?>" class="wpsl-field" 
 									value="<?php echo get_option('sociallikes_twitter_via'); ?>" />
 							</td>
 						</tr>
 						<tr valign="top">
-							<th scope="row"><?php _e('Twitter Related') ?></th>
+							<th scope="row"><?php _e('Twitter Related', 'wp-social-likes') ?></th>
 							<td>
-								<input type="text" name="twitter_rel" placeholder="<?php _e('Username:Description') ?>" class="wpsl-field" 
+								<input type="text" name="twitter_rel" placeholder="<?php _e('Username:Description', 'wp-social-likes') ?>" class="wpsl-field" 
 									value="<?php echo get_option('sociallikes_twitter_rel'); ?>"/>
 							</td>
 						</tr>
@@ -373,23 +362,23 @@ class wpsociallikes
 							<th scope="row"></th>
 							<td scope="row">
 								<input type="checkbox" name="pinterest_img" id="pinterest_img" <?php if (get_option('sociallikes_pinterest_img')) echo 'checked' ?> />
-								<label for="pinterest_img" class="wpsl-label"><?php _e('Automatically place first image in the post/page to the Image URL field') ?></label>
+								<label for="pinterest_img" class="wpsl-label"><?php _e('Automatically place first image in the post/page to the Image URL field', 'wp-social-likes') ?></label>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row"></th>
 							<td>
 								<input type="checkbox" name="post_chb" id="post_chb" <?php if ($post) echo 'checked' ?> />					
-								<label for="post_chb" class="wpsl-label"><?php _e('Add by default for new posts') ?></label>
-								<input type="submit" name="apply_to_posts" id="apply_to_posts" value="<?php _e('Apply to existing posts') ?>" class="button-secondary"/>
+								<label for="post_chb" class="wpsl-label"><?php _e('Add by default for new posts', 'wp-social-likes') ?></label>
+								<input type="submit" name="apply_to_posts" id="apply_to_posts" value="<?php _e('Apply to existing posts', 'wp-social-likes') ?>" class="button-secondary"/>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row"></th>
 							<td>
 								<input type="checkbox" name="page_chb" id="page_chb" <?php if ($page) echo 'checked' ?> />					
-								<label for="page_chb" class="wpsl-label"><?php _e('Add by default for new pages') ?></label>
-								<input type="submit" name="apply_to_pages" id="apply_to_pages" value="<?php _e('Apply to existing pages') ?>" class="button-secondary" />
+								<label for="page_chb" class="wpsl-label"><?php _e('Add by default for new pages', 'wp-social-likes') ?></label>
+								<input type="submit" name="apply_to_pages" id="apply_to_pages" value="<?php _e('Apply to existing pages', 'wp-social-likes') ?>" class="button-secondary" />
 							</td>
 						</tr>
 		
