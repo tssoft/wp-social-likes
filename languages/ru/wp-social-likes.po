@@ -1,0 +1,127 @@
+# WordPress Social Likes
+# Author: TS Soft
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-03 11:57+0400\n"
+"PO-Revision-Date: 2014-02-03 12:25+0400\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+
+#: wp-social-likes.php:36
+msgid "Share link on VK"
+msgstr "Поделиться ссылкой во Вконтакте"
+
+#: wp-social-likes.php:37
+msgid "Share link on Facebook"
+msgstr "Поделиться ссылкой на Фейсбуке"
+
+#: wp-social-likes.php:38
+msgid "Share link on Twitter"
+msgstr "Поделиться ссылкой в Твиттере"
+
+#: wp-social-likes.php:39
+msgid "Share link on Google+"
+msgstr "Поделиться ссылкой в Гугл-плюсе"
+
+#: wp-social-likes.php:40
+msgid "Share image on Pinterest"
+msgstr "Поделиться картинкой на Пинтересте"
+
+#: wp-social-likes.php:41
+msgid "Share link on LiveJournal"
+msgstr "Поделиться ссылкой в ЖЖ"
+
+#: wp-social-likes.php:42
+msgid "Share link on Odnoklassniki"
+msgstr "Поделиться ссылкой в Одноклассниках"
+
+#: wp-social-likes.php:43
+msgid "Share link on Mail.ru"
+msgstr "Поделиться ссылкой в Моём мире"
+
+#: wp-social-likes.php:218
+msgid "Vkontakte"
+msgstr "Вконтакте"
+
+#: wp-social-likes.php:NaN
+msgid "Odnoklassniki"
+msgstr "Одноклассники"
+
+#: wp-social-likes.php:NaN
+msgid "Mail.ru"
+msgstr "Мой мир"
+
+#: wp-social-likes.php:241
+msgid "Share"
+msgstr "Поделиться"
+
+#: wp-social-likes.php:133
+msgid "Add social buttons"
+msgstr "Добавить кнопки социальных сетей"
+
+#: wp-social-likes.php:138
+msgid "Image&nbspURL:"
+msgstr "URL&nbspизображения:"
+
+#: wp-social-likes.php:140
+msgid "Image URL (required for Pinterest)"
+msgstr "URL изображения (требуется для Pinterest)"
+
+#: wp-social-likes.php:306
+msgid "Social Likes Settings"
+msgstr "Настройки Social Likes"
+
+#: wp-social-likes.php:314
+msgid "Look"
+msgstr "Расположение"
+
+#: wp-social-likes.php:318
+msgid "Horizontal"
+msgstr "Горизонтальное"
+
+#: wp-social-likes.php:321
+msgid "Vertical"
+msgstr "Вертикальное"
+
+#: wp-social-likes.php:324
+msgid "Single button"
+msgstr "Одна кнопка"
+
+#: wp-social-likes.php:328
+msgid "Show counters"
+msgstr "Показать счётчики"
+
+#: wp-social-likes.php:333
+msgid "Websites"
+msgstr "Вебсайты"
+
+#: wp-social-likes.php:353
+msgid "More websites"
+msgstr "Другие вебсайты"
+
+#: wp-social-likes.php:376
+msgid "Automatically place first image in the post/page to the Image URL field"
+msgstr "Автоматически вносить самое первое изображение на странице в поле URL изображения"
+
+#: wp-social-likes.php:383
+msgid "Add by default for new posts"
+msgstr "Добавлять по умолчанию для новых записей"
+
+#: wp-social-likes.php:384
+msgid "Apply to existing posts"
+msgstr "Применить к существующим записям"
+
+#: wp-social-likes.php:391
+msgid "Add by default for new pages"
+msgstr "Добавлять по умолчанию для новых страниц"
+
+#: wp-social-likes.php:392
+msgid "Apply to existing pages"
+msgstr "Применить к существующим страницам"
