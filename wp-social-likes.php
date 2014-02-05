@@ -40,7 +40,7 @@ class wpsociallikes
 		add_option('twitter_btn', true);
 		add_option('google_btn', true);
 		add_option('pinterest_btn', false);
-		add_option('lj_btn', false);
+		//add_option('lj_btn', false);
 		add_option('odn_btn', false);
 		add_option('mm_btn', false);
 		add_option('pos1', 'vk_btn');
@@ -48,7 +48,7 @@ class wpsociallikes
 		add_option('pos3', 'twitter_btn');
 		add_option('pos4', 'google_btn');
 		add_option('pos5', 'pinterest_btn');
-		add_option('pos6', 'lj_btn');
+		//add_option('pos6', 'lj_btn');
 		add_option('pos7', 'odn_btn');
 		add_option('pos8', 'mm_btn');
 		add_option('sociallikes_counters', true);
