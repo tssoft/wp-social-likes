@@ -489,7 +489,7 @@ class wpsociallikes
 
 	function submit_admin_form() {
 		$positions	= $_POST['site'];
-		$buttons = array('vk_btn', 'facebook_btn', 'twitter_btn', 'google_btn', 'pinterest_btn', 'lj_btn', 'odn_btn', 'mm_btn');
+		$buttons = array('vk_btn', 'facebook_btn', 'twitter_btn', 'google_btn', 'pinterest_btn', 'odn_btn', 'mm_btn');
 		$pos_count = count($positions);
 
 		foreach ($buttons as $value) {
