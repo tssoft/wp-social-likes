@@ -415,19 +415,17 @@ class wpsociallikes
 							<td class="without-bottom">
 								<ul class="sortable-container">	
 									<?php 
-										for ($i = 1; $i <= count($label) + 1; $i++) {
-											if ($i != 6) { // ignore LiveJournal
-												$option = 'pos' . $i;
-												$btn = get_option($option);
-												$checked = get_option($btn);
-												$hidden = ($this->lang != 'ru-RU') && !$checked && ($btn == 'odn_btn' || $btn == 'mm_btn');
-												?>
-												<li class="sortable-item<?php if ($hidden) echo ' hidden' ?>">
-													<input type="checkbox" name="site[]" id="<?php echo $btn ?>" value="<?php echo $btn ?>" <?php if ($checked) echo 'checked' ?> />					
-													<label for="<?php echo $btn ?>" class="wpsl-label"><?php echo $label[$btn] ?></label>
-												</li>				
-												<?php
-											}
+										for ($i = 1; $i <= count($label); $i++) {
+											$option = 'pos' . $i;
+											$btn = get_option($option);
+											$checked = get_option($btn);
+											$hidden = ($this->lang != 'ru-RU') && !$checked && ($btn == 'odn_btn' || $btn == 'mm_btn');
+											?>
+											<li class="sortable-item<?php if ($hidden) echo ' hidden' ?>">
+												<input type="checkbox" name="site[]" id="<?php echo $btn ?>" value="<?php echo $btn ?>" <?php if ($checked) echo 'checked' ?> />					
+												<label for="<?php echo $btn ?>" class="wpsl-label"><?php echo $label[$btn] ?></label>
+											</li>				
+											<?php
 										}
 									?>			
 								</ul>
@@ -489,7 +487,7 @@ class wpsociallikes
 
 	function submit_admin_form() {
 		$positions	= $_POST['site'];
-		$buttons = array('vk_btn', 'facebook_btn', 'twitter_btn', 'google_btn', 'pinterest_btn', 'lj_btn', 'odn_btn', 'mm_btn');
+		$buttons = array('vk_btn', 'facebook_btn', 'twitter_btn', 'google_btn', 'pinterest_btn', 'odn_btn', 'mm_btn');
 		$pos_count = count($positions);
 
 		foreach ($buttons as $value) {
