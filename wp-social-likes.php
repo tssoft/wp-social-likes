@@ -253,7 +253,7 @@ class wpsociallikes
 
 		$new_ul = '<ul class="social-likes';
 
-		$classAppend = (($skin == 'flat') && ($light = true)) ? ' social-likes_light' : '';
+		$classAppend = (($skin == 'flat') && $light) ? ' social-likes_light' : '';
 		if ($iconsOnly) {
 			$classAppend .= " social-likes_notext";
 		}
@@ -414,7 +414,7 @@ class wpsociallikes
 							<th class="valign-top" scope="row"><?php _e('Websites', 'wp-social-likes') ?></th>
 							<td class="without-bottom">
 								<ul class="sortable-container">	
-									<?php 
+									<?php
 										for ($i = 1; $i <= count($label); $i++) {
 											$option = 'pos' . $i;
 											$btn = get_option($option);
@@ -429,7 +429,7 @@ class wpsociallikes
 										}
 									?>			
 								</ul>
-								<?php 
+								<?php
 									if ($this->lang != 'ru-RU' && !(get_option('odn_btn') && get_option('mm_btn'))) {
 										?><span class="more-websites"><?php _e('More websites', 'wp-social-likes') ?></span><?php		
 									}

@@ -119,9 +119,9 @@ jQuery(document).ready(function ($) {
 	
 	function sort_buttons() {
 		wpsl_ul.empty();
-		if (single) {
+		/*if (single) {
 			addCloseButton();
-		}
+		}*/
 		$('input[type="checkbox"]:checked').each(function () {
 			if ($(this).attr("id").indexOf("_btn") != -1)
 			{
@@ -144,7 +144,7 @@ jQuery(document).ready(function ($) {
 		if (single) {
 			wpsl_ul.unwrap();
 			$('div.social-likes__button_single').remove();
-			$('div.social-likes__close').remove();
+			//$('div.social-likes__close').remove();
 			single = false;
 		}
 		var radio = $('input[name=look]:checked').val();
@@ -159,7 +159,7 @@ jQuery(document).ready(function ($) {
 			wpsl_ul.addClass('social-likes_single');
 			wpsl_ul.addClass('social-likes_vertical');
 			wpsl_ul.attr('data-single-title', $("#label_share").attr("value"));
-			addCloseButton();
+			//addCloseButton();
 			wpsl_ul.wrap(parent);
 			var shareText = $("#label_share").attr("value");
 			var buttonDiv = $("<div/>", {
@@ -175,7 +175,7 @@ jQuery(document).ready(function ($) {
 		}
 	}
 	
-	function addCloseButton() {
+	/*function addCloseButton() {
 		var closeButton = $("<div/>", {
 			class: "social-likes__close",
 			text: "×"
@@ -185,7 +185,7 @@ jQuery(document).ready(function ($) {
 			wpsl_ul.removeClass('social-likes_opened');
 		});
 		wpsl_ul.append(closeButton);
-	}
+	}*/
 	
 	sort_buttons();
 	rebuild();
