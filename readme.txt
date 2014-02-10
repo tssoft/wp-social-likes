@@ -2,7 +2,7 @@
 Contributors: tssoft
 Tags: facebook, twitter, vk.com, vkontakte, google+, pinterest, livejournal, odnoklassniki, mail.ru, social links, share buttons, social, social buttons, jquery
 Requires at least: 3.0
-Tested Up To: 3.5.1
+Tested Up To: 3.8.1
 Stable tag: trunk
 License: MIT
 License URI: https://raw.github.com/tssoft/wp-social-likes/master/license.md
@@ -34,9 +34,18 @@ Currently available in English and Russian. Any help with translating Social Lik
 == Screenshots ==
 
 1. Settings page allows you to customize list of website buttons and how they appear on page
-2. Option in editor allows to control appereance of buttons for every post or page 
+2. Option in editor allows to control appearance of buttons for every post or page 
+3. Button style customization with 4 skins & Icons only mode
 
 == Changelog ==
+
+= 1.6 =
+ * Button style customization with 4 skins: Classic, Flat (standard & light) and Birman
+ * Icons only mode
+ * Option whether to show zero counters or not
+ * LiveJournal button removed
+ * Social Likes library updated to version 3.0.1
+ * Plugin is translation-ready. Any help with translation to your language is appreciated!
 
 = 1.5 =
  * Fixed bug with appearance of websites on settings page for English version of WordPress
