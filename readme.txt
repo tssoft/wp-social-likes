@@ -39,6 +39,10 @@ Currently available in English and Russian. Any help with translating Social Lik
 
 == Changelog ==
 
+= 1.7 =
+ * <div/> tags used instead of <ul/>
+ * Slight code optimization
+
 = 1.6 =
  * Button style customization with 4 skins: Classic, Flat (standard & light) and Birman
  * Icons only mode
