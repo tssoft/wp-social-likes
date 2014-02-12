@@ -24,7 +24,7 @@ jQuery(document).ready(function ($) {
 	var parent = $("<div/>", { class: "social-likes_single-w" });
 	var single = false;
 	
-	var li = {};
+	var li = [];
 	
 	function newButton(social_network_name)
 	{
