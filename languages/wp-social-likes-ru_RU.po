@@ -1,9 +1,9 @@
-# Social Likes 1.7
+# Social Likes
 # Author: TS Soft
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: wp-social-likes\n"
+"Project-Id-Version: wp-social-likes 1.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-11 18:16+0400\n"
 "PO-Revision-Date: 2014-02-11 18:18+0400\n"
