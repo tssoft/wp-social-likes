@@ -49,6 +49,9 @@ Based on the Social Likes library by Artem Sapegin (http://sapegin.me/projects/s
 
 == Changelog ==
 
+= 1.8 =
+ * Fixed bug with interactive preview reset
+
 = 1.7 =
  * Translations: English, Russian
  * Improved buttons markup to remove side effects caused by theme styles (Bug reported by Alexander Sarychev)
