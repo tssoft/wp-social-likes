@@ -2,7 +2,7 @@
 /*
 Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes)
-Version: 1.8
+Version: 1.9
 Author: TS Soft
 Author URI: http://ts-soft.ru/en/
 License: MIT
@@ -99,7 +99,7 @@ class wpsociallikes
 	
 	function header_content() {
 		$skin = str_replace('light', '', get_option('sociallikes_skin'));
-		if (($skin != 'classic') && ($skin != 'flat') && ($skin != 'birman')) { // backward compatibility
+		if (($skin != 'classic') && ($skin != 'flat') && ($skin != 'birman')) {
 			$skin = 'classic';
 		}
 		?>
@@ -337,7 +337,7 @@ class wpsociallikes
 				$skin .= 'light';
 			}
 		}
-		if (($skin != 'classic') && ($skin != 'flat') && ($skin != 'flatlight') && ($skin != 'birman')) { // backward compatibility
+		if (($skin != 'classic') && ($skin != 'flat') && ($skin != 'flatlight') && ($skin != 'birman')) {
 			$skin = 'classic';
 		}
 		$zeroes = get_option('sociallikes_zeroes');
@@ -378,6 +378,7 @@ class wpsociallikes
 					<input id="label_odnoklassniki" type="hidden" value="<?php echo $this->label_odnoklassniki ?>">
 					<input id="label_mailru" type="hidden" value="<?php echo $this->label_mailru ?>">
 					<input id="label_share" type="hidden" value="<?php echo $this->label_share ?>">
+					<input id="confirm_leaving_message" type="hidden" value="<?php _e('You have unsaved changes on this page. Do you want to leave this page and discard your changes?', 'wp-social-likes') ?>">
 					
 					<table class="plugin-setup">
 						<tr valign="top">
@@ -464,9 +465,9 @@ class wpsociallikes
 							</td>
 						</tr>
 						<!--tr valign="top">
-							<th scope="row"><?php _e('Twitter Related', 'wp-social-likes') ?></th>
+							<th scope="row">Twitter Related</th>
 							<td>
-								<input type="text" name="twitter_rel" placeholder="<?php _e('Username:Description', 'wp-social-likes') ?>" class="wpsl-field" 
+								<input type="text" name="twitter_rel" placeholder="Username:Description" class="wpsl-field" 
 									value="<?php echo get_option('sociallikes_twitter_rel'); ?>"/>
 							</td>
 						</tr-->

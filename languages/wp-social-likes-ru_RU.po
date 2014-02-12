@@ -3,12 +3,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: wp-social-likes 1.8\n"
+"Project-Id-Version: wp-social-likes\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-11 18:16+0400\n"
-"PO-Revision-Date: 2014-02-11 18:18+0400\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2014-02-12 15:23+0400\n"
+"PO-Revision-Date: 2014-02-12 15:25+0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,15 +45,15 @@ msgstr "Поделиться ссылкой в Одноклассниках"
 msgid "Share link on Mail.ru"
 msgstr "Поделиться ссылкой в Моём мире"
 
-#: wp-social-likes.php:89 wp-social-likes.php:337
+#: wp-social-likes.php:89 wp-social-likes.php:346
 msgid "VK"
 msgstr "Вконтакте"
 
-#: wp-social-likes.php:95 wp-social-likes.php:343
+#: wp-social-likes.php:95 wp-social-likes.php:352
 msgid "Odnoklassniki"
 msgstr "Одноклассники"
 
-#: wp-social-likes.php:96 wp-social-likes.php:344
+#: wp-social-likes.php:96 wp-social-likes.php:353
 msgid "Mail.ru"
 msgstr "Мой мир"
 
@@ -61,94 +61,102 @@ msgstr "Мой мир"
 msgid "Share"
 msgstr "Поделиться"
 
-#: wp-social-likes.php:144
+#: wp-social-likes.php:147
 msgid "Add social buttons"
 msgstr "Добавить кнопки социальных сетей"
 
-#: wp-social-likes.php:149
+#: wp-social-likes.php:152
 msgid "Image&nbspURL:"
 msgstr "URL&nbspизображения:"
 
-#: wp-social-likes.php:151
+#: wp-social-likes.php:154
 msgid "Image URL (required for Pinterest)"
 msgstr "URL изображения (необходим для Pinterest)"
 
-#: wp-social-likes.php:349
+#: wp-social-likes.php:358
 msgid "Social Likes Settings"
 msgstr "Настройки Social Likes"
 
-#: wp-social-likes.php:375
+#: wp-social-likes.php:381
+msgid ""
+"You have unsaved changes on this page. Do you want to leave this page and "
+"discard your changes?"
+msgstr ""
+"Вы не сохранили изменения на этой странице. Покинуть страницу и отменить "
+"изменения?"
+
+#: wp-social-likes.php:385
 msgid "Skin"
 msgstr "Скин"
 
-#: wp-social-likes.php:379
+#: wp-social-likes.php:389
 msgid "Classic"
 msgstr "Классический"
 
-#: wp-social-likes.php:382
+#: wp-social-likes.php:392
 msgid "Flat β"
 msgstr "Плоский β"
 
-#: wp-social-likes.php:385
+#: wp-social-likes.php:395
 msgid "Flat Light β"
 msgstr "Плоский Лёгкий β"
 
-#: wp-social-likes.php:388
+#: wp-social-likes.php:398
 msgid "Birman β"
 msgstr "Бирман β"
 
-#: wp-social-likes.php:393
+#: wp-social-likes.php:403
 msgid "Look"
 msgstr "Вид"
 
-#: wp-social-likes.php:397
+#: wp-social-likes.php:407
 msgid "Horizontal"
 msgstr "Горизонтальный"
 
-#: wp-social-likes.php:400
+#: wp-social-likes.php:410
 msgid "Vertical"
 msgstr "Вертикальный"
 
-#: wp-social-likes.php:403
+#: wp-social-likes.php:413
 msgid "Single button"
 msgstr "Одной кнопкой"
 
-#: wp-social-likes.php:412
+#: wp-social-likes.php:422
 msgid "Show counters"
 msgstr "Счётчики"
 
-#: wp-social-likes.php:416
+#: wp-social-likes.php:426
 msgid "With zeroes"
 msgstr "Отображать нули"
 
-#: wp-social-likes.php:420
+#: wp-social-likes.php:430
 msgid "Icons only"
 msgstr "Только значки"
 
-#: wp-social-likes.php:425
+#: wp-social-likes.php:435
 msgid "Websites"
 msgstr "Сайты"
 
-#: wp-social-likes.php:445
+#: wp-social-likes.php:455
 msgid "More websites"
 msgstr "Остальные сайты"
 
-#: wp-social-likes.php:468
+#: wp-social-likes.php:478
 msgid "Automatically place first image in the post/page to the Image URL field"
 msgstr "Автоматически помещать первую картинку в поле URL изображения"
 
-#: wp-social-likes.php:475
+#: wp-social-likes.php:485
 msgid "Add by default for new posts"
 msgstr "Добавлять по умолчанию для новых записей"
 
-#: wp-social-likes.php:476
+#: wp-social-likes.php:486
 msgid "Apply to existing posts"
 msgstr "Применить к существующим записям"
 
-#: wp-social-likes.php:483
+#: wp-social-likes.php:493
 msgid "Add by default for new pages"
 msgstr "Добавлять по умолчанию для новых страниц"
 
-#: wp-social-likes.php:484
+#: wp-social-likes.php:494
 msgid "Apply to existing pages"
 msgstr "Применить к существующим страницам"

@@ -23,29 +23,53 @@ jQuery(document).ready(function ($) {
 	var wpsl_ul = $("<div/>", { class: "social-likes social-likes_visible social-likes_ready" });
 	var parent = $("<div/>", { class: "social-likes_single-w" });
 	var single = false;
-	
 	var li = [];
+	
+	function saveSettings()
+	{
+		var settings = {
+			skin: $('input[name=skin]:checked').val(),
+			look: $('input[name=look]:checked').val(),
+			counters: $('#counters').is(':checked'),
+			zeroes: $('#zeroes').is(':checked'),
+			icons: $('#icons').is(':checked'),
+			twitterVia: $('input[name=twitter_via]').val(),
+			pinterestImg: $('#pinterest_img').is(':checked'),
+			defaultForPosts: $('#post_chb').is(':checked'),
+			defaultForPages: $('#page_chb').is(':checked'),
+			buttons: [],
+		};
+		$('input[type="checkbox"]:checked').each(function () {
+			if ($(this).attr("id").indexOf("_btn") != -1)
+			{
+				settings.buttons.push($(this).attr('id'));
+			}
+		});
+		return settings;
+	}
+	var initSettings = saveSettings();
+	var saveButtonWasPressed = false;
 	
 	function newButton(social_network_name)
 	{
 		var title = [];
 		var label = [];
-		title['vkontakte'] = $("#title_vkontakte").attr("value");
-		title['facebook'] = $("#title_facebook ").attr("value");
-		title['twitter'] = $("#title_twitter").attr("value");
-		title['plusone'] = $("#title_plusone").attr("value");
-		title['pinterest'] = $("#title_pinterest").attr("value");
-		//title['livejournal'] = $("#title_livejournal").attr("value");
-		title['odnoklassniki'] = $("#title_odnoklassniki").attr("value");
-		title['mailru'] = $("#title_mailru").attr("value");
-		label['vkontakte'] = $("<span/>", { class: "labelToDisappear", text: $("#label_vkontakte").attr("value") });
-		label['facebook'] = $("<span/>", { class: "labelToDisappear", text: $("#label_facebook ").attr("value") });
-		label['twitter'] = $("<span/>", { class: "labelToDisappear", text: $("#label_twitter").attr("value") });
-		label['plusone'] = $("<span/>", { class: "labelToDisappear", text: $("#label_plusone").attr("value") });
-		label['pinterest'] = $("<span/>", { class: "labelToDisappear", text: $("#label_pinterest").attr("value") });
-		//label['livejournal'] = $("<span/>", { class: "labelToDisappear", text: $("#label_livejournal").attr("value") });
-		label['odnoklassniki'] = $("<span/>", { class: "labelToDisappear", text: $("#label_odnoklassniki").attr("value") });
-		label['mailru'] = $("<span/>", { class: "labelToDisappear", text: $("#label_mailru").attr("value") });
+		title['vkontakte'] = $("#title_vkontakte").val();
+		title['facebook'] = $("#title_facebook ").val();
+		title['twitter'] = $("#title_twitter").val();
+		title['plusone'] = $("#title_plusone").val();
+		title['pinterest'] = $("#title_pinterest").val();
+		//title['livejournal'] = $("#title_livejournal").val();
+		title['odnoklassniki'] = $("#title_odnoklassniki").val();
+		title['mailru'] = $("#title_mailru").val();
+		label['vkontakte'] = $("<span/>", { class: "labelToDisappear", text: $("#label_vkontakte").val() });
+		label['facebook'] = $("<span/>", { class: "labelToDisappear", text: $("#label_facebook ").val() });
+		label['twitter'] = $("<span/>", { class: "labelToDisappear", text: $("#label_twitter").val() });
+		label['plusone'] = $("<span/>", { class: "labelToDisappear", text: $("#label_plusone").val() });
+		label['pinterest'] = $("<span/>", { class: "labelToDisappear", text: $("#label_pinterest").val() });
+		//label['livejournal'] = $("<span/>", { class: "labelToDisappear", text: $("#label_livejournal").val() });
+		label['odnoklassniki'] = $("<span/>", { class: "labelToDisappear", text: $("#label_odnoklassniki").val() });
+		label['mailru'] = $("<span/>", { class: "labelToDisappear", text: $("#label_mailru").val() });
 		
 		var button = $('<div/>', {
 			class: 'social-likes__widget social-likes__widget_'.concat(social_network_name),
@@ -71,9 +95,6 @@ jQuery(document).ready(function ($) {
 	
 	function sort_buttons() {
 		wpsl_ul.empty();
-		/*if (single) {
-			addCloseButton();
-		}*/
 		$('input[type="checkbox"]:checked').each(function () {
 			if ($(this).attr("id").indexOf("_btn") != -1)
 			{
@@ -96,7 +117,6 @@ jQuery(document).ready(function ($) {
 		if (single) {
 			wpsl_ul.unwrap();
 			$('div.social-likes__button_single').remove();
-			//$('div.social-likes__close').remove();
 			single = false;
 		}
 		var radio = $('input[name=look]:checked').val();
@@ -110,10 +130,9 @@ jQuery(document).ready(function ($) {
 			single = true;
 			wpsl_ul.addClass('social-likes_single');
 			wpsl_ul.addClass('social-likes_vertical');
-			wpsl_ul.attr('data-single-title', $("#label_share").attr("value"));
-			//addCloseButton();
+			wpsl_ul.attr('data-single-title', $("#label_share").val());
 			wpsl_ul.wrap(parent);
-			var shareText = $("#label_share").attr("value");
+			var shareText = $("#label_share").val();
 			var buttonDiv = $("<div/>", {
 				class: "social-likes__button social-likes__button_single"
 			});
@@ -126,18 +145,6 @@ jQuery(document).ready(function ($) {
 			}));
 		}
 	}
-	
-	/*function addCloseButton() {
-		var closeButton = $("<div/>", {
-			class: "social-likes__close",
-			text: "×"
-		});
-		closeButton.on("click", function (event) {
-			event.stopPropagation();
-			wpsl_ul.removeClass('social-likes_opened');
-		});
-		wpsl_ul.append(closeButton);
-	}*/
 	
 	sort_buttons();
 	rebuild();
@@ -225,4 +232,46 @@ jQuery(document).ready(function ($) {
 	}
 	
 	changeStyle();
+	
+	$('form[name=wpsociallikes]').on('submit', function()
+	{
+		saveButtonWasPressed = true;
+	});
+	
+	$(window).on('beforeunload', function()
+	{
+		if (!saveButtonWasPressed)
+		{
+			var confirmMessage = $("#confirm_leaving_message").val();
+			var thereAreChanges = false;
+			var newSettings = saveSettings();
+			if ((initSettings.skin != newSettings.skin) ||
+				(initSettings.look != newSettings.look) ||
+				(initSettings.counters != newSettings.counters) ||
+				(initSettings.zeroes != newSettings.zeroes) ||
+				(initSettings.icons != newSettings.icons) ||
+				(initSettings.twitterVia != newSettings.twitterVia) ||
+				(initSettings.pinterestImg != newSettings.pinterestImg) ||
+				(initSettings.defaultForPosts != newSettings.defaultForPosts) ||
+				(initSettings.defaultForPages != newSettings.defaultForPages) ||
+				(initSettings.buttons.length != newSettings.buttons.length))
+			{
+				thereAreChanges = true;
+			}
+			else
+			{
+				for (var i = 0; i < initSettings.buttons.length; i++)
+				{
+					if (initSettings.buttons[i] != newSettings.buttons[i])
+					{
+						thereAreChanges = true;
+					}
+				}
+			}
+			if (thereAreChanges)
+			{
+				return confirmMessage;
+			}
+		}
+	});
 });
