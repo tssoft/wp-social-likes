@@ -26,7 +26,7 @@ Features:
  * Easy to install
  * All buttons in a single style
  * Four different skins give 11 different looks for social buttons 
- * Won’t explode your page’s layout
+ * Won't explode your page's layout
  * Much faster than proprietary social buttons
  * Likes counters can be shown for each social network
  * Buttons can be reordered easily
