@@ -62,6 +62,7 @@ class wpsociallikes
 		add_option('sociallikes_light', false); // Deprecated
 		add_option('sociallikes_icons', false);
 		add_option('sociallikes_zeroes', false);
+		add_option('sociallikes_customlocale', '');
 		
 		add_action('init', array(&$this, 'ap_action_init'));
 		add_action('wp_head', array(&$this, 'header_content'));
@@ -77,7 +78,15 @@ class wpsociallikes
 	}
 	
 	function ap_action_init() {
-		load_plugin_textdomain('wp-social-likes', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/');
+		$customLocale = get_option('sociallikes_customlocale');
+		$textdomainError = false;
+		if ($customLocale != '') {
+			$textdomainError =
+				!load_textdomain('wp-social-likes', plugin_dir_path( __FILE__ ).'/languages/wp-social-likes-'.$customLocale.'.mo');
+		}
+		if (($customLocale == '') || $textdomainError) {
+			load_plugin_textdomain('wp-social-likes', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/');
+		}
 		$this->title_vkontakte = __('Share link on VK', 'wp-social-likes');
 		$this->title_facebook = __('Share link on Facebook', 'wp-social-likes');
 		$this->title_twitter = __('Share link on Twitter', 'wp-social-likes');
