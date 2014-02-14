@@ -67,11 +67,13 @@ But you could change plugin language (locale) using hidden feature:
 4. Assign proper locale to it. (See [list of correct locales](http://codex.wordpress.org/WordPress_in_Your_Language))
 5. Don't forget to apply changes with 'Save Changes' button
 
+
 == Screenshots ==
 
 1. Settings page allows you to customize list of website buttons and how they appear on page
 2. Option in editor allows to control appearance of buttons for every post or page 
 3. Button style customization with 4 skins, "Icons only" and "Single button" modes
+
 
 == Changelog ==
 
