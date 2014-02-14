@@ -37,9 +37,35 @@ Features:
  
 Check screenshots page or try live preview to pick buttons look that best fits theme design of your site.
  
-Translation currently available in English and Russian. Any help with translating Social Likes to other languages will be greatly appreciated! (i18n with gettext)
+Translation currently available in English and Russian. 
+Any help with translating Social Likes to other languages will be greatly appreciated! (i18n with gettext)
 
-Based on the Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes).
+Based on the [Social Likes library](http://sapegin.me/projects/social-likes) by Artem Sapegin.
+
+
+== Frequently Asked Questions ==
+
+= 1. Is it possible to place social buttons above the content of the page/post? =
+
+Yes. By default plugin places social buttons after page/post content. We find it reasonable to view content before sharing it with others. 
+But you could place buttons before or even before-and-after page/post content using hidden feature:
+
+1. Go to options list of your WordPress site: /wp-admin/options.php
+2. Find 'sociallikes_placement' option
+3. Assign one of these values to it: before, after, before-after
+4. Don't forget to apply changes with 'Save Changes' button
+
+= 2. Is it possible to use different language (locale) for plugin than Wordpress uses? =
+
+Yes. By default plugin uses the same language (locale) as Wordpress does. 
+If there is no translation for this locale, plugin would use English as a default language. We find it suitable for most cases. 
+But you could change plugin language (locale) using hidden feature:
+
+1. First of all check whether plugin has translation to your language or not. If it does, go further. If not, contribute translation! :)
+2. Go to options list of your WordPress site: /wp-admin/options.php
+3. Find 'sociallikes_customlocale' option
+4. Assign proper locale to it. (See [list of correct locales](http://codex.wordpress.org/WordPress_in_Your_Language))
+5. Don't forget to apply changes with 'Save Changes' button
 
 == Screenshots ==
 
@@ -48,6 +74,12 @@ Based on the Social Likes library by Artem Sapegin (http://sapegin.me/projects/s
 3. Button style customization with 4 skins, "Icons only" and "Single button" modes
 
 == Changelog ==
+
+= 1.9 =
+ * Reminder on unsaved plugin settings
+ * Social Likes library updated to version 3.0.2
+ * *Hidden feature:* Now it is possible to place buttons before page/post content (See question 1 in FAQ)
+ * *Hidden feature:* Now it is possible to use different language (locale) for plugin than Wordpress uses (See question 2 in FAQ)
 
 = 1.8 =
  * Fixed bug with interactive preview reset
