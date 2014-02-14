@@ -48,9 +48,8 @@ class wpsociallikes
 		add_option('pos3', 'twitter_btn');
 		add_option('pos4', 'google_btn');
 		add_option('pos5', 'pinterest_btn');
-		//add_option('pos6', 'lj_btn');
-		add_option('pos7', 'odn_btn');
-		add_option('pos8', 'mm_btn');
+		add_option('pos6', 'odn_btn');
+		add_option('pos7', 'mm_btn');
 		add_option('sociallikes_counters', true);
 		add_option('sociallikes_look', 'h');
 		add_option('sociallikes_twitter_via');
@@ -63,6 +62,7 @@ class wpsociallikes
 		add_option('sociallikes_icons', false);
 		add_option('sociallikes_zeroes', false);
 		add_option('sociallikes_customlocale', '');
+		add_option('sociallikes_placement', 'after');
 		
 		add_action('init', array(&$this, 'ap_action_init'));
 		add_action('wp_head', array(&$this, 'header_content'));
@@ -226,7 +226,17 @@ class wpsociallikes
 			if (!is_single() && !is_page()) {
 				$buttons = str_replace(' data-counters', ' data-url="'.get_permalink( $post->ID ).'" data-counters', $buttons);
 			}
-			$content .= $buttons;
+			$placement = get_option('sociallikes_placement');
+			if ($placement == 'before') {
+				$content = $buttons . $content;
+			} else if ($placement == 'before-after') {
+				$content = $buttons . $content . $buttons;
+			} else {
+				$content .= $buttons;
+				if ($placement != 'after') {
+					update_option('sociallikes_placement', 'after');
+				}
+			}
 		}
 		return $content;
 	}
