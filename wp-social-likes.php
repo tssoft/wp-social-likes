@@ -223,9 +223,7 @@ class wpsociallikes
 				$parts = explode('data-media="', $buttons);
 				$buttons = $parts[0] . 'data-media="' . $img_url . $parts[1];
 			}
-			if (!is_single() && !is_page()) {
-				$buttons = str_replace(' data-counters', ' data-url="'.get_permalink( $post->ID ).'" data-counters', $buttons);
-			}
+			$buttons = str_replace(' data-counters', ' data-url="'.get_permalink( $post->ID ).'" data-counters', $buttons);
 			$placement = get_option('sociallikes_placement');
 			if ($placement == 'before') {
 				$content = $buttons . $content;
@@ -238,6 +236,7 @@ class wpsociallikes
 				}
 			}
 		}
+
 		return $content;
 	}
 
