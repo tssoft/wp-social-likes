@@ -145,6 +145,9 @@ class wpsociallikes
 		
 		if ($checked) {
 			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
+			if ($img_url == '' && get_option('sociallikes_pinterest_img')) {
+				$img_url = $this->get_post_first_img($post);
+			}
 		} else {
 			$img_url = '';
 		}
@@ -181,7 +184,12 @@ class wpsociallikes
 			</script>	
 		<?php
 	}
-	
+
+	function get_post_first_img($post) {
+		$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+		return $matches [1] [0];
+	}
+
 	function save_post_meta($post_id) {
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
 			return;
@@ -198,16 +206,15 @@ class wpsociallikes
 		}
 
 		update_post_meta($post_id, 'sociallikes', isset($_POST['wpsociallikes']));
-		if (($_POST['image_url'] == "") & get_option('sociallikes_pinterest_img')) {
-			//get first image
+		if (($_POST['image_url'] == "") && get_option('sociallikes_pinterest_img')) {
 			$img_url = "";
 			$post = get_post($post_id);
-			$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
-			$img_url = $matches [1] [0];
+			$img_url = $this->get_post_first_img($post); 
 			update_post_meta($post_id, 'sociallikes_img_url', $img_url);
 		}
-		else
+		else {
 			update_post_meta($post_id, 'sociallikes_img_url', $_POST['image_url']);
+		}
 	}
 	
 	function add_social_likes($content = '') {
@@ -222,6 +229,10 @@ class wpsociallikes
 			if (strstr($buttons, 'Pinterest') && $img_url != '') {
 				$parts = explode('data-media="', $buttons);
 				$buttons = $parts[0] . 'data-media="' . $img_url . $parts[1];
+			}
+			if (strstr($buttons, 'Pinterest') && $img_url == '' && get_option('sociallikes_pinterest_img')) {
+				$parts = explode('data-media="', $buttons);
+				$buttons = $parts[0] . 'data-media="' . $this->get_post_first_img($post) . $parts[1];	
 			}
 			$buttons = str_replace(' data-counters', ' data-url="'.get_permalink( $post->ID ).'" data-counters', $buttons);
 			$placement = get_option('sociallikes_placement');
