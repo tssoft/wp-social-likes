@@ -134,6 +134,15 @@ class wpsociallikes
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'post', 'normal', 'default', array('default'=>$post_opt));
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'page', 'normal', 'default', array('default'=>$page_opt));
 		
+		$args = array(
+		  'public'   => true,
+		  '_builtin' => false
+		);
+		$post_types = get_post_types($args, 'names', 'and');
+	  	foreach ($post_types  as $post_type ) {
+	    	add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), $post_type, 'normal', 'default', array('default'=>$post_opt));
+	  	}
+		
 		$plugin_page = add_options_page('Social Likes', 'Social Likes', 10, basename(__FILE__), array (&$this, 'display_admin_form'));
 		add_action('admin_head-' . $plugin_page, array(&$this, 'admin_menu_head'));
 	}
