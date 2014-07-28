@@ -29,11 +29,10 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
 
 */
-
 class wpsociallikes
 {
 	var $lang;
-	
+
 	function wpsociallikes() {	
 		add_option('vk_btn', true);		
 		add_option('facebook_btn', true);
@@ -62,6 +61,7 @@ class wpsociallikes
 		add_option('sociallikes_zeroes', false);
 		add_option('sociallikes_customlocale', '');
 		add_option('sociallikes_placement', 'after');
+		add_option('sociallikes_shortcode', 'disabled');
 		
 		add_action('init', array(&$this, 'ap_action_init'));
 		add_action('wp_head', array(&$this, 'header_content'));
@@ -74,6 +74,8 @@ class wpsociallikes
 		// https://github.com/tssoft/wp-social-likes/issues/7
 		add_filter('the_excerpt_rss', array(&$this, 'exclude_div_in_RSS_description'));
 		add_filter('the_content_feed', array(&$this, 'exclude_div_in_RSS_content'));
+
+		add_shortcode('wp-social-likes', array(&$this, 'shortcode_content'));
 	}
 	
 	function ap_action_init() {
@@ -131,6 +133,15 @@ class wpsociallikes
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'post', 'normal', 'default', array('default'=>$post_opt));
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'page', 'normal', 'default', array('default'=>$page_opt));
 		
+		$args = array(
+		  'public'   => true,
+		  '_builtin' => false
+		);
+		$post_types = get_post_types($args, 'names', 'and');
+	  	foreach ($post_types  as $post_type ) {
+	    	add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), $post_type, 'normal', 'default', array('default'=>$post_opt));
+	  	}
+		
 		$plugin_page = add_options_page('Social Likes', 'Social Likes', 10, basename(__FILE__), array (&$this, 'display_admin_form'));
 		add_action('admin_head-' . $plugin_page, array(&$this, 'admin_menu_head'));
 	}
@@ -144,6 +155,9 @@ class wpsociallikes
 		
 		if ($checked) {
 			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
+			if ($img_url == '' && get_option('sociallikes_pinterest_img')) {
+				$img_url = $this->get_post_first_img($post);
+			}
 		} else {
 			$img_url = '';
 		}
@@ -180,7 +194,12 @@ class wpsociallikes
 			</script>	
 		<?php
 	}
-	
+
+	function get_post_first_img($post) {
+		$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+		return $matches [1] [0];
+	}
+
 	function save_post_meta($post_id) {
 		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
 			return;
@@ -197,16 +216,15 @@ class wpsociallikes
 		}
 
 		update_post_meta($post_id, 'sociallikes', isset($_POST['wpsociallikes']));
-		if (($_POST['image_url'] == "") & get_option('sociallikes_pinterest_img')) {
-			//get first image
+		if (($_POST['image_url'] == "") && get_option('sociallikes_pinterest_img')) {
 			$img_url = "";
 			$post = get_post($post_id);
-			$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
-			$img_url = $matches [1] [0];
+			$img_url = $this->get_post_first_img($post); 
 			update_post_meta($post_id, 'sociallikes_img_url', $img_url);
 		}
-		else
+		else {
 			update_post_meta($post_id, 'sociallikes_img_url', $_POST['image_url']);
+		}
 	}
 	
 	function add_social_likes($content = '') {
@@ -215,16 +233,8 @@ class wpsociallikes
 		$this->lang = get_bloginfo('language');
 		if ((is_page() || is_single() || !preg_match('/<!--more(.*?)?-->/', $post_content, $matches)) && get_post_meta($post->ID, 'sociallikes', true))
 		{
-			$buttons = $this->build_buttons();
-			$buttons = str_replace(' data-counters', ' data-title="'.$post->post_title.'" data-counters', $buttons);
-			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
-			if (strstr($buttons, 'Pinterest') && $img_url != '') {
-				$parts = explode('data-media="', $buttons);
-				$buttons = $parts[0] . 'data-media="' . $img_url . $parts[1];
-			}
-			if (!is_single() && !is_page()) {
-				$buttons = str_replace(' data-counters', ' data-url="'.get_permalink( $post->ID ).'" data-counters', $buttons);
-			}
+			$buttons = $this->build_buttons($post);
+			
 			$placement = get_option('sociallikes_placement');
 			if ($placement == 'before') {
 				$content = $buttons . $content;
@@ -237,10 +247,11 @@ class wpsociallikes
 				}
 			}
 		}
+
 		return $content;
 	}
 
-	function build_buttons() {
+	function build_buttons($post) {
 		$twitter_via = get_option('sociallikes_twitter_via');
 		//$twitter_rel = get_option('sociallikes_twitter_rel');
 		$look = get_option('sociallikes_look');
@@ -272,7 +283,17 @@ class wpsociallikes
 		}*/
 		$socialButton['twitter_btn'] .= 'title="'.$this->title_twitter.'">'.$label_twitter.'</div>';
 		$socialButton['google_btn'] = '<div class="plusone" title="'.$this->title_plusone.'">'.$label_plusone.'</div>';
-		$socialButton['pinterest_btn'] = '<div class="pinterest" title="'.$this->title_pinterest.'" data-media="">'.$label_pinterest.'</div>';
+		
+		$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
+		$socialButton['pinterest_btn'] = '<div class="pinterest" title="' . $this->title_pinterest . '"';
+		if ($img_url != '') {
+			$socialButton['pinterest_btn'] .= ' data-media="' . $img_url . '"';
+		}
+		if ($img_url == '' && get_option('sociallikes_pinterest_img')) {
+			$socialButton['pinterest_btn'] .= ' data-media="' . $this->get_post_first_img($post) . '"';	
+		}
+		$socialButton['pinterest_btn'] .= '>' . $label_pinterest . '</div>';
+		
 		//$socialButton['lj_btn'] = '<div class="livejournal" title="'.$this->title_livejournal.'">'.$label_livejournal.'</div>';
 		$socialButton['odn_btn'] = '<div class="odnoklassniki" title="'.$this->title_odnoklassniki.'">'.$label_odnoklassniki.'</div>';
 		$socialButton['mm_btn'] = '<div class="mailru" title="'.$this->title_mailru.'">'.$label_mailru.'</div>';
@@ -292,6 +313,8 @@ class wpsociallikes
 			$main_div .= ' social-likes_single'.$classAppend.'" data-single-title="'.$this->label_share.'"';
 		}
 
+		$main_div .= ' data-title="' . $post->post_title . '"';
+		$main_div .= ' data-url="' . get_permalink( $post->ID ) . '"';
 		$main_div .= get_option('sociallikes_counters') ? ' data-counters="yes"' : ' data-counters="no"';
 		$main_div .= get_option('sociallikes_zeroes') ? ' data-zeroes="yes"' : '';
 
@@ -562,6 +585,14 @@ class wpsociallikes
 	    }
 
 	    return $content;
+	}
+
+	function shortcode_content() {
+		global $post;
+		if (get_option('sociallikes_shortcode') == 'enabled') {
+			return $this->build_buttons($post);
+		}
+		return '';
 	}
 }
 
