@@ -57,7 +57,6 @@ class wpsociallikes
 		add_option('sociallikes_post', true);
 		add_option('sociallikes_page', false);	
 		add_option('sociallikes_skin', 'classic');
-		add_option('sociallikes_light', false); // Deprecated
 		add_option('sociallikes_icons', false);
 		add_option('sociallikes_zeroes', false);
 		add_option('sociallikes_customlocale', '');
@@ -257,9 +256,8 @@ class wpsociallikes
 		//$twitter_rel = get_option('sociallikes_twitter_rel');
 		$look = get_option('sociallikes_look');
 		$skin = get_option('sociallikes_skin');
-		$lightOption = get_option('sociallikes_light'); // For backward compatibility
 		$light = false;
-		if (strpos($skin, 'light') || $lightOption) {
+		if (strpos($skin, 'light')) {
 		    $light = true;
 		    $skin = str_replace('light', '', $skin);
 		}
@@ -369,15 +367,9 @@ class wpsociallikes
 		$post = get_option('sociallikes_post');
 		$page = get_option('sociallikes_page');
 		$skin = get_option('sociallikes_skin');
-		$lightOption = get_option('sociallikes_light'); // For backward compatibility
 		$light = false;
 		if (strpos($skin, 'light')) {
 		    $light = true;
-		} else if ($lightOption) {
-		    $light = true;
-			if ($skin == 'flat') {
-				$skin .= 'light';
-			}
 		}
 		if (($skin != 'classic') && ($skin != 'flat') && ($skin != 'flatlight') && ($skin != 'birman')) {
 			$skin = 'classic';
@@ -574,7 +566,6 @@ class wpsociallikes
 		update_option('sociallikes_post', isset($_POST['post_chb']));
 		update_option('sociallikes_page', isset($_POST['page_chb']));
 		update_option('sociallikes_skin', $_POST['skin']);
-		//update_option('sociallikes_light', $_POST['light']);
 		update_option('sociallikes_zeroes', $_POST['zeroes']);
 		update_option('sociallikes_icons', $_POST['icons']);
 	}
