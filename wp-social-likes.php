@@ -142,7 +142,7 @@ class wpsociallikes
 	    	add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), $post_type, 'normal', 'default', array('default'=>$post_opt));
 	  	}
 		
-		$plugin_page = add_options_page('Social Likes', 'Social Likes', 10, basename(__FILE__), array (&$this, 'display_admin_form'));
+		$plugin_page = add_options_page('Social Likes', 'Social Likes', 'administrator', basename(__FILE__), array (&$this, 'display_admin_form'));
 		add_action('admin_head-' . $plugin_page, array(&$this, 'admin_menu_head'));
 	}
 	
@@ -566,8 +566,10 @@ class wpsociallikes
 		update_option('sociallikes_post', isset($_POST['post_chb']));
 		update_option('sociallikes_page', isset($_POST['page_chb']));
 		update_option('sociallikes_skin', $_POST['skin']);
-		update_option('sociallikes_zeroes', $_POST['zeroes']);
-		update_option('sociallikes_icons', $_POST['icons']);
+		$zeroes = isset($_POST['zeroes']) ? $_POST['zeroes'] : false;
+		$icons = isset($_POST['icons']) ? $_POST['icons'] : false;
+		update_option('sociallikes_zeroes', $zeroes);
+		update_option('sociallikes_icons', $icons);
 	}
 
 	function exclude_div_in_RSS_description($content) {
