@@ -67,6 +67,10 @@ But you could change plugin language (locale) using hidden feature:
 4. Assign proper locale to it. (See [list of correct locales](http://codex.wordpress.org/WordPress_in_Your_Language))
 5. Don't forget to apply changes with 'Save Changes' button
 
+= 3. Is there any shortcode for placing buttons anywhere inside page/post content? =
+
+Yes. TODO
+
 
 == Screenshots ==
 
@@ -76,6 +80,10 @@ But you could change plugin language (locale) using hidden feature:
 
 
 == Changelog ==
+
+= 1.10 =
+ * Fixed bug with getting first image for the Pinterest automatically (Reported by Dilmaghani Graphics Department)
+ * *Hidden feature:* Shortcode for placing buttons anywhere inside page/post content (See question 3 in FAQ)
 
 = 1.9 =
  * Reminder on unsaved plugin settings
@@ -88,7 +96,7 @@ But you could change plugin language (locale) using hidden feature:
 
 = 1.7 =
  * Translations: English, Russian
- * Improved buttons markup to remove side effects caused by theme styles (Bug reported by Alexander Sarychev)
+ * Improved buttons markup to remove side effects caused by theme styles (Reported by Alexander Sarychev)
 
 = 1.6 =
  * Button style customization with 4 skins: Classic, Flat (standard & light) and Birman
