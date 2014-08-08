@@ -74,6 +74,7 @@ class wpsociallikes
 		// https://github.com/tssoft/wp-social-likes/issues/7
 		add_filter('the_excerpt_rss', array(&$this, 'exclude_div_in_RSS_description'));
 		add_filter('the_content_feed', array(&$this, 'exclude_div_in_RSS_content'));
+		add_filter('plugin_action_links', array(&$this, 'add_action_links'), 10, 2);
 
 		add_shortcode('wp-social-likes', array(&$this, 'shortcode_content'));
 	}
@@ -595,6 +596,18 @@ class wpsociallikes
 			return $this->build_buttons($post);
 		}
 		return '';
+	}
+
+	function add_action_links($all_links, $current_file) {
+		if (basename(__FILE__) == basename($current_file)) {
+			$plugin_file_name_parts = explode('/', plugin_basename(__FILE__));
+			$plugin_file_name = $plugin_file_name_parts[count($plugin_file_name_parts) - 1];
+			$settings_link = '<a href="' . admin_url('options-general.php?page='
+				. $plugin_file_name) . '">'
+				. __('Settings', 'wp-social-likes') . '</a>';
+			array_unshift($all_links, $settings_link);
+		}
+		return $all_links;
 	}
 }
 

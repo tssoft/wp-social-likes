@@ -1,12 +1,14 @@
-# Social Likes
-# Author: TS Soft
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: wp-social-likes\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-12 15:23+0400\n"
+"POT-Creation-Date: 2014-08-08 11:09+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,168 +17,172 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: wp-social-likes.php:81
+#: wp-social-likes.php:92
 msgid "Share link on VK"
 msgstr ""
 
-#: wp-social-likes.php:82
+#: wp-social-likes.php:93
 msgid "Share link on Facebook"
 msgstr ""
 
-#: wp-social-likes.php:83
+#: wp-social-likes.php:94
 msgid "Share link on Twitter"
 msgstr ""
 
-#: wp-social-likes.php:84
+#: wp-social-likes.php:95
 msgid "Share link on Google+"
 msgstr ""
 
-#: wp-social-likes.php:85
+#: wp-social-likes.php:96
 msgid "Share image on Pinterest"
 msgstr ""
 
-#: wp-social-likes.php:87
+#: wp-social-likes.php:98
 msgid "Share link on Odnoklassniki"
 msgstr ""
 
-#: wp-social-likes.php:88
+#: wp-social-likes.php:99
 msgid "Share link on Mail.ru"
 msgstr ""
 
-#: wp-social-likes.php:89 wp-social-likes.php:346
+#: wp-social-likes.php:100 wp-social-likes.php:381
 msgid "VK"
 msgstr ""
 
-#: wp-social-likes.php:90 wp-social-likes.php:347
+#: wp-social-likes.php:101 wp-social-likes.php:382
 msgid "Facebook"
 msgstr ""
 
-#: wp-social-likes.php:91 wp-social-likes.php:348
+#: wp-social-likes.php:102 wp-social-likes.php:383
 msgid "Twitter"
 msgstr ""
 
-#: wp-social-likes.php:92 wp-social-likes.php:349
+#: wp-social-likes.php:103 wp-social-likes.php:384
 msgid "Google+"
 msgstr ""
 
-#: wp-social-likes.php:93 wp-social-likes.php:350
+#: wp-social-likes.php:104 wp-social-likes.php:385
 msgid "Pinterest"
 msgstr ""
 
-#: wp-social-likes.php:95 wp-social-likes.php:352
+#: wp-social-likes.php:106 wp-social-likes.php:387
 msgid "Odnoklassniki"
 msgstr ""
 
-#: wp-social-likes.php:96 wp-social-likes.php:353
+#: wp-social-likes.php:107 wp-social-likes.php:388
 msgid "Mail.ru"
 msgstr ""
 
-#: wp-social-likes.php:97
+#: wp-social-likes.php:108
 msgid "Share"
 msgstr ""
 
-#: wp-social-likes.php:147
+#: wp-social-likes.php:170
 msgid "Add social buttons"
 msgstr ""
 
-#: wp-social-likes.php:152
+#: wp-social-likes.php:175
 msgid "Image&nbspURL:"
 msgstr ""
 
-#: wp-social-likes.php:154
+#: wp-social-likes.php:177
 msgid "Image URL (required for Pinterest)"
 msgstr ""
 
-#: wp-social-likes.php:358
+#: wp-social-likes.php:393
 msgid "Social Likes Settings"
 msgstr ""
 
-#: wp-social-likes.php:381
+#: wp-social-likes.php:416
 msgid ""
 "You have unsaved changes on this page. Do you want to leave this page and "
 "discard your changes?"
 msgstr ""
 
-#: wp-social-likes.php:385
+#: wp-social-likes.php:420
 msgid "Skin"
 msgstr ""
 
-#: wp-social-likes.php:389
+#: wp-social-likes.php:424
 msgid "Classic"
 msgstr ""
 
-#: wp-social-likes.php:392
+#: wp-social-likes.php:427
 msgid "Flat β"
 msgstr ""
 
-#: wp-social-likes.php:395
+#: wp-social-likes.php:430
 msgid "Flat Light β"
 msgstr ""
 
-#: wp-social-likes.php:398
+#: wp-social-likes.php:433
 msgid "Birman β"
 msgstr ""
 
-#: wp-social-likes.php:403
+#: wp-social-likes.php:438
 msgid "Look"
 msgstr ""
 
-#: wp-social-likes.php:407
+#: wp-social-likes.php:442
 msgid "Horizontal"
 msgstr ""
 
-#: wp-social-likes.php:410
+#: wp-social-likes.php:445
 msgid "Vertical"
 msgstr ""
 
-#: wp-social-likes.php:413
+#: wp-social-likes.php:448
 msgid "Single button"
 msgstr ""
 
-#: wp-social-likes.php:422
+#: wp-social-likes.php:457
 msgid "Show counters"
 msgstr ""
 
-#: wp-social-likes.php:426
+#: wp-social-likes.php:461
 msgid "With zeroes"
 msgstr ""
 
-#: wp-social-likes.php:430
+#: wp-social-likes.php:465
 msgid "Icons only"
 msgstr ""
 
-#: wp-social-likes.php:435
+#: wp-social-likes.php:470
 msgid "Websites"
 msgstr ""
 
-#: wp-social-likes.php:455
+#: wp-social-likes.php:490
 msgid "More websites"
 msgstr ""
 
-#: wp-social-likes.php:461
+#: wp-social-likes.php:496
 msgid "Twitter Via"
 msgstr ""
 
-#: wp-social-likes.php:463
+#: wp-social-likes.php:498
 msgid "Username"
 msgstr ""
 
-#: wp-social-likes.php:478
+#: wp-social-likes.php:513
 msgid "Automatically place first image in the post/page to the Image URL field"
 msgstr ""
 
-#: wp-social-likes.php:485
+#: wp-social-likes.php:520
 msgid "Add by default for new posts"
 msgstr ""
 
-#: wp-social-likes.php:486
+#: wp-social-likes.php:521
 msgid "Apply to existing posts"
 msgstr ""
 
-#: wp-social-likes.php:493
+#: wp-social-likes.php:528
 msgid "Add by default for new pages"
 msgstr ""
 
-#: wp-social-likes.php:494
+#: wp-social-likes.php:529
 msgid "Apply to existing pages"
+msgstr ""
+
+#: wp-social-likes.php:605
+msgid "Settings"
 msgstr ""
