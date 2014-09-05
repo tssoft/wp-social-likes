@@ -2,7 +2,7 @@
 Contributors: tssoft
 Tags: facebook, twitter, vk.com, vkontakte, google+, pinterest, odnoklassniki, mail.ru, social links, share buttons, social, social buttons, jquery
 Requires at least: 3.0
-Tested Up To: 3.8.1
+Tested Up To: 4.0
 Stable tag: trunk
 License: MIT
 License URI: https://raw.github.com/tssoft/wp-social-likes/master/license.md
