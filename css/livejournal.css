@@ -41,3 +41,6 @@
   min-width: 13em;
   background: none repeat scroll 0% 0% #CADCF3;
 }
+.social-likes_flat.social-likes_light.social-likes_vertical .social-likes__widget_livejournal {
+  background: none;
+}
