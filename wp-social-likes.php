@@ -579,7 +579,7 @@ class wpsociallikes
 		$pos_count = count($positions);
 
 		foreach ($buttons as $value) {
-			if (in_array($value, $positions)) {
+			if (($positions != null) && in_array($value, $positions)) {
 				update_option($value, true);	
 				$position = array_search($value, $positions) + 1;
 			} else {
