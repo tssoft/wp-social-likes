@@ -84,6 +84,7 @@ Yes. TODO
 = 1.10 =
  * Fixed bug with getting first image for the Pinterest automatically (Reported by Dilmaghani Graphics Department)
  * *Hidden feature:* Shortcode for placing buttons anywhere inside page/post content (See question 3 in FAQ)
+ * Added custom LiveJournal button
 
 = 1.9 =
  * Reminder on unsaved plugin settings
