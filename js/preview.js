@@ -23,8 +23,7 @@ jQuery(document).ready(function ($) {
 	var wpsl_ul = $("<div/>", { class: "social-likes social-likes_visible social-likes_ready" });
 	var parent = $("<div/>", { class: "social-likes_single-w" });
 	var single = false;
-	var li = [];
-	
+
 	function saveSettings()
 	{
 		var settings = {
@@ -37,7 +36,7 @@ jQuery(document).ready(function ($) {
 			pinterestImg: $('#pinterest_img').is(':checked'),
 			defaultForPosts: $('#post_chb').is(':checked'),
 			defaultForPages: $('#page_chb').is(':checked'),
-			buttons: [],
+			buttons: []
 		};
 		$('input[type="checkbox"]:checked').each(function () {
 			if ($(this).attr("id").indexOf("_btn") != -1)
@@ -49,28 +48,30 @@ jQuery(document).ready(function ($) {
 	}
 	var initSettings = saveSettings();
 	var saveButtonWasPressed = false;
-	
+
 	function newButton(social_network_name)
 	{
-		var title = [];
-		var label = [];
-		title['vkontakte'] = $("#title_vkontakte").val();
-		title['facebook'] = $("#title_facebook ").val();
-		title['twitter'] = $("#title_twitter").val();
-		title['plusone'] = $("#title_plusone").val();
-		title['pinterest'] = $("#title_pinterest").val();
-		//title['livejournal'] = $("#title_livejournal").val();
-		title['odnoklassniki'] = $("#title_odnoklassniki").val();
-		title['mailru'] = $("#title_mailru").val();
-		label['vkontakte'] = $("<span/>", { class: "labelToDisappear", text: $("#label_vkontakte").val() });
-		label['facebook'] = $("<span/>", { class: "labelToDisappear", text: $("#label_facebook ").val() });
-		label['twitter'] = $("<span/>", { class: "labelToDisappear", text: $("#label_twitter").val() });
-		label['plusone'] = $("<span/>", { class: "labelToDisappear", text: $("#label_plusone").val() });
-		label['pinterest'] = $("<span/>", { class: "labelToDisappear", text: $("#label_pinterest").val() });
-		//label['livejournal'] = $("<span/>", { class: "labelToDisappear", text: $("#label_livejournal").val() });
-		label['odnoklassniki'] = $("<span/>", { class: "labelToDisappear", text: $("#label_odnoklassniki").val() });
-		label['mailru'] = $("<span/>", { class: "labelToDisappear", text: $("#label_mailru").val() });
-		
+		var title = {
+			'vkontakte': $("#title_vkontakte").val(),
+			'facebook': $("#title_facebook ").val(),
+			'twitter': $("#title_twitter").val(),
+			'plusone': $("#title_plusone").val(),
+			'pinterest': $("#title_pinterest").val(),
+			'livejournal': $("#title_livejournal").val(),
+			'odnoklassniki': $("#title_odnoklassniki").val(),
+			'mailru': $("#title_mailru").val()
+		};
+		var label = {
+			'vkontakte': $("<span/>", { class: "labelToDisappear", text: $("#label_vkontakte").val() }),
+			'facebook': $("<span/>", { class: "labelToDisappear", text: $("#label_facebook ").val() }),
+			'twitter': $("<span/>", { class: "labelToDisappear", text: $("#label_twitter").val() }),
+			'plusone': $("<span/>", { class: "labelToDisappear", text: $("#label_plusone").val() }),
+			'pinterest': $("<span/>", { class: "labelToDisappear", text: $("#label_pinterest").val() }),
+			'livejournal': $("<span/>", { class: "labelToDisappear", text: $("#label_livejournal").val() }),
+			'odnoklassniki': $("<span/>", { class: "labelToDisappear", text: $("#label_odnoklassniki").val() }),
+			'mailru': $("<span/>", { class: "labelToDisappear", text: $("#label_mailru").val() })
+		};
+
 		var button = $('<div/>', {
 			class: 'social-likes__widget social-likes__widget_'.concat(social_network_name),
 			title: title[social_network_name]
@@ -79,20 +80,23 @@ jQuery(document).ready(function ($) {
 		}).append($('<span/>', {
 			class: 'social-likes__icon social-likes__icon_'.concat(social_network_name)
 		})).append(label[social_network_name]));
+
 		return button;
 	}
-	
-	li['vk_btn'] = newButton('vkontakte');
-	li['facebook_btn'] = newButton('facebook');
-	li['twitter_btn'] = newButton('twitter');
-	li['google_btn'] = newButton('plusone');
-	li['pinterest_btn'] = newButton('pinterest');
-	//li['lj_btn'] = newButton('likes__widget_livejournal');
-	li['odn_btn'] = newButton('odnoklassniki');
-	li['mm_btn'] = newButton('mailru');
+
+	var li = {
+		'vk_btn': newButton('vkontakte'),
+		'facebook_btn': newButton('facebook'),
+		'twitter_btn': newButton('twitter'),
+		'google_btn': newButton('plusone'),
+		'pinterest_btn': newButton('pinterest'),
+		'lj_btn': newButton('livejournal'),
+		'odn_btn': newButton('odnoklassniki'),
+		'mm_btn': newButton('mailru')
+	};
 
 	$('#preview').html(wpsl_ul);
-	
+
 	function sort_buttons() {
 		wpsl_ul.empty();
 		$('input[type="checkbox"]:checked').each(function () {
@@ -112,7 +116,7 @@ jQuery(document).ready(function ($) {
 			$(".labelToDisappear").show();
 		}
 	}
-	
+
 	function rebuild() {
 		if (single) {
 			wpsl_ul.unwrap();
@@ -145,12 +149,12 @@ jQuery(document).ready(function ($) {
 			}));
 		}
 	}
-	
+
 	sort_buttons();
 	rebuild();
-	
+
 	$('.view-state').on('change', sortableContainer.changeView);
-	
+
 	$('form').on('change', '#counters', function () {
 		if ($(this).is(":checked")) {
 			wpsl_ul.removeAttr('data-counters');
@@ -163,7 +167,7 @@ jQuery(document).ready(function ($) {
 	if (!$("#counters").is(":checked")) {
 		$("#withZeroes").hide();
 	}
-	
+
 	$('form').on('change', '#zeroes', function () {
 		if ($("#zeroes").is(":checked")) {
 			wpsl_ul.attr('data-zeroes', 'yes');
@@ -171,18 +175,18 @@ jQuery(document).ready(function ($) {
 			wpsl_ul.removeAttr('data-zeroes');
 		}
 	});
-	
+
 	if ($('input[name=look]:checked').val() == 's') {
 		single = true;
 	}
-	
+
 	$('form').on('change', '#h_look, #v_look, #s_look', rebuild);
-	
+
 	$('form').on('click', 'div.social-likes_single-w', function (event) {
 		event.stopPropagation();
 		wpsl_ul.addClass('social-likes_opened');
 	});
-	
+
 	$('form').on('change', 'input:checkbox', function () {
 		sort_buttons();
 	});
@@ -192,7 +196,7 @@ jQuery(document).ready(function ($) {
 			wpsl_ul.removeClass('social-likes_opened');
 		}
 	});
-	
+
 	$(document).on('click', '.more-websites', function () {
 		$('li.sortable-item.hidden').show();
 		$(this).hide();
@@ -201,21 +205,23 @@ jQuery(document).ready(function ($) {
 	$(document).on('click', 'input[type="radio"]', resetRadioButtons);
 
 	resetRadioButtons();
-	
+
 	function resetRadioButtons() {
 		$('input[type="radio"]').removeClass('checked');
 		$('input[type="radio"]:checked').addClass('checked');
 	};
-	
+
 	$('form').on('change', '[id *= "skin"], #icons', changeStyle);
-	
+
 	function changeStyle()
 	{
 		wpsl_ul.removeClass('social-likes_light');
+		wpsl_ul.removeClass('social-likes_flat');
 		var styleSheet = "#styleClassic";
 		if ($("#skin_flat").is(":checked") || $("#skin_flatlight").is(":checked"))
 		{
 			styleSheet = "#styleFlat";
+			wpsl_ul.addClass('social-likes_flat');
 			if ($("#skin_flatlight").is(":checked"))
 			{
 				wpsl_ul.addClass('social-likes_light');
@@ -230,14 +236,14 @@ jQuery(document).ready(function ($) {
 		$("#styleBirman").attr("disabled", true);
 		$(styleSheet).removeAttr("disabled");
 	}
-	
+
 	changeStyle();
-	
+
 	$('form[name=wpsociallikes]').on('submit', function()
 	{
 		saveButtonWasPressed = true;
 	});
-	
+
 	$(window).on('beforeunload', function()
 	{
 		if (!saveButtonWasPressed)

@@ -39,7 +39,7 @@ class wpsociallikes
 		add_option('twitter_btn', true);
 		add_option('google_btn', true);
 		add_option('pinterest_btn', false);
-		//add_option('lj_btn', false);
+		add_option('lj_btn', false);
 		add_option('odn_btn', false);
 		add_option('mm_btn', false);
 		add_option('pos1', 'vk_btn');
@@ -47,8 +47,9 @@ class wpsociallikes
 		add_option('pos3', 'twitter_btn');
 		add_option('pos4', 'google_btn');
 		add_option('pos5', 'pinterest_btn');
-		add_option('pos6', 'odn_btn');
-		add_option('pos7', 'mm_btn');
+		add_option('pos6', 'lj_btn');
+		add_option('pos7', 'odn_btn');
+		add_option('pos8', 'mm_btn');
 		add_option('sociallikes_counters', true);
 		add_option('sociallikes_look', 'h');
 		add_option('sociallikes_twitter_via');
@@ -62,7 +63,7 @@ class wpsociallikes
 		add_option('sociallikes_customlocale', '');
 		add_option('sociallikes_placement', 'after');
 		add_option('sociallikes_shortcode', 'disabled');
-		
+
 		add_action('init', array(&$this, 'ap_action_init'));
 		add_action('wp_head', array(&$this, 'header_content'));
 		add_action('wp_enqueue_scripts', array(&$this, 'header_scripts'));
@@ -78,7 +79,7 @@ class wpsociallikes
 
 		add_shortcode('wp-social-likes', array(&$this, 'shortcode_content'));
 	}
-	
+
 	function ap_action_init() {
 		$customLocale = get_option('sociallikes_customlocale');
 		$textdomainError = false;
@@ -94,7 +95,7 @@ class wpsociallikes
 		$this->title_twitter = __('Share link on Twitter', 'wp-social-likes');
 		$this->title_plusone = __('Share link on Google+', 'wp-social-likes');
 		$this->title_pinterest = __('Share image on Pinterest', 'wp-social-likes');
-		//$this->title_livejournal = __('Share link on LiveJournal', 'wp-social-likes');
+		$this->title_livejournal = __('Share link on LiveJournal', 'wp-social-likes');
 		$this->title_odnoklassniki = __('Share link on Odnoklassniki', 'wp-social-likes');
 		$this->title_mailru = __('Share link on Mail.ru', 'wp-social-likes');
 		$this->label_vkontakte = __('VK', 'wp-social-likes');
@@ -102,38 +103,44 @@ class wpsociallikes
 		$this->label_twitter = __('Twitter', 'wp-social-likes');
 		$this->label_plusone = __('Google+', 'wp-social-likes');
 		$this->label_pinterest = __('Pinterest', 'wp-social-likes');
-		//$this->label_livejournal = __('LiveJournal', 'wp-social-likes');
+		$this->label_livejournal = __('LiveJournal', 'wp-social-likes');
 		$this->label_odnoklassniki = __('Odnoklassniki', 'wp-social-likes');
 		$this->label_mailru = __('Mail.ru', 'wp-social-likes');
 		$this->label_share = __('Share', 'wp-social-likes');
 	}
-	
+
 	function header_content() {
 		$skin = str_replace('light', '', get_option('sociallikes_skin'));
 		if (($skin != 'classic') && ($skin != 'flat') && ($skin != 'birman')) {
 			$skin = 'classic';
 		}
 		?>
-			<link rel="stylesheet" id="styleClassic" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_<?php echo $skin ?>.css">
+			<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_<?php echo $skin ?>.css">
 			<script src="<?php echo plugin_dir_url(__FILE__) ?>js/social-likes.min.js"></script>
 		<?php
+		if (get_option('lj_btn')) {
+			?>
+				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
+				<script src="<?php echo plugin_dir_url(__FILE__) ?>js/custom-buttons.js"></script>
+			<?php
+		}
 	}
-	
+
 	function header_scripts() {
 		wp_enqueue_script('jquery');
 	}
-	
+
 	function wpsociallikes_admin_scripts() {
 		wp_enqueue_script('jquery');
 		wp_enqueue_script('jquery-ui-sortable');
 	}
-	
+
 	function wpsociallikes_menu() {
 		$post_opt = get_option('sociallikes_post');
 		$page_opt = get_option('sociallikes_page');
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'post', 'normal', 'default', array('default'=>$post_opt));
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'page', 'normal', 'default', array('default'=>$page_opt));
-		
+
 		$args = array(
 		  'public'   => true,
 		  '_builtin' => false
@@ -142,18 +149,18 @@ class wpsociallikes
 	  	foreach ($post_types  as $post_type ) {
 	    	add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), $post_type, 'normal', 'default', array('default'=>$post_opt));
 	  	}
-		
+
 		$plugin_page = add_options_page('Social Likes', 'Social Likes', 'administrator', basename(__FILE__), array (&$this, 'display_admin_form'));
 		add_action('admin_head-' . $plugin_page, array(&$this, 'admin_menu_head'));
 	}
-	
+
 	function wpsociallikes_meta($post, $metabox) {
 		if (!strstr($_SERVER['REQUEST_URI'], '-new.php')) {
 			$checked = get_post_meta($post->ID, 'sociallikes', true);
 		} else {
 			$checked = $metabox['args']['default'];
 		}
-		
+
 		if ($checked) {
 			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
 			if ($img_url == '' && get_option('sociallikes_pinterest_img')) {
@@ -162,14 +169,14 @@ class wpsociallikes
 		} else {
 			$img_url = '';
 		}
-		
+
 		?>
 			<div id="social-likes">
 				<div style="padding: 5px 0">
 					<input type="checkbox" name="wpsociallikes" id="wpsociallikes" <?php if ($checked) echo 'checked class="checked"' ?> title="<?php echo get_permalink($post->ID); ?>" />
 					<label for="wpsociallikes"><?php _e('Add social buttons', 'wp-social-likes') ?></label>
 				</div>
-				
+
 				<table>
 					<tr>
 						<td><label for="image_url" style="padding-right:5px"><?php _e('Image&nbspURL:', 'wp-social-likes') ?></label></td>
@@ -179,7 +186,7 @@ class wpsociallikes
 					</tr>
 				</table>
 			</div>
-			
+
 			<script>
 				(function($) {
 					$('input#wpsociallikes').change(function () {
@@ -227,7 +234,7 @@ class wpsociallikes
 			update_post_meta($post_id, 'sociallikes_img_url', $_POST['image_url']);
 		}
 	}
-	
+
 	function add_social_likes($content = '') {
 		global $post, $page, $pages;
 		$post_content = $pages[$page-1];
@@ -235,7 +242,7 @@ class wpsociallikes
 		if ((is_page() || is_single() || !preg_match('/<!--more(.*?)?-->/', $post_content, $matches)) && get_post_meta($post->ID, 'sociallikes', true))
 		{
 			$buttons = $this->build_buttons($post);
-			
+
 			$placement = get_option('sociallikes_placement');
 			if ($placement == 'before') {
 				$content = $buttons . $content;
@@ -263,18 +270,20 @@ class wpsociallikes
 		    $skin = str_replace('light', '', $skin);
 		}
 		$iconsOnly = get_option('sociallikes_icons');
-		
+
 		$label_vkontakte = $iconsOnly ? '' : $this->label_vkontakte;
 		$label_facebook = $iconsOnly ? '' : $this->label_facebook;
 		$label_twitter = $iconsOnly ? '' : $this->label_twitter;
 		$label_plusone = $iconsOnly ? '' : $this->label_plusone;
 		$label_pinterest = $iconsOnly ? '' : $this->label_pinterest;
-		//$label_livejournal = $iconsOnly ? '' : $this->label_livejournal;
+		$label_livejournal = $iconsOnly ? '' : $this->label_livejournal;
 		$label_odnoklassniki = $iconsOnly ? '' : $this->label_odnoklassniki;
 		$label_mailru = $iconsOnly ? '' : $this->label_mailru;
-		
+
 		$socialButton['vk_btn'] = '<div class="vkontakte" title="'.$this->title_vkontakte.'">'.$label_vkontakte.'</div>';
+
 		$socialButton['facebook_btn'] = '<div class="facebook" title="'.$this->title_facebook.'">'.$label_facebook.'</div>';
+
 		$socialButton['twitter_btn'] = '<div class="twitter" ';
 		if ($twitter_via != '') {
 			$socialButton['twitter_btn'] .= 'data-via="' . $twitter_via . '" ';
@@ -283,8 +292,9 @@ class wpsociallikes
 			$socialButton['twitter_btn'] .= 'data-related="' . $twitter_rel . '" ';
 		}*/
 		$socialButton['twitter_btn'] .= 'title="'.$this->title_twitter.'">'.$label_twitter.'</div>';
+
 		$socialButton['google_btn'] = '<div class="plusone" title="'.$this->title_plusone.'">'.$label_plusone.'</div>';
-		
+
 		$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
 		$socialButton['pinterest_btn'] = '<div class="pinterest" title="' . $this->title_pinterest . '"';
 		if ($img_url != '') {
@@ -294,16 +304,28 @@ class wpsociallikes
 			$socialButton['pinterest_btn'] .= ' data-media="' . $this->get_post_first_img($post) . '"';	
 		}
 		$socialButton['pinterest_btn'] .= '>' . $label_pinterest . '</div>';
-		
-		//$socialButton['lj_btn'] = '<div class="livejournal" title="'.$this->title_livejournal.'">'.$label_livejournal.'</div>';
+
+		$socialButton['lj_btn'] =
+			'<div class="livejournal" title="'
+			.$this->title_livejournal
+			.'" data-html="&lt;a href=\'{url}\'&gt;{title}&lt;/a&gt;">'
+			.$label_livejournal.'</div><form id="sociallikes-livefournal-form"></form>';
+
 		$socialButton['odn_btn'] = '<div class="odnoklassniki" title="'.$this->title_odnoklassniki.'">'.$label_odnoklassniki.'</div>';
+
 		$socialButton['mm_btn'] = '<div class="mailru" title="'.$this->title_mailru.'">'.$label_mailru.'</div>';
 
 		$main_div = '<div class="social-likes';
 
-		$classAppend = (($skin == 'flat') && $light) ? ' social-likes_light' : '';
+		$classAppend = '';
 		if ($iconsOnly) {
-			$classAppend .= " social-likes_notext";
+			$classAppend .= ' social-likes_notext';
+		}
+		if ($skin == 'flat') {
+			$classAppend .= ' social-likes_flat';
+			if ($light) {
+				$classAppend .= ' social-likes_light';
+			}
 		}
 
 		if ($look == 'h') {
@@ -332,18 +354,19 @@ class wpsociallikes
 
 		return $main_div;
 	}
-	
+
 	function admin_menu_head() {
 		?>
 			<link rel="stylesheet" id="styleClassic" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_classic.css">
 		    <link rel="stylesheet" id="styleFlat" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_flat.css">
 			<link rel="stylesheet" id="styleBirman" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_birman.css">
+			<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
 			<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/admin-page.css">
 			<script src="<?php echo plugin_dir_url(__FILE__) ?>js/social-likes.min.js"></script>
 			<script src="<?php echo plugin_dir_url(__FILE__) ?>js/preview.js"></script>
 		<?php
 	}
-	
+
 	function display_admin_form() {
 		if (isset($_POST['submit']) || isset($_POST['apply_to_posts']) || isset($_POST['apply_to_pages'])) {
 			$this->submit_admin_form();
@@ -362,7 +385,7 @@ class wpsociallikes
 				update_post_meta($post->ID, 'sociallikes', isset($_POST['page_chb']));
 			}
 		}
-	
+
 		$look = get_option('sociallikes_look');
 		$counters = get_option('sociallikes_counters');
 		$post = get_option('sociallikes_post');
@@ -383,7 +406,7 @@ class wpsociallikes
 		$label["twitter_btn"] = __("Twitter", 'wp-social-likes');
 		$label["google_btn"] = __("Google+", 'wp-social-likes');
 		$label["pinterest_btn"] = __("Pinterest", 'wp-social-likes');
-		//$label["lj_btn"] = __("LiveJournal", 'wp-social-likes');
+		$label["lj_btn"] = __("LiveJournal", 'wp-social-likes');
 		$label["odn_btn"] = __("Odnoklassniki", 'wp-social-likes');
 		$label["mm_btn"] = __("Mail.ru", 'wp-social-likes');
 
@@ -393,15 +416,15 @@ class wpsociallikes
 				<h2><?php _e('Social Likes Settings', 'wp-social-likes') ?></h2>
 
 				<form name="wpsociallikes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=wp-social-likes.php&amp;updated=true">
-					
+
 					<?php wp_nonce_field('update-options'); ?>
-					
+
 					<input id="title_vkontakte" type="hidden" value="<?php echo $this->title_vkontakte ?>">
 					<input id="title_facebook" type="hidden" value="<?php echo $this->title_facebook ?>">
 					<input id="title_twitter" type="hidden" value="<?php echo $this->title_twitter ?>">
 					<input id="title_plusone" type="hidden" value="<?php echo $this->title_plusone ?>">
 					<input id="title_pinterest" type="hidden" value="<?php echo $this->title_pinterest ?>">
-					<!--input id="title_livejournal" type="hidden" value="<?php echo $this->title_livejournal ?>"-->
+					<input id="title_livejournal" type="hidden" value="<?php echo $this->title_livejournal ?>">
 					<input id="title_odnoklassniki" type="hidden" value="<?php echo $this->title_odnoklassniki ?>">
 					<input id="title_mailru" type="hidden" value="<?php echo $this->title_mailru ?>">
 					<input id="label_vkontakte" type="hidden" value="<?php echo $this->label_vkontakte ?>">
@@ -409,12 +432,12 @@ class wpsociallikes
 					<input id="label_twitter" type="hidden" value="<?php echo $this->label_twitter ?>">
 					<input id="label_plusone" type="hidden" value="<?php echo $this->label_plusone ?>">
 					<input id="label_pinterest" type="hidden" value="<?php echo $this->label_pinterest ?>">
-					<!--input id="label_livejournal" type="hidden" value="<?php echo $this->label_livejournal ?>"-->
+					<input id="label_livejournal" type="hidden" value="<?php echo $this->label_livejournal ?>">
 					<input id="label_odnoklassniki" type="hidden" value="<?php echo $this->label_odnoklassniki ?>">
 					<input id="label_mailru" type="hidden" value="<?php echo $this->label_mailru ?>">
 					<input id="label_share" type="hidden" value="<?php echo $this->label_share ?>">
 					<input id="confirm_leaving_message" type="hidden" value="<?php _e('You have unsaved changes on this page. Do you want to leave this page and discard your changes?', 'wp-social-likes') ?>">
-					
+
 					<table class="plugin-setup">
 						<tr valign="top">
 							<th scope="row"><?php _e('Skin', 'wp-social-likes') ?></th>
@@ -424,13 +447,13 @@ class wpsociallikes
 									<label class="switch-button" for="skin_classic"><?php _e('Classic', 'wp-social-likes') ?></label>
 
 									<input type="radio" name="skin" id="skin_flat" class="view-state<?php if ($skin == 'flat') echo ' checked' ?>" value="flat" <?php if ($skin == 'flat') echo ' checked' ?> />
-									<label class="switch-button" for="skin_flat"><?php _e('Flat β', 'wp-social-likes') ?></label>
+									<label class="switch-button" for="skin_flat"><?php _e('Flat', 'wp-social-likes') ?></label>
 
 									<input type="radio" name="skin" id="skin_flatlight" class="view-state<?php if ($skin == 'flat') echo ' checked' ?>" value="flatlight" <?php if ($skin == 'flatlight') echo ' checked' ?> />
-									<label class="switch-button" for="skin_flatlight"><?php _e('Flat Light β', 'wp-social-likes') ?></label>
+									<label class="switch-button" for="skin_flatlight"><?php _e('Flat Light', 'wp-social-likes') ?></label>
 
 									<input type="radio" name="skin" id="skin_birman" class="view-state<?php if ($skin == 'birman') echo ' checked' ?>" value="birman" <?php if ($skin == 'birman') echo ' checked' ?> />
-									<label class="switch-button" for="skin_birman"><?php _e('Birman β', 'wp-social-likes') ?></label>
+									<label class="switch-button" for="skin_birman"><?php _e('Birman', 'wp-social-likes') ?></label>
 								</div>
 							</td>
 						</tr>
@@ -529,12 +552,12 @@ class wpsociallikes
 								<input type="submit" name="apply_to_pages" id="apply_to_pages" value="<?php _e('Apply to existing pages', 'wp-social-likes') ?>" class="button-secondary" />
 							</td>
 						</tr>
-		
+
 					</table>
 					<div class="row">
 						<div id="preview" class="shadow-border" <?php if ($this->lang == 'ru-RU') echo 'language="ru"' ?> ></div>
 					</div>
-					
+
 					<?php submit_button(); ?>
 				</form>
 			</div>
@@ -543,7 +566,16 @@ class wpsociallikes
 
 	function submit_admin_form() {
 		$positions	= $_POST['site'];
-		$buttons = array('vk_btn', 'facebook_btn', 'twitter_btn', 'google_btn', 'pinterest_btn', 'odn_btn', 'mm_btn');
+		$buttons = array(
+			'vk_btn',
+			'facebook_btn',
+			'twitter_btn',
+			'google_btn',
+			'pinterest_btn',
+			'odn_btn',
+			'mm_btn',
+			'lj_btn'
+		);
 		$pos_count = count($positions);
 
 		foreach ($buttons as $value) {

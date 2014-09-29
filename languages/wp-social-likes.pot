@@ -37,6 +37,10 @@ msgstr ""
 msgid "Share image on Pinterest"
 msgstr ""
 
+#: wp-social-likes.php
+msgid "Share link on LiveJournal"
+msgstr ""
+
 #: wp-social-likes.php:98
 msgid "Share link on Odnoklassniki"
 msgstr ""
@@ -108,15 +112,15 @@ msgid "Classic"
 msgstr ""
 
 #: wp-social-likes.php:427
-msgid "Flat β"
+msgid "Flat"
 msgstr ""
 
 #: wp-social-likes.php:430
-msgid "Flat Light β"
+msgid "Flat Light"
 msgstr ""
 
 #: wp-social-likes.php:433
-msgid "Birman β"
+msgid "Birman"
 msgstr ""
 
 #: wp-social-likes.php:438
