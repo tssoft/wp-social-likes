@@ -69,7 +69,14 @@ But you could change plugin language (locale) using hidden feature:
 
 = 3. Is there any shortcode for placing buttons anywhere inside page/post content? =
 
-Yes. TODO
+Yes. In order to use Social Likes shortcodes on your blog, you should first enable this hidden feature on the WordPress advanced options page. 
+
+1. Go to options list of your WordPress site: /wp-admin/options.php
+2. Find 'sociallikes_shortcode' option
+3. Change its value to 'enabled'. (You can then switch it back to 'disabled' if you wish to turn the shortcodes off)
+4. Don't forget to apply changes with 'Save Changes' button
+
+Then, to insert Social Likes button on any position in a post, paste the following code there: [wp-social-likes]
 
 
 == Screenshots ==
@@ -82,9 +89,11 @@ Yes. TODO
 == Changelog ==
 
 = 1.10 =
- * Fixed bug with getting first image for the Pinterest automatically (Reported by Dilmaghani Graphics Department)
- * *Hidden feature:* Shortcode for placing buttons anywhere inside page/post content (See question 3 in FAQ)
+ * Improved compatibility with Wordpress 3.9+
  * Added custom LiveJournal button
+ * Fixed bug with getting first image for the Pinterest automatically (Reported by Dilmaghani Graphics Department)
+ * Social Likes library updated to version 3.0.4 (Released 13.05.2014)
+ * *Hidden feature:* Shortcode for placing buttons anywhere inside page/post content (See question 3 in FAQ)
 
 = 1.9 =
  * Reminder on unsaved plugin settings
