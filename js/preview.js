@@ -79,7 +79,11 @@ jQuery(document).ready(function ($) {
 			class: 'social-likes__button social-likes__button_'.concat(social_network_name)
 		}).append($('<span/>', {
 			class: 'social-likes__icon social-likes__icon_'.concat(social_network_name)
-		})).append(label[social_network_name]));
+		})).append(label[social_network_name])
+		).append($('<span/>', {
+			class: 'social-likes__counter social-likes__counter_'.concat(social_network_name),
+			text: '0'
+		}));
 
 		return button;
 	}
@@ -152,29 +156,22 @@ jQuery(document).ready(function ($) {
 
 	sort_buttons();
 	rebuild();
+	updateCounters();
 
 	$('.view-state').on('change', sortableContainer.changeView);
 
 	$('form').on('change', '#counters', function () {
 		if ($(this).is(":checked")) {
 			wpsl_ul.removeAttr('data-counters');
-			$("#withZeroes").show();
+			$("#zeroes-container").show();
 		} else {
 			wpsl_ul.attr('data-counters', 'no');
-			$("#withZeroes").hide();
+			$("#zeroes-container").hide();
 		}
 	});
 	if (!$("#counters").is(":checked")) {
-		$("#withZeroes").hide();
+		$("#zeroes-container").hide();
 	}
-
-	$('form').on('change', '#zeroes', function () {
-		if ($("#zeroes").is(":checked")) {
-			wpsl_ul.attr('data-zeroes', 'yes');
-		} else {
-			wpsl_ul.removeAttr('data-zeroes');
-		}
-	});
 
 	if ($('input[name=look]:checked').val() == 's') {
 		single = true;
@@ -202,6 +199,16 @@ jQuery(document).ready(function ($) {
 		$(this).hide();
 	});
 
+	$('form').on('change', '#counters, #zeroes', updateCounters);
+
+	function updateCounters() {
+		if ($("#counters").is(":checked") && $("#zeroes").is(":checked")) {
+			$(".social-likes__counter").show();
+		} else {
+			$(".social-likes__counter").hide();
+		}
+	}
+
 	$(document).on('click', 'input[type="radio"]', resetRadioButtons);
 
 	resetRadioButtons();
@@ -216,12 +223,10 @@ jQuery(document).ready(function ($) {
 	function changeStyle()
 	{
 		wpsl_ul.removeClass('social-likes_light');
-		wpsl_ul.removeClass('social-likes_flat');
-		var styleSheet = "#styleClassic";
+		var styleName = "classic";
 		if ($("#skin_flat").is(":checked") || $("#skin_flatlight").is(":checked"))
 		{
-			styleSheet = "#styleFlat";
-			wpsl_ul.addClass('social-likes_flat');
+			styleName = "flat";
 			if ($("#skin_flatlight").is(":checked"))
 			{
 				wpsl_ul.addClass('social-likes_light');
@@ -229,12 +234,14 @@ jQuery(document).ready(function ($) {
 		}
 		else if ($("#skin_birman").is(":checked"))
 		{
-			styleSheet = "#styleBirman";
+			styleName = "birman";
 		}
-		$("#styleClassic").attr("disabled", true);
-		$("#styleFlat").attr("disabled", true);
-		$("#styleBirman").attr("disabled", true);
-		$(styleSheet).removeAttr("disabled");
+		$("link[id^='sociallikes-style-classic']," +
+			"link[id^='sociallikes-style-flat']," +
+			"link[id^='sociallikes-style-birman']")
+			.attr("disabled", true);
+			console.log($("link[id^='sociallikes-style-" + styleName + "']"));
+		$("link[id^='sociallikes-style-" + styleName + "']").removeAttr("disabled");
 	}
 
 	changeStyle();

@@ -8,7 +8,7 @@ var socialLikesButtons = {
 					.replace(/{title}/g, this.options.title)
 					.replace(/&/g, '&amp;')
 					.replace(/"/g, '&quot;');
-				form = jQuery('#sociallikes-livefournal-form');
+				form = jQuery('#sociallikes-livejournal-form');
 				form.attr({
 					action: 'http://www.livejournal.com/update.bml',
 					method: 'post',

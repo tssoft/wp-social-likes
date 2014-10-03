@@ -1,0 +1,13 @@
+.social-likes__widget_livejournal>.social-likes__button_livejournal {
+	color: #000000;
+}
+.social-likes__widget_livejournal:hover {
+	background: none repeat scroll 0% 0% #5183B4;
+}
+.social-likes__widget_livejournal:hover>.social-likes__button_livejournal {
+	color: #ffffff;
+}
+.social-likes__button_livejournal,
+.social-likes__button_livejournal:hover {
+	background: none;
+}

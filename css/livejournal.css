@@ -19,28 +19,3 @@
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABBVBMVEUAAAAAM2bAwMD///9uodQaSH+FYnt+X3eOZXx6XHYOMWCDYXtDYYVLao87UnkeS4IzUHhVcJNYjMA6apmZzvkkUYc1V38pXZRfkcKd0Pyh1f+YzfklUYcjQWwtXpBwpNhLfrFPgbKbzfqh1P+azvooVIoVPWtrn9Kl2f9KfbBRg7Sazfqi1f+ZzfonU4gdSoFpndBMf7JPgrOazfum2f+f1P8vW5IbSoFpntFNgLRNf7B/s+Z8telek8UAJVtonM9wo9ZEerBJZH6Jioe2o4qLhX0XRXxqndBalM53hI3/1pj/2Z7fuZEXRn1OicOIjY7/15r/zpr/05t7enzkwZP/1pzwypnA4MqSAAAAAXRSTlMAQObYZgAAAJJJREFUeF5EyyEPglAYheHzMi7eO6cJm82MTYO/3WbUaDTi6GzQ2Mf4BvBupzzbQUKSaSkTcXcQG1AMqSOxgvKi1T4dWSH0dgmnUM4CosT7m4M4M/czv1jdxDpOVUjyXflWTL3NQdz53Fxe5iDyB97TsnFggf9/2CEAZChEZDcbGDDAPAFiBAG1rAbSCBEEhSwIAHICG8xK35H0AAAAAElFTkSuQmCC");
   background-position: 2px 2px;
 }
-
-/* hacks for displaying LiveJournal button icon when using the flat skin */
-.social-likes_flat .social-likes__icon_livejournal {
-  margin-top: 2px;
-  width: 20px;
-  height: 20px;
-  background-repeat: no-repeat;
-}
-.social-likes_flat .social-likes__button_livejournal:hover {
-  background: none repeat scroll 0% 0% #CADCF3;
-  color: #5183B4;
-}
-.social-likes_flat.social-likes_light .social-likes__button_livejournal {
-  background: none;
-}
-.social-likes_flat.social-likes_light .social-likes__button_livejournal:hover {
-  background: none;
-}
-.social-likes_flat.social-likes_vertical .social-likes__widget_livejournal {
-  min-width: 13em;
-  background: none repeat scroll 0% 0% #CADCF3;
-}
-.social-likes_flat.social-likes_light.social-likes_vertical .social-likes__widget_livejournal {
-  background: none;
-}

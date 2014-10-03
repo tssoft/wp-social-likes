@@ -115,15 +115,23 @@ class wpsociallikes
 			$skin = 'classic';
 		}
 		?>
-			<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_<?php echo $skin ?>.css">
-			<script src="<?php echo plugin_dir_url(__FILE__) ?>js/social-likes.min.js"></script>
+		<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_<?php echo $skin ?>.css">
 		<?php
-		if (get_option('lj_btn')) {
-			?>
+			$customButtonsEnabled = $this->custom_buttons_enabled();
+			if ($customButtonsEnabled) {
+				?>
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
+				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_<?php echo $skin ?>.css">
+				<?php
+			}
+		?>
+		<script src="<?php echo plugin_dir_url(__FILE__) ?>js/social-likes.min.js"></script>
+		<?php
+			if ($customButtonsEnabled) {
+				?>
 				<script src="<?php echo plugin_dir_url(__FILE__) ?>js/custom-buttons.js"></script>
-			<?php
-		}
+				<?php
+			}
 	}
 
 	function header_scripts() {
@@ -309,7 +317,7 @@ class wpsociallikes
 			'<div class="livejournal" title="'
 			.$this->title_livejournal
 			.'" data-html="&lt;a href=\'{url}\'&gt;{title}&lt;/a&gt;">'
-			.$label_livejournal.'</div><form id="sociallikes-livefournal-form"></form>';
+			.$label_livejournal.'</div>';
 
 		$socialButton['odn_btn'] = '<div class="odnoklassniki" title="'.$this->title_odnoklassniki.'">'.$label_odnoklassniki.'</div>';
 
@@ -321,11 +329,8 @@ class wpsociallikes
 		if ($iconsOnly) {
 			$classAppend .= ' social-likes_notext';
 		}
-		if ($skin == 'flat') {
-			$classAppend .= ' social-likes_flat';
-			if ($light) {
-				$classAppend .= ' social-likes_light';
-			}
+		if (($skin == 'flat') && $light) {
+			$classAppend .= ' social-likes_light';
 		}
 
 		if ($look == 'h') {
@@ -350,18 +355,29 @@ class wpsociallikes
 				$main_div .= $socialButton[$btn];		
 			}
 		}
-		$main_div .= '</div>';
+		$main_div .= '</div><form id="sociallikes-livejournal-form"></form>';
 
 		return $main_div;
 	}
 
 	function admin_menu_head() {
 		?>
-			<link rel="stylesheet" id="styleClassic" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_classic.css">
-		    <link rel="stylesheet" id="styleFlat" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_flat.css">
-			<link rel="stylesheet" id="styleBirman" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_birman.css">
-			<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
-			<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/admin-page.css">
+			<link rel="stylesheet" id="sociallikes-style-classic"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_classic.css">
+		    <link rel="stylesheet" id="sociallikes-style-flat"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_flat.css">
+			<link rel="stylesheet" id="sociallikes-style-birman"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_birman.css">
+			<link rel="stylesheet"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
+			<link rel="stylesheet" id="sociallikes-style-classic-livejournal"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_classic.css">
+		    <link rel="stylesheet" id="sociallikes-style-flat-livejournal"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_flat.css">
+			<link rel="stylesheet" id="sociallikes-style-birman-livejournal"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_birman.css">
+			<link rel="stylesheet"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/admin-page.css">
 			<script src="<?php echo plugin_dir_url(__FILE__) ?>js/social-likes.min.js"></script>
 			<script src="<?php echo plugin_dir_url(__FILE__) ?>js/preview.js"></script>
 		<?php
@@ -479,7 +495,7 @@ class wpsociallikes
 									<input type="checkbox" name="counters" id="counters" <?php if ($counters) echo 'checked' ?> />
 									<label for="counters" class="wpsl-label"><?php _e('Show counters', 'wp-social-likes') ?></label>
 								</div>
-								<div class="option-checkboxes" id="withZeroes">
+								<div class="option-checkboxes" id="zeroes-container">
 									<input type="checkbox" name="zeroes" id="zeroes" <?php if ($zeroes) echo 'checked' ?> />
 									<label for="zeroes" class="wpsl-label"><?php _e('With zeroes', 'wp-social-likes') ?></label>
 								</div>
@@ -640,6 +656,10 @@ class wpsociallikes
 			array_unshift($all_links, $settings_link);
 		}
 		return $all_links;
+	}
+
+	function custom_buttons_enabled() {
+		return get_option('lj_btn');
 	}
 }
 

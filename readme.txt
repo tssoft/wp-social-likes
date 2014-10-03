@@ -89,6 +89,11 @@ Then, to insert Social Likes button on any position in a post, paste the followi
 
 == Changelog ==
 
+= 1.11 =
+ * Added "With zeroes" mode to preview
+ * Fixed LiveJournal button appearance with all 4 skins
+ * Fixed bug with counters disappearing when LiveJournal button is on (Reported by yegorka)
+
 = 1.10 =
  * Improved compatibility with Wordpress 3.9+
  * Added custom LiveJournal button
