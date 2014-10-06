@@ -119,6 +119,7 @@ jQuery(document).ready(function ($) {
 			wpsl_ul.removeClass('social-likes_notext');
 			$(".labelToDisappear").show();
 		}
+		updateCounters();
 	}
 
 	function rebuild() {
@@ -156,7 +157,6 @@ jQuery(document).ready(function ($) {
 
 	sort_buttons();
 	rebuild();
-	updateCounters();
 
 	$('.view-state').on('change', sortableContainer.changeView);
 
