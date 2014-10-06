@@ -655,10 +655,18 @@ class wpsociallikes
 		if (!$options) {
 			$options = get_option($this->socialLikesOptionsName);
 			if (!$options || !is_array($options)) {
-				$options = array();
+				$options = array(
+					'counters' => true,
+					'look' => 'h',
+					'post' => true,
+					'skin' => 'classic'
+				);
 			}
 			if (!$options['buttons'] || !is_array($options['buttons'])) {
 				$options['buttons'] = array();
+				for ($i = 0; $i < 4; $i++) {
+					array_push($options['buttons'], $this->buttons[$i]);
+				}
 			}
 		}
 
