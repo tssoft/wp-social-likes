@@ -31,7 +31,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 class wpsociallikes
 {
-	var $socialLikesOptionsName = 'sociallikes';
+	const OPTION_NAME_MAIN = 'sociallikes';
+	const OPTION_NAME_CUSTOM_LOCALE = 'sociallikes_customlocale';
+	const OPTION_NAME_PLACEMENT = 'sociallikes_placement';
+	const OPTION_NAME_SHORTCODE = 'sociallikes_shortcode';
+	const OPTION_NAME_EXCERPTS = 'sociallikes_excerpts';
+
 	var $lang;
 	var $options;
 	var $buttons = array(
@@ -46,10 +51,10 @@ class wpsociallikes
 	);
 
 	function wpsociallikes() {	
-		add_option('sociallikes_customlocale', '');
-		add_option('sociallikes_placement', 'after');
-		add_option('sociallikes_shortcode', 'disabled');
-		add_option('sociallikes_excerpts', 'disabled');
+		add_option(self::OPTION_NAME_CUSTOM_LOCALE, '');
+		add_option(self::OPTION_NAME_PLACEMENT, 'after');
+		add_option(self::OPTION_NAME_SHORTCODE, 'disabled');
+		add_option(self::OPTION_NAME_EXCERPTS, 'disabled');
 
 		add_action('init', array(&$this, 'ap_action_init'));
 		add_action('wp_head', array(&$this, 'header_content'));
@@ -243,12 +248,14 @@ class wpsociallikes
 			$buttons = $this->build_buttons($post);
 
 			$placement = $this->options['placement'];
-			if ($placement == 'before') {
-				$content = $buttons . $content;
-			} else if ($placement == 'before-after') {
-				$content = $buttons . $content . $buttons;
-			} else {
-				$content .= $buttons;
+			if ($placement != 'none') {
+				if ($placement == 'before') {
+					$content = $buttons . $content;
+				} else if ($placement == 'before-after') {
+					$content = $buttons . $content . $buttons;
+				} else {
+					$content .= $buttons;
+				}
 			}
 		}
 
@@ -604,7 +611,7 @@ class wpsociallikes
 			}
 		}
 
-		update_option($this->socialLikesOptionsName, $options);
+		update_option(self::OPTION_NAME_MAIN, $options);
 
 		$this->delete_deprecated_options();
 	}
@@ -628,7 +635,7 @@ class wpsociallikes
 
 	function shortcode_content() {
 		global $post;
-		if ($this->options['shortCode']) {
+		if ($this->options['shortcode']) {
 			return $this->build_buttons($post);
 		}
 		return '';
@@ -657,7 +664,7 @@ class wpsociallikes
 	function load_options() {
 		$options = $this->load_deprecated_options();
 		if (!$options) {
-			$options = get_option($this->socialLikesOptionsName);
+			$options = get_option(self::OPTION_NAME_MAIN);
 			if (!$options || !is_array($options)) {
 				$options = array(
 					'counters' => true,
@@ -674,10 +681,10 @@ class wpsociallikes
 			}
 		}
 
-		$options['customLocale'] = get_option('sociallikes_customlocale');
-		$options['placement'] = get_option('sociallikes_placement');
-		$options['shortCode'] = get_option('sociallikes_shortcode' == 'enabled');
-		$options['excerpts'] = get_option('sociallikes_excerpts') == 'enabled';
+		$options['customLocale'] = get_option(self::OPTION_NAME_CUSTOM_LOCALE);
+		$options['placement'] = get_option(self::OPTION_NAME_PLACEMENT);
+		$options['shortcode'] = get_option(self::OPTION_NAME_SHORTCODE) == 'enabled';
+		$options['excerpts'] = get_option(self::OPTION_NAME_EXCERPTS) == 'enabled';
 
 		$defaultValues = array(
 			'look' => 'h',
@@ -752,6 +759,16 @@ class wpsociallikes
 	}
 }
 
-$wpsociallikes = new wpsociallikes();	
+$wpsociallikes = new wpsociallikes();
+
+function social_likes($postId = null) {
+	echo get_social_likes($postId);
+}
+
+function get_social_likes($postId = null) {
+	$post = get_post($postId);
+	global $wpsociallikes;
+	return $post != null ? $wpsociallikes->build_buttons($post) : '';
+}
 
 ?>

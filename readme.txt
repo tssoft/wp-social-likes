@@ -90,6 +90,15 @@ Yes. You should just enable this hidden feature on the WordPress advanced option
 3. Change its value to 'enabled'
 4. Don't forget to apply changes with 'Save Changes' button
 
+= 5. Is there a function to display Social Likes buttons anywhere in a theme template? =
+
+Yes, after the Social Likes plugin is activated, you can use these two functions in your themes:
+
+ * *social_likes( $post_id )* - displays Social Likes buttons
+ * *get_social_likes( $post_id )* - returns the buttons as string
+
+$post_id is an optional argument. You can specify it to get the buttons for a certain post.
+
 
 == Screenshots ==
 
