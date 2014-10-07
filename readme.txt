@@ -56,6 +56,8 @@ But you could place buttons before or even before-and-after page/post content us
 3. Assign one of these values to it: before, after, before-after
 4. Don't forget to apply changes with 'Save Changes' button
 
+Also you could insert buttons in an excerpt, see question 4 for details.
+
 = 2. Is it possible to use different language (locale) for plugin than Wordpress uses? =
 
 Yes. By default plugin uses the same language (locale) as Wordpress does. 
@@ -79,6 +81,15 @@ Yes. In order to use Social Likes shortcodes on your blog, you should first enab
 
 Then, to insert Social Likes button on any position in a post, paste the following code there: [wp-social-likes]
 
+= 4. Is it possible to show Social Likes buttons for post excerpts, not only for full posts? =
+
+Yes. You should just enable this hidden feature on the WordPress advanced options page.
+
+1. Go to options list of your WordPress site: /wp-admin/options.php
+2. Find 'sociallikes_excerpts' option
+3. Change its value to 'enabled'
+4. Don't forget to apply changes with 'Save Changes' button
+
 
 == Screenshots ==
 
@@ -94,6 +105,7 @@ Then, to insert Social Likes button on any position in a post, paste the followi
  * Fixed LiveJournal button appearance for all 4 skins
  * Fixed bug with counters disappearing when LiveJournal button is on (Reported by yegorka)
  * Transition to the more optimal way of storing plugin settings
+ * *Hidden feature:* Social Likes buttons now can be added to post excerpts (Requested by johnmontfx, see question 4 in FAQ)
 
 = 1.10 =
  * Improved compatibility with Wordpress 3.9+

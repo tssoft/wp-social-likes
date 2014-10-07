@@ -49,6 +49,7 @@ class wpsociallikes
 		add_option('sociallikes_customlocale', '');
 		add_option('sociallikes_placement', 'after');
 		add_option('sociallikes_shortcode', 'disabled');
+		add_option('sociallikes_excerpts', 'disabled');
 
 		add_action('init', array(&$this, 'ap_action_init'));
 		add_action('wp_head', array(&$this, 'header_content'));
@@ -232,9 +233,12 @@ class wpsociallikes
 
 	function add_social_likes($content = '') {
 		global $post, $page, $pages;
-		$post_content = $pages[$page-1];
+		$post_content = $pages[$page - 1];
 		$this->lang = get_bloginfo('language');
-		if ((is_page() || is_single() || !preg_match('/<!--more(.*?)?-->/', $post_content, $matches)) && get_post_meta($post->ID, 'sociallikes', true))
+		$moreTagExists = preg_match('/<!--more(.*?)?-->/', $post_content, $matches);
+		if ((is_page() || is_single()
+			|| !$moreTagExists || $this->options['excerpts'])
+			&& get_post_meta($post->ID, 'sociallikes', true))
 		{
 			$buttons = $this->build_buttons($post);
 
@@ -624,7 +628,7 @@ class wpsociallikes
 
 	function shortcode_content() {
 		global $post;
-		if ($this->options['shortCode'] == 'enabled') {
+		if ($this->options['shortCode']) {
 			return $this->build_buttons($post);
 		}
 		return '';
@@ -672,7 +676,8 @@ class wpsociallikes
 
 		$options['customLocale'] = get_option('sociallikes_customlocale');
 		$options['placement'] = get_option('sociallikes_placement');
-		$options['shortCode'] = get_option('sociallikes_shortcode');
+		$options['shortCode'] = get_option('sociallikes_shortcode' == 'enabled');
+		$options['excerpts'] = get_option('sociallikes_excerpts') == 'enabled';
 
 		$defaultValues = array(
 			'look' => 'h',
