@@ -502,7 +502,7 @@ class wpsociallikes
 										for ($i = 1; $i <= count($label); $i++) {
 											$btn = null;
 											$checked = false;
-											if (count($i <= $this->options['buttons'])) {
+											if ($i <= count($this->options['buttons'])) {
 												$btn = $this->options['buttons'][$i - 1];
 												$index = array_search($btn, $remainingButtons, true);
 												if ($index !== false) {
@@ -589,7 +589,7 @@ class wpsociallikes
 			'page' => isset($_POST['page_chb']),
 			'pinterestImg' => isset($_POST['pinterest_img']),
 			'twitterVia' => $_POST['twitter_via'],
-			'twitterRel' => $_POST['twitter_rel'],
+			//'twitterRel' => $_POST['twitter_rel'],
 			'iconsOnly' => isset($_POST['icons']),
 			'counters' => isset($_POST['counters']),
 			'zeroes' => isset($_POST['zeroes']),
@@ -686,7 +686,7 @@ class wpsociallikes
 			'twitterRel' => ''
 		);
 		foreach ($defaultValues as $key => $value) {
-			if (!$options[$key]) {
+			if (!isset($options[$key]) || !$options[$key]) {
 				$options[$key] = $value;
 			}
 		}
