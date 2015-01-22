@@ -112,6 +112,7 @@ $post_id is an optional argument. You can specify it to get the buttons for a ce
 = 1.12 =
  * Added social_likes() and get_social_likes() functions for using social likes buttons in WordPress themes
  * Social Likes library updated to version 3.0.12 (Released 19.01.2015)
+ * Fixed bug with plugin options not getting updated on multilingual sites
 
 = 1.11 =
  * Added "With zeroes" mode to preview
