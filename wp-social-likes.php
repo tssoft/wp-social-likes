@@ -426,7 +426,7 @@ class wpsociallikes
 			<div class="wrap">
 				<h2><?php _e('Social Likes Settings', 'wp-social-likes') ?></h2>
 
-				<form name="wpsociallikes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=wp-social-likes.php&amp;updated=true">
+				<form name="wpsociallikes" method="post" action="?page=wp-social-likes.php&amp;updated=true">
 
 					<?php wp_nonce_field('update-options'); ?>
 
