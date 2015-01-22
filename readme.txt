@@ -109,6 +109,10 @@ $post_id is an optional argument. You can specify it to get the buttons for a ce
 
 == Changelog ==
 
+= 1.12 =
+ * Added social_likes() and get_social_likes() functions for using social likes buttons in WordPress themes
+ * Social Likes library updated to version 3.0.12 (Released 19.01.2015)
+
 = 1.11 =
  * Added "With zeroes" mode to preview
  * Fixed LiveJournal button appearance for all 4 skins
