@@ -1,0 +1,22 @@
+.social-likes__button_email {
+  background: #cadcf3;
+  background: -webkit-linear-gradient(top, #fff, #cadcf3);
+  background: linear-gradient(top, #fff, #cadcf3);
+  color: #5183b4;
+  border-color: rgba(182,216,246,0.8);
+  border-bottom-color: rgba(131,154,175,0.8);
+}
+.social-likes__button_email:hover {
+  background: #dce2f5;
+  background: -webkit-linear-gradient(top, #ecf1f7, #bad2f0);
+  background: linear-gradient(top, #ecf1f7, #bad2f0);
+  color: #253759;
+  border-color: #b7cfe4;
+  border-bottom-color: #9caebe;
+}
+.social-likes__icon_email {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA+ElEQVRIie3Uu0pDQRDG8V+lzyNaWBhUBG3sAlooXhAEjYX4FhIrTRtSC7H0HSSl4AUEhTxBCi+x0uJM4GAR9xyxOx8s7M7O7H+Z3RkqVfoPreESXVwnjquIWU8BnOILDzjCyS+jgZuIaaYAmujhGfsJ/nX0cZsKOEcLU3jD8RjfLXxiIeIuUgGdmNfwLkvVT23G4auxbpcBwGxADnO2jbCt5GylATUMMAzINj7wivm/AhbjsB3M4RFPWJalaIilMoAWpmVpaOT2JjCZWx/EBWYUeOTRN33BXoL/bvj2cJYCGBXavez2KYV2p0ChlWkVXQVaRaVKxfQNnupWzyJudrkAAAAASUVORK5CYII=");
+  background-position: -1px -2px;
+}
+/* Icon from https://www.iconfinder.com/icons/167630/email_icon#size=24
+License: Free Art License */

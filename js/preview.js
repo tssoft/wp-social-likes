@@ -59,7 +59,8 @@ jQuery(document).ready(function ($) {
 			'pinterest': $("#title_pinterest").val(),
 			'livejournal': $("#title_livejournal").val(),
 			'odnoklassniki': $("#title_odnoklassniki").val(),
-			'mailru': $("#title_mailru").val()
+			'mailru': $("#title_mailru").val(),
+			'email': $("#title_email").val()
 		};
 		var label = {
 			'vkontakte': $("<span/>", { class: "labelToDisappear", text: $("#label_vkontakte").val() }),
@@ -69,7 +70,8 @@ jQuery(document).ready(function ($) {
 			'pinterest': $("<span/>", { class: "labelToDisappear", text: $("#label_pinterest").val() }),
 			'livejournal': $("<span/>", { class: "labelToDisappear", text: $("#label_livejournal").val() }),
 			'odnoklassniki': $("<span/>", { class: "labelToDisappear", text: $("#label_odnoklassniki").val() }),
-			'mailru': $("<span/>", { class: "labelToDisappear", text: $("#label_mailru").val() })
+			'mailru': $("<span/>", { class: "labelToDisappear", text: $("#label_mailru").val() }),
+			'email': $("<span/>", { class: "labelToDisappear", text: $("#label_email").val() })
 		};
 
 		var button = $('<div/>', {
@@ -96,7 +98,8 @@ jQuery(document).ready(function ($) {
 		'pinterest_btn': newButton('pinterest'),
 		'lj_btn': newButton('livejournal'),
 		'odn_btn': newButton('odnoklassniki'),
-		'mm_btn': newButton('mailru')
+		'mm_btn': newButton('mailru'),
+		'email_btn': newButton('email')
 	};
 
 	$('#preview').html(wpsl_ul);
@@ -240,7 +243,6 @@ jQuery(document).ready(function ($) {
 			"link[id^='sociallikes-style-flat']," +
 			"link[id^='sociallikes-style-birman']")
 			.attr("disabled", true);
-			console.log($("link[id^='sociallikes-style-" + styleName + "']"));
 		$("link[id^='sociallikes-style-" + styleName + "']").removeAttr("disabled");
 	}
 

@@ -28,5 +28,13 @@ var socialLikesButtons = {
 				value: html
 			})).submit();
 		}
+	},
+	email: {
+		click: function(e) {
+			var mailtoUrl = 'mailto:?subject={subject}&body={body}'
+				.replace('{subject}', this.options.title)
+				.replace('{body}', this.options.url);
+			window.location.href = mailtoUrl;
+		}
 	}
 };

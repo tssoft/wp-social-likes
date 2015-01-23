@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-social-likes\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-08 11:09+0400\n"
-"PO-Revision-Date: 2014-09-26 14:06+0400\n"
+"POT-Creation-Date: 2015-01-23 13:39+0300\n"
+"PO-Revision-Date: 2015-01-23 13:43+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -17,71 +17,75 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: wp-social-likes.php:92
+#: wp-social-likes.php:87
 msgid "Share link on VK"
 msgstr "Поделиться ссылкой во Вконтакте"
 
-#: wp-social-likes.php:93
+#: wp-social-likes.php:88
 msgid "Share link on Facebook"
 msgstr "Поделиться ссылкой на Фейсбуке"
 
-#: wp-social-likes.php:94
+#: wp-social-likes.php:89
 msgid "Share link on Twitter"
 msgstr "Поделиться ссылкой в Твиттере"
 
-#: wp-social-likes.php:95
+#: wp-social-likes.php:90
 msgid "Share link on Google+"
 msgstr "Поделиться ссылкой в Гугл-плюсе"
 
-#: wp-social-likes.php:96
+#: wp-social-likes.php:91
 msgid "Share image on Pinterest"
 msgstr "Поделиться картинкой на Пинтересте"
 
-#: wp-social-likes.php
+#: wp-social-likes.php:92
 msgid "Share link on LiveJournal"
 msgstr "Поделиться ссылкой в ЖЖ"
 
-#: wp-social-likes.php:98
+#: wp-social-likes.php:93
 msgid "Share link on Odnoklassniki"
 msgstr "Поделиться ссылкой в Одноклассниках"
 
-#: wp-social-likes.php:99
+#: wp-social-likes.php:94
 msgid "Share link on Mail.ru"
 msgstr "Поделиться ссылкой в Моём мире"
 
-#: wp-social-likes.php:100 wp-social-likes.php:381
+#: wp-social-likes.php:95
+msgid "Share link by E-mail"
+msgstr "Поделиться ссылкой с помощью E-mail"
+
+#: wp-social-likes.php:96 wp-social-likes.php:437
 msgid "VK"
 msgstr "Вконтакте"
 
-#: wp-social-likes.php:106 wp-social-likes.php:387
+#: wp-social-likes.php:102 wp-social-likes.php:443
 msgid "Odnoklassniki"
 msgstr "Одноклассники"
 
-#: wp-social-likes.php:107 wp-social-likes.php:388
+#: wp-social-likes.php:103 wp-social-likes.php:444
 msgid "Mail.ru"
 msgstr "Мой мир"
 
-#: wp-social-likes.php:108
+#: wp-social-likes.php:105
 msgid "Share"
 msgstr "Поделиться"
 
-#: wp-social-likes.php:170
+#: wp-social-likes.php:186
 msgid "Add social buttons"
 msgstr "Добавить кнопки социальных сетей"
 
-#: wp-social-likes.php:175
+#: wp-social-likes.php:191
 msgid "Image&nbspURL:"
 msgstr "URL&nbspизображения:"
 
-#: wp-social-likes.php:177
+#: wp-social-likes.php:193
 msgid "Image URL (required for Pinterest)"
 msgstr "URL изображения (необходим для Pinterest)"
 
-#: wp-social-likes.php:393
+#: wp-social-likes.php:450
 msgid "Social Likes Settings"
 msgstr "Настройки Social Likes"
 
-#: wp-social-likes.php:416
+#: wp-social-likes.php:475
 msgid ""
 "You have unsaved changes on this page. Do you want to leave this page and "
 "discard your changes?"
@@ -89,82 +93,82 @@ msgstr ""
 "Вы не сохранили изменения на этой странице. Покинуть страницу и отменить "
 "изменения?"
 
-#: wp-social-likes.php:420
+#: wp-social-likes.php:479
 msgid "Skin"
 msgstr "Скин"
 
-#: wp-social-likes.php:424
+#: wp-social-likes.php:483
 msgid "Classic"
 msgstr "Классический"
 
-#: wp-social-likes.php:427
+#: wp-social-likes.php:486
 msgid "Flat"
 msgstr "Плоский"
 
-#: wp-social-likes.php:430
+#: wp-social-likes.php:489
 msgid "Flat Light"
 msgstr "Плоский Лёгкий"
 
-#: wp-social-likes.php:433
+#: wp-social-likes.php:492
 msgid "Birman"
 msgstr "Бирман"
 
-#: wp-social-likes.php:438
+#: wp-social-likes.php:497
 msgid "Look"
 msgstr "Вид"
 
-#: wp-social-likes.php:442
+#: wp-social-likes.php:501
 msgid "Horizontal"
 msgstr "Горизонтальный"
 
-#: wp-social-likes.php:445
+#: wp-social-likes.php:504
 msgid "Vertical"
 msgstr "Вертикальный"
 
-#: wp-social-likes.php:448
+#: wp-social-likes.php:507
 msgid "Single button"
 msgstr "Одной кнопкой"
 
-#: wp-social-likes.php:457
+#: wp-social-likes.php:516
 msgid "Show counters"
 msgstr "Счётчики"
 
-#: wp-social-likes.php:461
+#: wp-social-likes.php:520
 msgid "With zeroes"
 msgstr "Отображать нули"
 
-#: wp-social-likes.php:465
+#: wp-social-likes.php:524
 msgid "Icons only"
 msgstr "Только значки"
 
-#: wp-social-likes.php:470
+#: wp-social-likes.php:529
 msgid "Websites"
 msgstr "Сайты"
 
-#: wp-social-likes.php:490
+#: wp-social-likes.php:562
 msgid "More websites"
 msgstr "Остальные сайты"
 
-#: wp-social-likes.php:513
+#: wp-social-likes.php:585
 msgid "Automatically place first image in the post/page to the Image URL field"
 msgstr "Автоматически помещать первую картинку в поле URL изображения"
 
-#: wp-social-likes.php:520
+#: wp-social-likes.php:592
 msgid "Add by default for new posts"
 msgstr "Добавлять по умолчанию для новых записей"
 
-#: wp-social-likes.php:521
+#: wp-social-likes.php:593
 msgid "Apply to existing posts"
 msgstr "Применить к существующим записям"
 
-#: wp-social-likes.php:528
+#: wp-social-likes.php:600
 msgid "Add by default for new pages"
 msgstr "Добавлять по умолчанию для новых страниц"
 
-#: wp-social-likes.php:529
+#: wp-social-likes.php:601
 msgid "Apply to existing pages"
 msgstr "Применить к существующим страницам"
 
-#: wp-social-likes.php:605
+#: wp-social-likes.php:675
 msgid "Settings"
 msgstr "Настройки"

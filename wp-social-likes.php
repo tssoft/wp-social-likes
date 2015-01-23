@@ -47,7 +47,8 @@ class wpsociallikes
 		'pinterest_btn',
 		'odn_btn',
 		'mm_btn',
-		'lj_btn'
+		'lj_btn',
+		'email_btn'
 	);
 
 	function wpsociallikes() {	
@@ -91,6 +92,7 @@ class wpsociallikes
 		$this->title_livejournal = __('Share link on LiveJournal', 'wp-social-likes');
 		$this->title_odnoklassniki = __('Share link on Odnoklassniki', 'wp-social-likes');
 		$this->title_mailru = __('Share link on Mail.ru', 'wp-social-likes');
+		$this->title_email = __('Share link by E-mail', 'wp-social-likes');
 		$this->label_vkontakte = __('VK', 'wp-social-likes');
 		$this->label_facebook = __('Facebook', 'wp-social-likes');
 		$this->label_twitter = __('Twitter', 'wp-social-likes');
@@ -99,6 +101,7 @@ class wpsociallikes
 		$this->label_livejournal = __('LiveJournal', 'wp-social-likes');
 		$this->label_odnoklassniki = __('Odnoklassniki', 'wp-social-likes');
 		$this->label_mailru = __('Mail.ru', 'wp-social-likes');
+		$this->label_email = __('E-mail', 'wp-social-likes');
 		$this->label_share = __('Share', 'wp-social-likes');
 	}
 
@@ -110,17 +113,22 @@ class wpsociallikes
 		?>
 		<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_<?php echo $skin ?>.css">
 		<?php
-			$customButtonsEnabled = $this->custom_buttons_enabled();
-			if ($customButtonsEnabled) {
+			if ($this->button_is_active('lj_btn')) {
 				?>
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_<?php echo $skin ?>.css">
 				<?php
 			}
+			if ($this->button_is_active('email_btn')) {
+				?>
+				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/email.css">
+				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/email_<?php echo $skin ?>.css">
+				<?php
+			}
 		?>
 		<script src="<?php echo plugin_dir_url(__FILE__) ?>js/social-likes.min.js"></script>
 		<?php
-			if ($customButtonsEnabled) {
+			if ($this->custom_buttons_enabled()) {
 				?>
 				<script src="<?php echo plugin_dir_url(__FILE__) ?>js/custom-buttons.js"></script>
 				<?php
@@ -282,6 +290,7 @@ class wpsociallikes
 		$label_livejournal = $iconsOnly ? '' : $this->label_livejournal;
 		$label_odnoklassniki = $iconsOnly ? '' : $this->label_odnoklassniki;
 		$label_mailru = $iconsOnly ? '' : $this->label_mailru;
+		$label_email = $iconsOnly ? '' : $this->label_email;
 
 		$socialButton['vk_btn'] = '<div class="vkontakte" title="'.$this->title_vkontakte.'">'.$label_vkontakte.'</div>';
 
@@ -317,6 +326,8 @@ class wpsociallikes
 		$socialButton['odn_btn'] = '<div class="odnoklassniki" title="'.$this->title_odnoklassniki.'">'.$label_odnoklassniki.'</div>';
 
 		$socialButton['mm_btn'] = '<div class="mailru" title="'.$this->title_mailru.'">'.$label_mailru.'</div>';
+
+		$socialButton['email_btn'] = '<div class="email" title="'.$this->title_email.'">'.$label_email.'</div>';
 
 		$main_div = '<div class="social-likes';
 
@@ -361,6 +372,7 @@ class wpsociallikes
 				href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_flat.css">
 			<link rel="stylesheet" id="sociallikes-style-birman"
 				href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_birman.css">
+
 			<link rel="stylesheet"
 				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
 			<link rel="stylesheet" id="sociallikes-style-classic-livejournal"
@@ -369,6 +381,16 @@ class wpsociallikes
 				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_flat.css">
 			<link rel="stylesheet" id="sociallikes-style-birman-livejournal"
 				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_birman.css">
+
+			<link rel="stylesheet"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/email.css">
+			<link rel="stylesheet" id="sociallikes-style-classic-email"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/email_classic.css">
+		    <link rel="stylesheet" id="sociallikes-style-flat-email"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/email_flat.css">
+			<link rel="stylesheet" id="sociallikes-style-birman-email"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/email_birman.css">
+
 			<link rel="stylesheet"
 				href="<?php echo plugin_dir_url(__FILE__) ?>css/admin-page.css">
 			<script src="<?php echo plugin_dir_url(__FILE__) ?>js/social-likes.min.js"></script>
@@ -420,6 +442,7 @@ class wpsociallikes
 		$label["lj_btn"] = __("LiveJournal", 'wp-social-likes');
 		$label["odn_btn"] = __("Odnoklassniki", 'wp-social-likes');
 		$label["mm_btn"] = __("Mail.ru", 'wp-social-likes');
+		$label["email_btn"] = __("E-mail", 'wp-social-likes');
 
 		$this->lang = get_bloginfo('language');
 		?>
@@ -438,6 +461,7 @@ class wpsociallikes
 					<input id="title_livejournal" type="hidden" value="<?php echo $this->title_livejournal ?>">
 					<input id="title_odnoklassniki" type="hidden" value="<?php echo $this->title_odnoklassniki ?>">
 					<input id="title_mailru" type="hidden" value="<?php echo $this->title_mailru ?>">
+					<input id="title_email" type="hidden" value="<?php echo $this->title_email ?>">
 					<input id="label_vkontakte" type="hidden" value="<?php echo $this->label_vkontakte ?>">
 					<input id="label_facebook" type="hidden" value="<?php echo $this->label_facebook ?>">
 					<input id="label_twitter" type="hidden" value="<?php echo $this->label_twitter ?>">
@@ -446,6 +470,7 @@ class wpsociallikes
 					<input id="label_livejournal" type="hidden" value="<?php echo $this->label_livejournal ?>">
 					<input id="label_odnoklassniki" type="hidden" value="<?php echo $this->label_odnoklassniki ?>">
 					<input id="label_mailru" type="hidden" value="<?php echo $this->label_mailru ?>">
+					<input id="label_email" type="hidden" value="<?php echo $this->label_email ?>">
 					<input id="label_share" type="hidden" value="<?php echo $this->label_share ?>">
 					<input id="confirm_leaving_message" type="hidden" value="<?php _e('You have unsaved changes on this page. Do you want to leave this page and discard your changes?', 'wp-social-likes') ?>">
 
@@ -654,7 +679,7 @@ class wpsociallikes
 	}
 
 	function custom_buttons_enabled() {
-		return $this->button_is_active('lj_btn');
+		return $this->button_is_active('lj_btn') || $this->button_is_active('email_btn');
 	}
 
 	function button_is_active($name) {
