@@ -1,0 +1,13 @@
+.social-likes__widget_email>.social-likes__button_email {
+	color: #000000;
+}
+.social-likes__widget_email:hover {
+	background: none repeat scroll 0% 0% #5a5;
+}
+.social-likes__widget_email:hover>.social-likes__button_email {
+	color: #ffffff;
+}
+.social-likes__button_email,
+.social-likes__button_email:hover {
+	background: none;
+}
