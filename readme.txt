@@ -2,8 +2,8 @@
 Contributors: tssoft
 Tags: facebook, twitter, vk.com, vkontakte, google+, pinterest, odnoklassniki, mail.ru, social links, share buttons, social, social buttons, jquery
 Requires at least: 3.0
-Tested Up To: 4.0
-Stable tag: trunk
+Tested Up To: 4.1
+Stable tag: 5.1.26
 License: MIT
 License URI: https://raw.github.com/tssoft/wp-social-likes/master/license.md
 
@@ -109,10 +109,11 @@ $post_id is an optional argument. You can specify it to get the buttons for a ce
 
 == Changelog ==
 
-= 1.12 =
+= 5.1.26 =
+ * Added button for sharing via E-mail
  * Added social_likes() and get_social_likes() functions for using social likes buttons in WordPress themes
- * Social Likes library updated to version 3.0.12 (Released 19.01.2015)
  * Fixed bug with plugin options not getting updated on multilingual sites
+ * Social Likes library updated to version 3.0.12 (Released 19.01.2015)
 
 = 1.11 =
  * Added "With zeroes" mode to preview
