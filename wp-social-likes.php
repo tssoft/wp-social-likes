@@ -359,7 +359,7 @@ class wpsociallikes
 				$main_div .= $socialButton[$btn];
 			}
 		}
-		$main_div .= '</div><form class="sociallikes-livejournal-form"></form>';
+		$main_div .= '</div><form style="display: none;" class="sociallikes-livejournal-form"></form>';
 
 		return $main_div;
 	}
