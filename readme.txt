@@ -110,6 +110,7 @@ $post_id is an optional argument. You can specify it to get the buttons for a ce
 == Changelog ==
 
 = 5.2 =
+ * Added new vector icon for LiveJournal button
  * Fixed bug with rectangular areas appearing under social likes buttons on certain screen resolutions
 
 = 5.1.26 =
