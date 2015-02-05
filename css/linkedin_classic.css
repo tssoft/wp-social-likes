@@ -1,0 +1,6 @@
+.social-likes__counter_linkedin {
+	border-color: #0077b5;
+}
+.social-likes__counter_linkedin:after {
+	color: #fff;
+}

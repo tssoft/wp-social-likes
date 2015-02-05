@@ -58,6 +58,7 @@ jQuery(document).ready(function ($) {
 			'plusone': $("#title_plusone").val(),
 			'pinterest': $("#title_pinterest").val(),
 			'livejournal': $("#title_livejournal").val(),
+			'linkedin': $("#title_linkedin").val(),
 			'odnoklassniki': $("#title_odnoklassniki").val(),
 			'mailru': $("#title_mailru").val(),
 			'email': $("#title_email").val()
@@ -69,6 +70,7 @@ jQuery(document).ready(function ($) {
 			'plusone': $("<span/>", { class: "labelToDisappear", text: $("#label_plusone").val() }),
 			'pinterest': $("<span/>", { class: "labelToDisappear", text: $("#label_pinterest").val() }),
 			'livejournal': $("<span/>", { class: "labelToDisappear", text: $("#label_livejournal").val() }),
+			'linkedin': $("<span/>", { class: "labelToDisappear", text: $("#label_linkedin").val() }),
 			'odnoklassniki': $("<span/>", { class: "labelToDisappear", text: $("#label_odnoklassniki").val() }),
 			'mailru': $("<span/>", { class: "labelToDisappear", text: $("#label_mailru").val() }),
 			'email': $("<span/>", { class: "labelToDisappear", text: $("#label_email").val() })
@@ -97,6 +99,7 @@ jQuery(document).ready(function ($) {
 		'google_btn': newButton('plusone'),
 		'pinterest_btn': newButton('pinterest'),
 		'lj_btn': newButton('livejournal'),
+		'linkedin_btn': newButton('linkedin'),
 		'odn_btn': newButton('odnoklassniki'),
 		'mm_btn': newButton('mailru'),
 		'email_btn': newButton('email')

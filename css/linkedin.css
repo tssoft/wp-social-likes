@@ -1,0 +1,19 @@
+.social-likes__button_linkedin {
+  background: #e8e8e8;
+  background: -webkit-linear-gradient(top, #fff, #e8e8e8);
+  background: linear-gradient(top, #fff, #e8e8e8);
+  color: #0077b5;
+  border-color: rgba(50,100,150,0.8);
+  border-bottom-color: rgba(50,100,150,0.8);
+}
+.social-likes__button_linkedin:hover {
+  background: #fff;
+  background: -webkit-linear-gradient(top, #fff, #efefef);
+  background: linear-gradient(top, #fff, #efefef);
+  color: #087c5;
+  border-color: #0087c5;
+}
+.social-likes__icon_linkedin {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4zjOaXUAAAATdJREFUOE9jsJl0eIN8857/cmRgkD7j3oPbGMTqd/5nKN9KNuaq2PafQbQOYoho467/3fvv/M9ccwlDIT7MiWzIlMP3/sOA9ZQjGIpxYRRDijdeARvw7eef/8rt+zAU48IohjACsc2Uo/+V2vZiKITjMkwxFEN855z8v/T0IzAWrN3x33ryETB7CRDr9Rz8v/r80/+3X37+v+3Ki/+2U49iN6R801Wwd0BAChjI0UvOgdn/gPjlpx9gNgx8+fH7v0TTbuINAYGrzz/9z113+f/Wqy+gIv//p668QJoh3rNPgtXINO+Givz/X7/jBmmG6PYcAKthBWqAgcadN4e9IQZ9B/+nAfMNCHNXb/+v2rkfzheCZlKmiq1wMZOJhxGGUJyLK4GGmPQdmKPVtf+/JtBmcrDthIPrATBg/+LRdSriAAAAAElFTkSuQmCC");
+  background-position: 2px 1px;
+}

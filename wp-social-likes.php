@@ -2,7 +2,7 @@
 /*
 Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes)
-Version: 5.1.26
+Version: 5.2
 Author: TS Soft
 Author URI: http://ts-soft.ru/en/
 License: MIT
@@ -45,9 +45,10 @@ class wpsociallikes
 		'twitter_btn',
 		'google_btn',
 		'pinterest_btn',
+		'lj_btn',
+		'linkedin_btn',
 		'odn_btn',
 		'mm_btn',
-		'lj_btn',
 		'email_btn'
 	);
 
@@ -90,6 +91,7 @@ class wpsociallikes
 		$this->title_plusone = __('Share link on Google+', 'wp-social-likes');
 		$this->title_pinterest = __('Share image on Pinterest', 'wp-social-likes');
 		$this->title_livejournal = __('Share link on LiveJournal', 'wp-social-likes');
+		$this->title_linkedin = __('Share link on LinkedIn', 'wp-social-likes');
 		$this->title_odnoklassniki = __('Share link on Odnoklassniki', 'wp-social-likes');
 		$this->title_mailru = __('Share link on Mail.ru', 'wp-social-likes');
 		$this->title_email = __('Share link by E-mail', 'wp-social-likes');
@@ -99,6 +101,7 @@ class wpsociallikes
 		$this->label_plusone = __('Google+', 'wp-social-likes');
 		$this->label_pinterest = __('Pinterest', 'wp-social-likes');
 		$this->label_livejournal = __('LiveJournal', 'wp-social-likes');
+		$this->label_linkedin = __('LinkedIn', 'wp-social-likes');
 		$this->label_odnoklassniki = __('Odnoklassniki', 'wp-social-likes');
 		$this->label_mailru = __('Mail.ru', 'wp-social-likes');
 		$this->label_email = __('E-mail', 'wp-social-likes');
@@ -117,6 +120,12 @@ class wpsociallikes
 				?>
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_<?php echo $skin ?>.css">
+				<?php
+			}
+			if ($this->button_is_active('linkedin_btn')) {
+				?>
+				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin.css">
+				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin_<?php echo $skin ?>.css">
 				<?php
 			}
 			if ($this->button_is_active('email_btn')) {
@@ -288,6 +297,7 @@ class wpsociallikes
 		$label_plusone = $iconsOnly ? '' : $this->label_plusone;
 		$label_pinterest = $iconsOnly ? '' : $this->label_pinterest;
 		$label_livejournal = $iconsOnly ? '' : $this->label_livejournal;
+		$label_linkedin = $iconsOnly ? '' : $this->label_linkedin;
 		$label_odnoklassniki = $iconsOnly ? '' : $this->label_odnoklassniki;
 		$label_mailru = $iconsOnly ? '' : $this->label_mailru;
 		$label_email = $iconsOnly ? '' : $this->label_email;
@@ -322,6 +332,8 @@ class wpsociallikes
 			.$this->title_livejournal
 			.'" data-html="&lt;a href=\'{url}\'&gt;{title}&lt;/a&gt;">'
 			.$label_livejournal.'</div>';
+
+		$socialButton['linkedin_btn'] = '<div class="linkedin" title="'.$this->title_linkedin.'">'.$label_linkedin.'</div>';
 
 		$socialButton['odn_btn'] = '<div class="odnoklassniki" title="'.$this->title_odnoklassniki.'">'.$label_odnoklassniki.'</div>';
 
@@ -383,6 +395,15 @@ class wpsociallikes
 				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_birman.css">
 
 			<link rel="stylesheet"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin.css">
+			<link rel="stylesheet" id="sociallikes-style-classic-linkedin"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin_classic.css">
+		    <link rel="stylesheet" id="sociallikes-style-flat-linkedin"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin_flat.css">
+			<link rel="stylesheet" id="sociallikes-style-birman-linkedin"
+				href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin_birman.css">
+
+			<link rel="stylesheet"
 				href="<?php echo plugin_dir_url(__FILE__) ?>css/email.css">
 			<link rel="stylesheet" id="sociallikes-style-classic-email"
 				href="<?php echo plugin_dir_url(__FILE__) ?>css/email_classic.css">
@@ -440,6 +461,7 @@ class wpsociallikes
 		$label["google_btn"] = __("Google+", 'wp-social-likes');
 		$label["pinterest_btn"] = __("Pinterest", 'wp-social-likes');
 		$label["lj_btn"] = __("LiveJournal", 'wp-social-likes');
+		$label["linkedin_btn"] = __("LinkedIn", 'wp-social-likes');
 		$label["odn_btn"] = __("Odnoklassniki", 'wp-social-likes');
 		$label["mm_btn"] = __("Mail.ru", 'wp-social-likes');
 		$label["email_btn"] = __("E-mail", 'wp-social-likes');
@@ -459,6 +481,7 @@ class wpsociallikes
 					<input id="title_plusone" type="hidden" value="<?php echo $this->title_plusone ?>">
 					<input id="title_pinterest" type="hidden" value="<?php echo $this->title_pinterest ?>">
 					<input id="title_livejournal" type="hidden" value="<?php echo $this->title_livejournal ?>">
+					<input id="title_linkedin" type="hidden" value="<?php echo $this->title_linkedin ?>">
 					<input id="title_odnoklassniki" type="hidden" value="<?php echo $this->title_odnoklassniki ?>">
 					<input id="title_mailru" type="hidden" value="<?php echo $this->title_mailru ?>">
 					<input id="title_email" type="hidden" value="<?php echo $this->title_email ?>">
@@ -468,6 +491,7 @@ class wpsociallikes
 					<input id="label_plusone" type="hidden" value="<?php echo $this->label_plusone ?>">
 					<input id="label_pinterest" type="hidden" value="<?php echo $this->label_pinterest ?>">
 					<input id="label_livejournal" type="hidden" value="<?php echo $this->label_livejournal ?>">
+					<input id="label_linkedin" type="hidden" value="<?php echo $this->label_linkedin ?>">
 					<input id="label_odnoklassniki" type="hidden" value="<?php echo $this->label_odnoklassniki ?>">
 					<input id="label_mailru" type="hidden" value="<?php echo $this->label_mailru ?>">
 					<input id="label_email" type="hidden" value="<?php echo $this->label_email ?>">
@@ -679,7 +703,7 @@ class wpsociallikes
 	}
 
 	function custom_buttons_enabled() {
-		return $this->button_is_active('lj_btn') || $this->button_is_active('email_btn');
+		return $this->button_is_active('lj_btn') || $this->button_is_active('linkedin_btn') || $this->button_is_active('email_btn');
 	}
 
 	function button_is_active($name) {
