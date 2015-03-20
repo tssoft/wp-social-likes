@@ -190,9 +190,11 @@ class wpsociallikes
 
 		?>
 			<div id="social-likes">
+				<input type="hidden" name="wpsociallikes_update_meta" value="true" />
+
 				<div style="padding: 5px 0">
-					<input type="checkbox" name="wpsociallikes" id="wpsociallikes_checkbox" <?php if ($checked) echo 'checked class="checked"' ?> title="<?php echo get_permalink($post->ID); ?>" />
-					<label for="wpsociallikes_checkbox"><?php _e('Add social buttons', 'wp-social-likes') ?></label>
+					<input type="checkbox" name="wpsociallikes_enabled" id="wpsociallikes_enabled" <?php if ($checked) echo 'checked class="checked"' ?> title="<?php echo get_permalink($post->ID); ?>" />
+					<label for="wpsociallikes_enabled"><?php _e('Add social buttons', 'wp-social-likes') ?></label>
 				</div>
 
 				<table>
@@ -208,7 +210,7 @@ class wpsociallikes
 			<script>
 				(function($) {
 					var savedImageUrlValue = '';
-					$('input#wpsociallikes_checkbox').change(function () {
+					$('input#wpsociallikes_enabled').change(function () {
 						var $this = $(this);
 						$this.toggleClass('checked');
 						var socialLikesEnabled = $this.hasClass('checked');
@@ -235,7 +237,7 @@ class wpsociallikes
 	}
 
 	function save_post_meta($post_id) {
-		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+		if (!isset($_POST['wpsociallikes_update_meta']) || (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)) {
 			return;
 		}
 
@@ -249,7 +251,7 @@ class wpsociallikes
 			}
 		}
 
-		update_post_meta($post_id, 'sociallikes', isset($_POST['wpsociallikes']));
+		update_post_meta($post_id, 'sociallikes', isset($_POST['wpsociallikes_enabled']));
 		if (($_POST['wpsociallikes_image_url'] == '') && $this->options['pinterestImg']) {
 			$img_url = "";
 			$post = get_post($post_id);
