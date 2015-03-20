@@ -191,15 +191,15 @@ class wpsociallikes
 		?>
 			<div id="social-likes">
 				<div style="padding: 5px 0">
-					<input type="checkbox" name="wpsociallikes" id="wpsociallikes" <?php if ($checked) echo 'checked class="checked"' ?> title="<?php echo get_permalink($post->ID); ?>" />
-					<label for="wpsociallikes"><?php _e('Add social buttons', 'wp-social-likes') ?></label>
+					<input type="checkbox" name="wpsociallikes" id="wpsociallikes_checkbox" <?php if ($checked) echo 'checked class="checked"' ?> title="<?php echo get_permalink($post->ID); ?>" />
+					<label for="wpsociallikes_checkbox"><?php _e('Add social buttons', 'wp-social-likes') ?></label>
 				</div>
 
 				<table>
 					<tr>
-						<td><label for="image_url" style="padding-right:5px"><?php _e('Image&nbspURL:', 'wp-social-likes') ?></label></td>
+						<td><label for="wpsociallikes_image_url" style="padding-right:5px"><?php _e('Image&nbspURL:', 'wp-social-likes') ?></label></td>
 						<td style="width:100%">
-							<input name="image_url" id="image_url" value="<?php echo $img_url ?>" <?php if (!$checked) echo 'disabled' ?> type="text" placeholder="<?php _e('Image URL (required for Pinterest)', 'wp-social-likes') ?>" style="width:100%" />
+							<input name="wpsociallikes_image_url" id="wpsociallikes_image_url" value="<?php echo $img_url ?>" <?php if (!$checked) echo 'disabled' ?> type="text" placeholder="<?php _e('Image URL (required for Pinterest)', 'wp-social-likes') ?>" style="width:100%" />
 						</td>
 					</tr>
 				</table>
@@ -207,13 +207,21 @@ class wpsociallikes
 
 			<script>
 				(function($) {
-					$('input#wpsociallikes').change(function () {
-						$(this).toggleClass('checked');
-						if ($(this).hasClass('checked')) {
-							$('#image_url').removeAttr('disabled');
+					var savedImageUrlValue = '';
+					$('input#wpsociallikes_checkbox').change(function () {
+						var $this = $(this);
+						$this.toggleClass('checked');
+						var socialLikesEnabled = $this.hasClass('checked');
+						var imageUrlField = $('#wpsociallikes_image_url');
+						if (socialLikesEnabled) {
+							imageUrlField
+								.removeAttr('disabled')
+								.val(savedImageUrlValue);
 						} else {
-							$('#image_url').attr('value', '');
-							$('#image_url').attr('disabled', 'disabled');
+							savedImageUrlValue = imageUrlField.val();
+							imageUrlField
+								.attr('disabled', 'disabled')
+								.val('');
 						}
 					});	
 				})( jQuery );
@@ -242,14 +250,14 @@ class wpsociallikes
 		}
 
 		update_post_meta($post_id, 'sociallikes', isset($_POST['wpsociallikes']));
-		if (($_POST['image_url'] == "") && $this->options['pinterestImg']) {
+		if (($_POST['wpsociallikes_image_url'] == '') && $this->options['pinterestImg']) {
 			$img_url = "";
 			$post = get_post($post_id);
 			$img_url = $this->get_post_first_img($post); 
 			update_post_meta($post_id, 'sociallikes_img_url', $img_url);
 		}
 		else {
-			update_post_meta($post_id, 'sociallikes_img_url', $_POST['image_url']);
+			update_post_meta($post_id, 'sociallikes_img_url', $_POST['wpsociallikes_image_url']);
 		}
 	}
 
