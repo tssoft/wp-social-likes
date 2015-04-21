@@ -1,0 +1,211 @@
+# Social Likes
+# Author: TS Soft
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-social-likes\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-05 09:40+0300\n"
+"PO-Revision-Date: 2015-04-21 11:41+0300\n"
+"Last-Translator: Albert Fazli (Альберт Фазлый)\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: wp-social-likes.php:88
+msgid "Share link on VK"
+msgstr "ВКонтакте аша уртаклашу"
+
+#: wp-social-likes.php:89
+msgid "Share link on Facebook"
+msgstr "Facebook аша уртаклашу"
+
+#: wp-social-likes.php:90
+msgid "Share link on Twitter"
+msgstr "Twitter аша уртаклашу"
+
+#: wp-social-likes.php:91
+msgid "Share link on Google+"
+msgstr "Google+ аша уртаклашу"
+
+#: wp-social-likes.php:92
+msgid "Share image on Pinterest"
+msgstr "Pinterest аша уртаклашу"
+
+#: wp-social-likes.php:93
+msgid "Share link on LiveJournal"
+msgstr "LiveJournal аша уртаклашу"
+
+#: wp-social-likes.php:94
+msgid "Share link on LinkedIn"
+msgstr "LinkedIn аша уртаклашу"
+
+#: wp-social-likes.php:95
+msgid "Share link on Odnoklassniki"
+msgstr "Одноклассники аша уртаклашу"
+
+#: wp-social-likes.php:96
+msgid "Share link on Mail.ru"
+msgstr "Share link on Mail.ru"
+
+#: wp-social-likes.php:97
+msgid "Share link by E-mail"
+msgstr "E-mail аша уртаклашу"
+
+#: wp-social-likes.php:98 wp-social-likes.php:458
+msgid "VK"
+msgstr "ВКонтакте"
+
+#: wp-social-likes.php:99 wp-social-likes.php:459
+msgid "Facebook"
+msgstr "Facebook"
+
+#: wp-social-likes.php:100 wp-social-likes.php:460
+msgid "Twitter"
+msgstr "Twitter"
+
+#: wp-social-likes.php:101 wp-social-likes.php:461
+msgid "Google+"
+msgstr "Google+"
+
+#: wp-social-likes.php:102 wp-social-likes.php:462
+msgid "Pinterest"
+msgstr "Pinterest"
+
+#: wp-social-likes.php:103 wp-social-likes.php:463
+msgid "LiveJournal"
+msgstr "LiveJournal"
+
+#: wp-social-likes.php:104 wp-social-likes.php:464
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: wp-social-likes.php:105 wp-social-likes.php:465
+msgid "Odnoklassniki"
+msgstr "Одноклассники"
+
+#: wp-social-likes.php:106 wp-social-likes.php:466
+msgid "Mail.ru"
+msgstr "Mail.ru"
+
+#: wp-social-likes.php:107 wp-social-likes.php:467
+msgid "E-mail"
+msgstr "E-mail"
+
+#: wp-social-likes.php:108
+msgid "Share"
+msgstr "Уртаклашу"
+
+#: wp-social-likes.php:195
+msgid "Add social buttons"
+msgstr "Социаль төймә өстәү"
+
+#: wp-social-likes.php:200
+msgid "Image&nbspURL:"
+msgstr "Сүрәт&nbspURL'ы:"
+
+#: wp-social-likes.php:202
+msgid "Image URL (required for Pinterest)"
+msgstr "Сүрәт URL'ы (Pinterest өчен кирәк)"
+
+#: wp-social-likes.php:472
+msgid "Social Likes Settings"
+msgstr "Социаль төймәләр көйләнеше"
+
+#: wp-social-likes.php:499
+msgid ""
+"You have unsaved changes on this page. Do you want to leave this page and "
+"discard your changes?"
+msgstr ""
+"Әлеге биттә ясалган үзгәрешләрне сакламагансың әле. Үзгәрешләрне сакламыйча "
+"күчәсеме?"
+
+#: wp-social-likes.php:503
+msgid "Skin"
+msgstr "Кыяфәте"
+
+#: wp-social-likes.php:507
+msgid "Classic"
+msgstr "Классика"
+
+#: wp-social-likes.php:510
+msgid "Flat"
+msgstr "Такыр"
+
+#: wp-social-likes.php:513
+msgid "Flat Light"
+msgstr "Такыр, якты"
+
+#: wp-social-likes.php:516
+msgid "Birman"
+msgstr "Бирман"
+
+#: wp-social-likes.php:521
+msgid "Look"
+msgstr "Тезелеше"
+
+#: wp-social-likes.php:525
+msgid "Horizontal"
+msgstr "Ятма килеш"
+
+#: wp-social-likes.php:528
+msgid "Vertical"
+msgstr "Басма килеш"
+
+#: wp-social-likes.php:531
+msgid "Single button"
+msgstr "Бер генә төймә"
+
+#: wp-social-likes.php:540
+msgid "Show counters"
+msgstr "Санагычын та күрсәтәсе"
+
+#: wp-social-likes.php:544
+msgid "With zeroes"
+msgstr "Нуль булса да"
+
+#: wp-social-likes.php:548
+msgid "Icons only"
+msgstr "Тамга сүрәтен генә"
+
+#: wp-social-likes.php:553
+msgid "Websites"
+msgstr "Сайтлар"
+
+#: wp-social-likes.php:586
+msgid "More websites"
+msgstr "Башка сайтлар"
+
+#: wp-social-likes.php:592
+msgid "Twitter Via"
+msgstr "Твит ясау танытмасы"
+
+#: wp-social-likes.php:594
+msgid "Username"
+msgstr "Танытма исем"
+
+#: wp-social-likes.php:609
+msgid "Automatically place first image in the post/page to the Image URL field"
+msgstr "Сүрәт URL'ы итеп язма эчендә беренче сүрәтен кулланасы"
+
+#: wp-social-likes.php:616
+msgid "Add by default for new posts"
+msgstr "Яңа язмаларга өстисе"
+
+#: wp-social-likes.php:617
+msgid "Apply to existing posts"
+msgstr "Моңарчы ясалган язмаларда үзгәртәсе"
+
+#: wp-social-likes.php:624
+msgid "Add by default for new pages"
+msgstr "Яңа битләргә өстисе"
+
+#: wp-social-likes.php:625
+msgid "Apply to existing pages"
+msgstr "Моңарчы ясалган битләрдә үзгәртәсе"
+
+#: wp-social-likes.php:699
+msgid "Settings"
+msgstr "Көйләнеше"

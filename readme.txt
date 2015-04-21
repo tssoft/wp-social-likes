@@ -109,6 +109,9 @@ $post_id is an optional argument. You can specify it to get the buttons for a ce
 
 == Changelog ==
 
+= 5.4 =
+ * Added Tatar translation (tt_RU)
+
 = 5.2 =
  * Added custom LinkedIn button
  * Added new vector icon for the LiveJournal button
