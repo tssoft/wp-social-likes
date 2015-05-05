@@ -252,28 +252,22 @@ class wpsociallikes
 		}
 
 		update_post_meta($post_id, 'sociallikes', isset($_POST['wpsociallikes_enabled']));
-		if (($_POST['wpsociallikes_image_url'] == '') && $this->options['pinterestImg']) {
-			$img_url = "";
+
+		$img_url_sent = isset($_POST['wpsociallikes_image_url']);
+		$img_url = $img_url_sent ? $_POST['wpsociallikes_image_url'] : '';
+		if ($img_url_sent && $img_url == '' && $this->options['pinterestImg']) {
 			$post = get_post($post_id);
 			$img_url = $this->get_post_first_img($post); 
-			update_post_meta($post_id, 'sociallikes_img_url', $img_url);
 		}
-		else {
-			update_post_meta($post_id, 'sociallikes_img_url', $_POST['wpsociallikes_image_url']);
-		}
+		update_post_meta($post_id, 'sociallikes_img_url', $img_url);
 	}
 
 	function add_social_likes($content = '') {
-		global $post, $page, $pages;
-		$post_content = $pages[$page - 1];
-		$this->lang = get_bloginfo('language');
-		$moreTagExists = preg_match('/<!--more(.*?)?-->/', $post_content, $matches);
-		if ((is_page() || is_single()
-			|| !$moreTagExists || $this->options['excerpts'])
-			&& get_post_meta($post->ID, 'sociallikes', true))
-		{
+		global $post;
+		if (in_the_loop() && get_post_meta($post->ID, 'sociallikes', true)
+				&& (is_page() || is_single() || $this->options['excerpts'] || !$this->is_post_with_excerpt())) {
+			$this->lang = get_bloginfo('language');
 			$buttons = $this->build_buttons($post);
-
 			$placement = $this->options['placement'];
 			if ($placement != 'none') {
 				if ($placement == 'before') {
@@ -285,8 +279,13 @@ class wpsociallikes
 				}
 			}
 		}
-
 		return $content;
+	}
+
+	function is_post_with_excerpt() {
+		global $page, $pages;
+		$post_content = $pages[$page - 1];
+		return preg_match('/<!--more(.*?)?-->/', $post_content);
 	}
 
 	function build_buttons($post) {

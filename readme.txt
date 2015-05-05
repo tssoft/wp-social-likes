@@ -95,9 +95,9 @@ Yes. You should just enable this hidden feature on the WordPress advanced option
 Yes, after the Social Likes plugin is activated, you can use these two functions in your themes:
 
  * *social_likes( $post_id )* - displays Social Likes buttons
- * *get_social_likes( $post_id )* - returns the buttons as string
+ * *get_social_likes( $post_id )* - returns buttons as string
 
-$post_id is an optional argument. You can specify it to get the buttons for a certain post.
+$post_id is an optional argument. You can use it to get buttons for a specific post.
 
 
 == Screenshots ==
@@ -108,6 +108,9 @@ $post_id is an optional argument. You can specify it to get the buttons for a ce
 
 
 == Changelog ==
+
+= 5.5 =
+ * Fixed bug with social buttons appearing inside third party recent posts widgets (Reported by rollo3000)
 
 = 5.4 =
  * Added Tatar translation (tt_RU)
