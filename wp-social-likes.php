@@ -2,7 +2,7 @@
 /*
 Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes)
-Version: 5.2
+Version: 5.5.7
 Author: TS Soft
 Author URI: http://ts-soft.ru/en/
 License: MIT
