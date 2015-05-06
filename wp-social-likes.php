@@ -76,13 +76,10 @@ class wpsociallikes
 
 	function ap_action_init() {
 		$this->load_options();
-		$customLocale = $this->options['customLocale'];
-		$textdomainError = false;
-		if ($customLocale != '') {
-			$textdomainError =
-				!load_textdomain('wp-social-likes', plugin_dir_path( __FILE__ ).'/languages/wp-social-likes-'.$customLocale.'.mo');
-		}
-		if (($customLocale == '') || $textdomainError) {
+		$custom_locale = $this->options['customLocale'];
+		if ($custom_locale) {
+			load_textdomain('wp-social-likes', plugin_dir_path( __FILE__ ).'/languages/wp-social-likes-'.$custom_locale.'.mo');
+		} else {
 			load_plugin_textdomain('wp-social-likes', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/');
 		}
 		$this->title_vkontakte = __('Share link on VK', 'wp-social-likes');

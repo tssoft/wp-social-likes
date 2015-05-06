@@ -111,6 +111,7 @@ $post_id is an optional argument. You can use it to get buttons for a specific p
 
 = 5.5 =
  * Fixed bug with social buttons appearing inside third party recent posts widgets (Reported by rollo3000)
+ * Fixed: if sociallikes_customlocale is set to en_US, plugin still uses default locale of WordPress
 
 = 5.4 =
  * Added Tatar translation (tt_RU)
