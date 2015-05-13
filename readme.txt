@@ -111,6 +111,7 @@ $post_id is an optional argument. You can use it to get buttons for a specific p
 
 = 5.5 =
  * Options are stored in object instead of array
+ * Fixed appearance of LiveJournal button for Flat skin
 
 = 5.5.7 =
  * Fixed bug with social buttons appearing inside third party recent posts widgets (Reported by rollo3000)
