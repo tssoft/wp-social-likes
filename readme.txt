@@ -3,7 +3,7 @@ Contributors: tssoft
 Tags: facebook, twitter, vk.com, vkontakte, google+, pinterest, odnoklassniki, mail.ru, social links, share buttons, social, social buttons, jquery
 Requires at least: 3.0
 Tested Up To: 4.1
-Stable tag: 5.1.26
+Stable tag: 5.5.7
 License: MIT
 License URI: https://raw.github.com/tssoft/wp-social-likes/master/license.md
 
@@ -110,13 +110,14 @@ $post_id is an optional argument. You can use it to get buttons for a specific p
 == Changelog ==
 
 = 5.5 =
+ * Options are stored in object instead of array
+
+= 5.5.7 =
  * Fixed bug with social buttons appearing inside third party recent posts widgets (Reported by rollo3000)
  * Fixed: if sociallikes_customlocale is set to en_US, plugin still uses default locale of WordPress
-
-= 5.4 =
  * Added Tatar translation (tt_RU)
 
-= 5.2 =
+= 5.2.5 =
  * Added custom LinkedIn button
  * Added new vector icon for the LiveJournal button
  * Fixed bug with rectangular areas appearing under social likes buttons

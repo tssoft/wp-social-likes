@@ -2,12 +2,12 @@
 /*
 Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes)
-Version: 5.2
+Version: 5.5.7
 Author: TS Soft
 Author URI: http://ts-soft.ru/en/
 License: MIT
 
-Copyright 2014 TS Soft LLC (email: dev@ts-soft.ru )
+Copyright 2015 TS Soft LLC (email: dev@ts-soft.ru )
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the 
@@ -27,10 +27,9 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
-
 */
-class wpsociallikes
-{
+
+class wpsociallikes {
 	const OPTION_NAME_MAIN = 'sociallikes';
 	const OPTION_NAME_CUSTOM_LOCALE = 'sociallikes_customlocale';
 	const OPTION_NAME_PLACEMENT = 'sociallikes_placement';
@@ -76,7 +75,7 @@ class wpsociallikes
 
 	function ap_action_init() {
 		$this->load_options();
-		$custom_locale = $this->options['customLocale'];
+		$custom_locale = $this->options->customLocale;
 		if ($custom_locale) {
 			load_textdomain('wp-social-likes', plugin_dir_path( __FILE__ ).'/languages/wp-social-likes-'.$custom_locale.'.mo');
 		} else {
@@ -106,26 +105,26 @@ class wpsociallikes
 	}
 
 	function header_content() {
-		$skin = str_replace('light', '', $this->options['skin']);
+		$skin = str_replace('light', '', $this->options->skin);
 		if (($skin != 'classic') && ($skin != 'flat') && ($skin != 'birman')) {
 			$skin = 'classic';
 		}
 		?>
 		<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_<?php echo $skin ?>.css">
 		<?php
-			if ($this->button_is_active('lj_btn')) {
+			if ($this->is_button_active('lj_btn')) {
 				?>
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_<?php echo $skin ?>.css">
 				<?php
 			}
-			if ($this->button_is_active('linkedin_btn')) {
+			if ($this->is_button_active('linkedin_btn')) {
 				?>
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin.css">
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin_<?php echo $skin ?>.css">
 				<?php
 			}
-			if ($this->button_is_active('email_btn')) {
+			if ($this->is_button_active('email_btn')) {
 				?>
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/email.css">
 				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/email_<?php echo $skin ?>.css">
@@ -151,8 +150,8 @@ class wpsociallikes
 	}
 
 	function wpsociallikes_menu() {
-		$post_opt = $this->options['post'];
-		$page_opt = $this->options['page'];
+		$post_opt = $this->options->post;
+		$page_opt = $this->options->page;
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'post', 'normal', 'default', array('default'=>$post_opt));
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'page', 'normal', 'default', array('default'=>$page_opt));
 
@@ -178,7 +177,7 @@ class wpsociallikes
 
 		if ($checked) {
 			$img_url = get_post_meta($post->ID, 'sociallikes_img_url', true);
-			if ($img_url == '' && $this->options['pinterestImg']) {
+			if ($img_url == '' && $this->options->pinterestImg) {
 				$img_url = $this->get_post_first_img($post);
 			}
 		} else {
@@ -252,7 +251,7 @@ class wpsociallikes
 
 		$img_url_sent = isset($_POST['wpsociallikes_image_url']);
 		$img_url = $img_url_sent ? $_POST['wpsociallikes_image_url'] : '';
-		if ($img_url_sent && $img_url == '' && $this->options['pinterestImg']) {
+		if ($img_url_sent && $img_url == '' && $this->options->pinterestImg) {
 			$post = get_post($post_id);
 			$img_url = $this->get_post_first_img($post); 
 		}
@@ -262,10 +261,10 @@ class wpsociallikes
 	function add_social_likes($content = '') {
 		global $post;
 		if (in_the_loop() && get_post_meta($post->ID, 'sociallikes', true)
-				&& (is_page() || is_single() || $this->options['excerpts'] || !$this->is_post_with_excerpt())) {
+				&& (is_page() || is_single() || $this->options->excerpts || !$this->is_post_with_excerpt())) {
 			$this->lang = get_bloginfo('language');
 			$buttons = $this->build_buttons($post);
-			$placement = $this->options['placement'];
+			$placement = $this->options->placement;
 			if ($placement != 'none') {
 				if ($placement == 'before') {
 					$content = $buttons . $content;
@@ -286,16 +285,16 @@ class wpsociallikes
 	}
 
 	function build_buttons($post) {
-		$twitter_via = $this->options['twitterVia'];
-		//$twitter_rel = $this->options['twitterRel'];
-		$look = $this->options['look'];
-		$skin = $this->options['skin'];
+		$twitter_via = $this->options->twitterVia;
+		//$twitter_rel = $this->options->twitterRel;
+		$look = $this->options->look;
+		$skin = $this->options->skin;
 		$light = false;
 		if (strpos($skin, 'light')) {
 		    $light = true;
 		    $skin = str_replace('light', '', $skin);
 		}
-		$iconsOnly = $this->options['iconsOnly'];
+		$iconsOnly = $this->options->iconsOnly;
 
 		$label_vkontakte = $iconsOnly ? '' : $this->label_vkontakte;
 		$label_facebook = $iconsOnly ? '' : $this->label_facebook;
@@ -328,7 +327,7 @@ class wpsociallikes
 		if ($img_url != '') {
 			$socialButton['pinterest_btn'] .= ' data-media="' . $img_url . '"';
 		}
-		if ($img_url == '' && $this->options['pinterestImg']) {
+		if ($img_url == '' && $this->options->pinterestImg) {
 			$socialButton['pinterest_btn'] .= ' data-media="' . $this->get_post_first_img($post) . '"';	
 		}
 		$socialButton['pinterest_btn'] .= '>' . $label_pinterest . '</div>';
@@ -367,12 +366,12 @@ class wpsociallikes
 
 		$main_div .= ' data-title="' . $post->post_title . '"';
 		$main_div .= ' data-url="' . get_permalink( $post->ID ) . '"';
-		$main_div .= $this->options['counters'] ? ' data-counters="yes"' : ' data-counters="no"';
-		$main_div .= $this->options['zeroes'] ? ' data-zeroes="yes"' : '';
+		$main_div .= $this->options->counters ? ' data-counters="yes"' : ' data-counters="no"';
+		$main_div .= $this->options->zeroes ? ' data-zeroes="yes"' : '';
 
 		$main_div .= '>';
 
-		foreach ($this->options['buttons'] as $btn) {
+		foreach ($this->options->buttons as $btn) {
 			if (in_array($btn, $this->buttons)) {
 				$main_div .= $socialButton[$btn];
 			}
@@ -446,11 +445,11 @@ class wpsociallikes
 
 		$this->load_options();
 
-		$look = $this->options['look'];
-		$counters = $this->options['counters'];
-		$post = $this->options['post'];
-		$page = $this->options['page'];
-		$skin = $this->options['skin'];
+		$look = $this->options->look;
+		$counters = $this->options->counters;
+		$post = $this->options->post;
+		$page = $this->options->page;
+		$skin = $this->options->skin;
 		$light = false;
 		if (strpos($skin, 'light')) {
 		    $light = true;
@@ -458,8 +457,8 @@ class wpsociallikes
 		if (($skin != 'classic') && ($skin != 'flat') && ($skin != 'flatlight') && ($skin != 'birman')) {
 			$skin = 'classic';
 		}
-		$zeroes = $this->options['zeroes'];
-		$iconsOnly = $this->options['iconsOnly'];
+		$zeroes = $this->options->zeroes;
+		$iconsOnly = $this->options->iconsOnly;
 
 		$label["vk_btn"] = __("VK", 'wp-social-likes');
 		$label["facebook_btn"] = __("Facebook", 'wp-social-likes');
@@ -564,8 +563,9 @@ class wpsociallikes
 										for ($i = 1; $i <= count($label); $i++) {
 											$btn = null;
 											$checked = false;
-											if ($i <= count($this->options['buttons'])) {
-												$btn = $this->options['buttons'][$i - 1];
+											$buttons = & $this->options->buttons;
+											if ($i <= count($buttons)) {
+												$btn = $buttons[$i - 1];
 												$index = array_search($btn, $remainingButtons, true);
 												if ($index !== false) {
 													array_splice($remainingButtons, $index, 1);
@@ -587,8 +587,8 @@ class wpsociallikes
 								</ul>
 								<?php
 									if ($this->lang != 'ru-RU'
-										&& !($this->button_is_active('odn_btn')
-										&& $this->button_is_active('mm_btn'))) {
+										&& !($this->is_button_active('odn_btn')
+										&& $this->is_button_active('mm_btn'))) {
 										?><span class="more-websites"><?php _e('More websites', 'wp-social-likes') ?></span><?php		
 									}
 								?>
@@ -598,20 +598,20 @@ class wpsociallikes
 							<th scope="row"><?php _e('Twitter Via', 'wp-social-likes') ?></th>
 							<td>
 								<input type="text" name="twitter_via" placeholder="<?php _e('Username', 'wp-social-likes') ?>" class="wpsl-field" 
-									value="<?php echo $this->options['twitterVia']; ?>" />
+									value="<?php echo $this->options->twitterVia; ?>" />
 							</td>
 						</tr>
 						<!--tr valign="top">
 							<th scope="row">Twitter Related</th>
 							<td>
 								<input type="text" name="twitter_rel" placeholder="Username:Description" class="wpsl-field" 
-									value="<?php echo $this->options['twitterRel']; ?>"/>
+									value="<?php echo $this->options->twitterRel; ?>"/>
 							</td>
 						</tr-->
 						<tr valign="top">
 							<th scope="row"></th>
 							<td scope="row" class="without-bottom">
-								<input type="checkbox" name="pinterest_img" id="pinterest_img" <?php if ($this->options['pinterestImg']) echo 'checked' ?> />
+								<input type="checkbox" name="pinterest_img" id="pinterest_img"<?php if ($this->options->pinterestImg) echo ' checked' ?> />
 								<label for="pinterest_img" class="wpsl-label"><?php _e('Automatically place first image in the post/page to the Image URL field', 'wp-social-likes') ?></label>
 							</td>
 						</tr>
@@ -644,30 +644,26 @@ class wpsociallikes
 	}
 
 	function submit_admin_form() {
-		$options = array(
-			'skin' => $_POST['skin'],
-			'look' => $_POST['look'],
-			'post' => isset($_POST['post_chb']),
-			'page' => isset($_POST['page_chb']),
-			'pinterestImg' => isset($_POST['pinterest_img']),
-			'twitterVia' => $_POST['twitter_via'],
-			//'twitterRel' => $_POST['twitter_rel'],
-			'iconsOnly' => isset($_POST['icons']),
-			'counters' => isset($_POST['counters']),
-			'zeroes' => isset($_POST['zeroes']),
-			'buttons' => array()
-		);
-
+		$options = new wpsociallikes_options();
+		$options->skin = $_POST['skin'];
+		$options->look = $_POST['look'];
+		$options->post = isset($_POST['post_chb']);
+		$options->page = isset($_POST['page_chb']);
+		$options->pinterestImg = isset($_POST['pinterest_img']);
+		$options->twitterVia = $_POST['twitter_via'];
+		//$options->twitterRel = $_POST['twitter_rel'];
+		$options->iconsOnly = isset($_POST['icons']);
+		$options->counters = isset($_POST['counters']);
+		$options->zeroes = isset($_POST['zeroes']);
+		$options->buttons = array();
 		if (isset($_POST['site'])) {
 			foreach ($_POST['site'] as $btn) {
 				if (in_array($btn, $this->buttons)) {
-					array_push($options['buttons'], $btn);
+					array_push($options->buttons, $btn);
 				}
 			}
 		}
-
 		update_option(self::OPTION_NAME_MAIN, $options);
-
 		$this->delete_deprecated_options();
 	}
 
@@ -684,13 +680,12 @@ class wpsociallikes
 	    if (is_feed()) {
 	    	$content = preg_replace("/<div.*(class)=(\"|')social-likes(\"|').*>.*<\/div>/smUi", '', $content);
 	    }
-
 	    return $content;
 	}
 
 	function shortcode_content() {
 		global $post;
-		if ($this->options['shortcode']) {
+		if ($this->options->shortcode) {
 			return $this->build_buttons($post);
 		}
 		return '';
@@ -709,78 +704,107 @@ class wpsociallikes
 	}
 
 	function custom_buttons_enabled() {
-		return $this->button_is_active('lj_btn') || $this->button_is_active('linkedin_btn') || $this->button_is_active('email_btn');
+		return $this->is_button_active('lj_btn') || $this->is_button_active('linkedin_btn') || $this->is_button_active('email_btn');
 	}
 
-	function button_is_active($name) {
-		return in_array($name, $this->options['buttons']);
+	function is_button_active($name) {
+		return in_array($name, $this->options->buttons);
 	}
 
 	function load_options() {
 		$options = $this->load_deprecated_options();
+
 		if (!$options) {
 			$options = get_option(self::OPTION_NAME_MAIN);
-			if (!$options || !is_array($options)) {
-				$options = array(
-					'counters' => true,
-					'look' => 'h',
-					'post' => true,
-					'skin' => 'classic'
-				);
-			}
-			if (!$options['buttons'] || !is_array($options['buttons'])) {
-				$options['buttons'] = array();
-				for ($i = 0; $i < 4; $i++) {
-					array_push($options['buttons'], $this->buttons[$i]);
-				}
+			if (!$options || !is_object($options) || !is_a($options, 'wpsociallikes_options')) {
+				$options = new wpsociallikes_options();
+				$options->counters = true;
+				$options->look = 'h';
+				$options->post = true;
+				$options->skin = 'classic';
 			}
 		}
 
-		$options['customLocale'] = get_option(self::OPTION_NAME_CUSTOM_LOCALE);
-		$options['placement'] = get_option(self::OPTION_NAME_PLACEMENT);
-		$options['shortcode'] = get_option(self::OPTION_NAME_SHORTCODE) == 'enabled';
-		$options['excerpts'] = get_option(self::OPTION_NAME_EXCERPTS) == 'enabled';
-
-		$defaultValues = array(
-			'look' => 'h',
-			'skin' => 'classic',
-			'twitterVia' => '',
-			'twitterRel' => ''
-		);
-		foreach ($defaultValues as $key => $value) {
-			if (!isset($options[$key]) || !$options[$key]) {
-				$options[$key] = $value;
+		if (!$options->buttons || !is_array($options->buttons)) {
+			$options->buttons = array();
+			for ($i = 0; $i < 4; $i++) {
+				array_push($options->buttons, $this->buttons[$i]);
 			}
+		}
+
+		$options->customLocale = get_option(self::OPTION_NAME_CUSTOM_LOCALE);
+		$options->placement = get_option(self::OPTION_NAME_PLACEMENT);
+		$options->shortcode = get_option(self::OPTION_NAME_SHORTCODE) == 'enabled';
+		$options->excerpts = get_option(self::OPTION_NAME_EXCERPTS) == 'enabled';
+
+		if (!$options->look) {
+			$options->look = 'h';
+		}
+		if (!$options->skin) {
+			$options->skin = 'classic';
+		}
+		if (!$options->twitterVia) {
+			$options->twitterVia = '';
+		}
+		if (!$options->twitterRel) {
+			$options->twitterRel = '';
 		}
 
 		$this->options = $options;
 	}
 
 	function load_deprecated_options() {
+		$options = $this->load_deprecated_options_1_11();
+		if (!$options) {
+			$options = $this->load_deprecated_options_5_5();
+		}
+		return $options;
+	}
+
+	function load_deprecated_options_1_11() {
 		if (!get_option('sociallikes_skin')
 			|| !get_option('sociallikes_look')) {
 			return null;
 		}
-		$options = array(
-			'skin' => get_option('sociallikes_skin'),
-			'look' => get_option('sociallikes_look'),
-			'post' => get_option('sociallikes_post'),
-			'page' => get_option('sociallikes_page'),
-			'pinterestImg' => get_option('sociallikes_pinterest_img'),
-			'twitterVia' => get_option('sociallikes_twitter_via'),
-			'twitterRel' => get_option('sociallikes_twitter_rel'),
-			'iconsOnly' => get_option('sociallikes_icons'),
-			'counters' => get_option('sociallikes_counters'),
-			'zeroes' => get_option('sociallikes_zeroes'),
-			'buttons' => array()
-		);
+		$options = new wpsociallikes_options();
+		$options->skin = get_option('sociallikes_skin');
+		$options->look = get_option('sociallikes_look');
+		$options->post = get_option('sociallikes_post');
+		$options->page = get_option('sociallikes_page');
+		$options->pinterestImg = get_option('sociallikes_pinterest_img');
+		$options->twitterVia = get_option('sociallikes_twitter_via');
+		$options->twitterRel = get_option('sociallikes_twitter_rel');
+		$options->iconsOnly = get_option('sociallikes_icons');
+		$options->counters = get_option('sociallikes_counters');
+		$options->zeroes = get_option('sociallikes_zeroes');
+		$options->buttons = array();
 		for ($i = 1; $i <= 8; $i++) {
 			$option = 'pos' . $i;
 			$btn = get_option($option);
 			if (get_option($btn)) {
-				array_push($options['buttons'], $btn);
+				array_push($options->buttons, $btn);
 			}
 		}
+		return $options;
+	}
+
+	function load_deprecated_options_5_5() {
+		$options_array = get_option(self::OPTION_NAME_MAIN);
+		if (!$options_array || !is_array($options_array)) {
+			return null;
+		}
+		$options = new wpsociallikes_options();
+		$options->skin = isset($options_array['skin']) ? $options_array['skin'] : null;
+		$options->look = isset($options_array['look']) ? $options_array['look'] : null;
+		$options->post = isset($options_array['post']) ? $options_array['post'] : null;
+		$options->page = isset($options_array['page']) ? $options_array['page'] : null;
+		$options->pinterestImg = isset($options_array['pinterestImg']) ? $options_array['pinterestImg'] : null;
+		$options->twitterVia = isset($options_array['twitterVia']) ? $options_array['twitterVia'] : null;
+		$options->twitterRel = isset($options_array['twitterRel']) ? $options_array['twitterRel'] : null;
+		$options->iconsOnly = isset($options_array['iconsOnly']) ? $options_array['iconsOnly'] : null;
+		$options->counters = isset($options_array['counters']) ? $options_array['counters'] : null;
+		$options->zeroes = isset($options_array['zeroes']) ? $options_array['zeroes'] : null;
+		$options->buttons = isset($options_array['buttons']) ? $options_array['buttons'] : null;
 		return $options;
 	}
 
@@ -795,6 +819,7 @@ class wpsociallikes
 		delete_option('sociallikes_skin');
 		delete_option('sociallikes_icons');
 		delete_option('sociallikes_zeroes');
+		delete_option('sociallikes_ul');
 		delete_option('vk_btn');
 		delete_option('facebook_btn');
 		delete_option('twitter_btn');
@@ -814,6 +839,20 @@ class wpsociallikes
 	}
 }
 
+class wpsociallikes_options {
+	var $skin;
+	var $look;
+	var $post;
+	var $page;
+	var $pinterestImg;
+	var $twitterVia;
+	var $twitterRel;
+	var $iconsOnly;
+	var $counters;
+	var $zeroes;
+	var $buttons;
+}
+
 $wpsociallikes = new wpsociallikes();
 
 function social_likes($postId = null) {
@@ -825,5 +864,4 @@ function get_social_likes($postId = null) {
 	global $wpsociallikes;
 	return $post != null ? $wpsociallikes->build_buttons($post) : '';
 }
-
 ?>
