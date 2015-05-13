@@ -44,7 +44,7 @@ var socialLikesButtons = {
 				};
 			}
 			options._[jsonUrl] = deferred;
-			$.getScript(jsonUrl).fail(deferred.reject);
+			jQuery.getScript(jsonUrl).fail(deferred.reject);
 		},
 		popupUrl: 'http://www.linkedin.com/shareArticle?mini=false&url={url}&title={title}',
 		popupWidth: 650,
