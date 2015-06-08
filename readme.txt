@@ -3,7 +3,7 @@ Contributors: tssoft
 Tags: facebook, twitter, vk.com, vkontakte, google+, pinterest, odnoklassniki, mail.ru, social links, share buttons, social, social buttons, jquery
 Requires at least: 3.0
 Tested Up To: 4.2.1
-Stable tag: 5.5.7
+Stable tag: 5.6.8
 License: MIT
 License URI: https://raw.github.com/tssoft/wp-social-likes/master/license.md
 
@@ -109,7 +109,7 @@ $post_id is an optional argument. You can use it to get buttons for a specific p
 
 == Changelog ==
 
-= 5.5 =
+= 5.6.8 =
  * Options are stored in object instead of array
  * Fixed appearance of LiveJournal button for Flat skin
  * Fixed: LinkedIn counters don't show (because of jQuery's compatibility mode)
