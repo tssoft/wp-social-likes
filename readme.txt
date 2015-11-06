@@ -109,6 +109,9 @@ $post_id is an optional argument. You can use it to get buttons for a specific p
 
 == Changelog ==
 
+= 5.11 =
+ * Fixed message "Undefined offset: 0" appearing when creating new post (Reported by steve82)
+
 = 5.6.8 =
  * Options are stored in object instead of array
  * Fixed appearance of LiveJournal button for Flat skin

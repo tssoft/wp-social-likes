@@ -229,7 +229,8 @@ class wpsociallikes {
 
 	function get_post_first_img($post) {
 		$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
-		return $matches [1] [0];
+		$match = $matches[1];
+		return count($match) !== 0 ? $match[0] : null;
 	}
 
 	function save_post_meta($post_id) {
