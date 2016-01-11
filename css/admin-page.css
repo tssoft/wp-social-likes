@@ -141,12 +141,7 @@ td.switch-button-row {
 
 .option-checkboxes {
 	float: left; 
-	margin-left: 0px; //15px
 	line-height: 15px;
-}
-
-.option-checkboxes {
-	margin-top: 0px; //4px
 }
 
 .option-checkboxes label, #counters {
@@ -163,4 +158,9 @@ td.switch-button-row {
 	border-bottom: 1px dotted;
 	cursor: pointer;
 	color: #6b6b6b
+}
+
+.wpsl-info-block {
+	font-size: 13px;
+	font-style: italic;
 }

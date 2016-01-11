@@ -555,6 +555,12 @@ class wpsociallikes {
 								</div>
 							</td>
 						</tr>
+						<tr>
+							<td/>
+							<td class="wpsl-info-block">
+								<?php _e('Twitter, LiveJournal & E-mail sharing buttons do not show counters by design', 'wp-social-likes') ?>
+							</td>
+						</tr>
 						<tr valign="top">
 							<th class="valign-top" scope="row"><?php _e('Websites', 'wp-social-likes') ?></th>
 							<td class="without-bottom">
