@@ -169,14 +169,17 @@ jQuery(document).ready(function ($) {
 	$('form').on('change', '#counters', function () {
 		if ($(this).is(":checked")) {
 			wpsl_ul.removeAttr('data-counters');
-			$("#zeroes-container").show();
 		} else {
 			wpsl_ul.attr('data-counters', 'no');
-			$("#zeroes-container").hide();
 		}
+		afterShowCountersChange()
 	});
-	if (!$("#counters").is(":checked")) {
-		$("#zeroes-container").hide();
+
+	afterShowCountersChange()
+
+	function afterShowCountersChange() {
+		var showCounters = $("#counters").is(":checked");
+		$("#zeroes-container, #counters-info-block")[showCounters ? "show" : "hide"]();
 	}
 
 	if ($('input[name=look]:checked').val() == 's') {
