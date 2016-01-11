@@ -555,7 +555,7 @@ class wpsociallikes {
 						<tr>
 							<td/>
 							<td class="wpsl-info-block">
-								<?php _e('Twitter, LiveJournal & E-mail sharing buttons do not show counters by design', 'wp-social-likes') ?>
+								<?php _e('Twitter, LiveJournal & E-mail counters do not work by design', 'wp-social-likes') ?>
 							</td>
 						</tr>
 						<tr valign="top">

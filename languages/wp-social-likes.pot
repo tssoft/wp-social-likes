@@ -170,7 +170,7 @@ msgid "Icons only"
 msgstr ""
 
 #: wp-social-likes.php:561
-msgid "Twitter, LiveJournal & E-mail sharing buttons do not show counters by design"
+msgid "Twitter, LiveJournal & E-mail counters do not work by design"
 msgstr ""
 
 #: wp-social-likes.php:553
