@@ -9,6 +9,8 @@ Supported social networks:
  * Twitter
  * Google+
  * Pinterest
+ * LiveJournal
+ * LinkedIn
  * VK.com and other popular Russian social networks
 
 Features:

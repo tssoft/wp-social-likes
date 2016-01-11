@@ -1,13 +1,13 @@
 === Social Likes ===
 Contributors: tssoft
-Tags: facebook, twitter, vk.com, vkontakte, google+, pinterest, odnoklassniki, mail.ru, social links, share buttons, social, social buttons, jquery
+Tags: facebook, twitter, vk.com, vkontakte, google+, pinterest, livejournal, linkedin, odnoklassniki, mail.ru, social links, share buttons, social, social buttons, jquery
 Requires at least: 3.0
-Tested Up To: 4.2.1
-Stable tag: 5.6.8
+Tested Up To: 4.4.1
+Stable tag: 6.1.11
 License: MIT
 License URI: https://raw.github.com/tssoft/wp-social-likes/master/license.md
 
-Little, easy to use plugin that adds single-style buttons with fast like counters for: Facebook, Twitter, Google+, Pinterest, VK.com and others.
+Little, easy to use plugin that adds single-style buttons with fast like counters for: Facebook, Google+, Pinterest, VK.com and others.
 
 == Description ==
 
@@ -20,6 +20,7 @@ Supported social networks:
  * Google+
  * Pinterest
  * LiveJournal
+ * LinkedIn
  * VK.com and other popular Russian social networks
 
 Features:
@@ -34,7 +35,7 @@ Features:
  * Horizontal or vertical buttons layout or single button mode with popup
  * Interactive preview of buttons look on the plugin settings page
  * Control appearance of buttons for each page and post
- * Additional options for Twitter and Pinterest
+ * Additional options for Pinterest
  
 Check screenshots page or try live preview to pick buttons look that best fits theme design of your site.
  
@@ -109,8 +110,9 @@ $post_id is an optional argument. You can use it to get buttons for a specific p
 
 == Changelog ==
 
-= 5.11 =
+= 6.1.11 =
  * Fixed message "Undefined offset: 0" appearing when creating new post (Reported by steve82)
+ * Social Likes library updated to version 3.1.0 (Released 10.01.2016)
 
 = 5.6.8 =
  * Options are stored in object instead of array
