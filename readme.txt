@@ -112,6 +112,7 @@ $post_id is an optional argument. You can use it to get buttons for a specific p
 
 = 6.1.11 =
  * Fixed message "Undefined offset: 0" appearing when creating new post (Reported by steve82)
+ * Fixed incorrect output in RSS feeds
  * Social Likes library updated to version 3.1.0 (Released 10.01.2016)
 
 = 5.6.8 =

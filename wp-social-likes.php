@@ -65,9 +65,6 @@ class wpsociallikes {
 		add_action('admin_enqueue_scripts', array(&$this, 'wpsociallikes_admin_scripts'));
 		add_filter('the_content', array(&$this, 'add_social_likes'));
 
-		// https://github.com/tssoft/wp-social-likes/issues/7
-		add_filter('the_excerpt_rss', array(&$this, 'exclude_div_in_RSS_description'));
-		add_filter('the_content_feed', array(&$this, 'exclude_div_in_RSS_content'));
 		add_filter('plugin_action_links', array(&$this, 'add_action_links'), 10, 2);
 
 		add_shortcode('wp-social-likes', array(&$this, 'shortcode_content'));
@@ -261,7 +258,7 @@ class wpsociallikes {
 
 	function add_social_likes($content = '') {
 		global $post;
-		if (in_the_loop() && get_post_meta($post->ID, 'sociallikes', true)
+		if (in_the_loop() && !is_feed() && get_post_meta($post->ID, 'sociallikes', true)
 				&& (is_page() || is_single() || $this->options->excerpts || !$this->is_post_with_excerpt())) {
 			$this->lang = get_bloginfo('language');
 			$buttons = $this->build_buttons($post);
@@ -672,22 +669,6 @@ class wpsociallikes {
 		}
 		update_option(self::OPTION_NAME_MAIN, $options);
 		$this->delete_deprecated_options();
-	}
-
-	function exclude_div_in_RSS_description($content) {
-		global $post;
-		if (get_post_meta($post->ID, 'sociallikes', true)) {
-			$index = strripos($content, ' ');
-			$content = substr_replace($content, '', $index);
-		}
-	    return $content;
-	}
-
-	function exclude_div_in_RSS_content($content) {
-	    if (is_feed()) {
-	    	$content = preg_replace("/<div.*(class)=(\"|')social-likes(\"|').*>.*<\/div>/smUi", '', $content);
-	    }
-	    return $content;
 	}
 
 	function shortcode_content() {
