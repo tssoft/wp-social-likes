@@ -59,7 +59,7 @@ But you could place buttons before or even before-and-after page/post content us
 
 Also you could insert buttons in an excerpt, see question 4 for details.
 
-= 2. Is it possible to use different language (locale) for plugin than Wordpress uses? =
+= 2. Is it possible to use different language (locale) for plugin than the default locale of Wordpress? =
 
 Yes. By default plugin uses the same language (locale) as Wordpress does. 
 If there is no translation for this locale, plugin would use English as a default language. We find it suitable for most cases. 
