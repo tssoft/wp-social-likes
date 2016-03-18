@@ -30,7 +30,7 @@ var socialLikesButtons = {
 		}
 	},
 	linkedin: {
-		counterUrl: 'http://www.linkedin.com/countserv/count/share?url={url}',
+		counterUrl: 'https://www.linkedin.com/countserv/count/share?url={url}',
 		counter: function(jsonUrl, deferred) {
 			var options = socialLikesButtons.linkedin;
 			if (!options._) {
@@ -46,7 +46,7 @@ var socialLikesButtons = {
 			options._[jsonUrl] = deferred;
 			jQuery.getScript(jsonUrl).fail(deferred.reject);
 		},
-		popupUrl: 'http://www.linkedin.com/shareArticle?mini=false&url={url}&title={title}',
+		popupUrl: 'https://www.linkedin.com/shareArticle?mini=false&url={url}&title={title}',
 		popupWidth: 650,
 		popupHeight: 500
 	},
