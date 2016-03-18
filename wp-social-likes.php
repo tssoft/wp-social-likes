@@ -2,7 +2,7 @@
 /*
 Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes)
-Version: 6.1.11
+Version: 6.3.18
 Author: TS Soft
 Author URI: http://ts-soft.ru/en/
 License: MIT
@@ -50,6 +50,7 @@ class wpsociallikes {
 		'mm_btn',
 		'email_btn'
 	);
+	var $skins = array('classic', 'flat', 'birman');
 
 	function wpsociallikes() {	
 		add_option(self::OPTION_NAME_CUSTOM_LOCALE, '');
@@ -58,11 +59,11 @@ class wpsociallikes {
 		add_option(self::OPTION_NAME_EXCERPTS, 'disabled');
 
 		add_action('init', array(&$this, 'ap_action_init'));
-		add_action('wp_head', array(&$this, 'header_content'));
-		add_action('wp_enqueue_scripts', array(&$this, 'header_scripts'));
-		add_action('admin_menu', array(&$this, 'wpsociallikes_menu'));
+		add_action('wp_enqueue_scripts', array(&$this, 'wp_enqueue_scripts'));
+		add_action('wp_enqueue_styles', array(&$this, 'wp_enqueue_styles'));
+		add_action('admin_enqueue_scripts', array(&$this, 'admin_enqueue_scripts'));
+		add_action('admin_menu', array(&$this, 'admin_menu'));
 		add_action('save_post', array(&$this, 'save_post_meta'));
-		add_action('admin_enqueue_scripts', array(&$this, 'wpsociallikes_admin_scripts'));
 		add_filter('the_content', array(&$this, 'add_social_likes'));
 
 		add_filter('plugin_action_links', array(&$this, 'add_action_links'), 10, 2);
@@ -101,52 +102,71 @@ class wpsociallikes {
 		$this->label_share = __('Share', 'wp-social-likes');
 	}
 
-	function header_content() {
+	function wp_enqueue_scripts() {
+		wp_enqueue_script('jquery');
+
+		$this->enqueue_script_library();
+
+		if ($this->custom_buttons_enabled()) {
+			wp_register_script('social_likes_custom_buttons', plugins_url('js/custom-buttons.js', __FILE__));
+			wp_enqueue_script('social_likes_custom_buttons');
+		}
+
 		$skin = str_replace('light', '', $this->options->skin);
 		if (($skin != 'classic') && ($skin != 'flat') && ($skin != 'birman')) {
 			$skin = 'classic';
 		}
-		?>
-		<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_<?php echo $skin ?>.css">
-		<?php
-			if ($this->is_button_active('lj_btn')) {
-				?>
-				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
-				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_<?php echo $skin ?>.css">
-				<?php
-			}
-			if ($this->is_button_active('linkedin_btn')) {
-				?>
-				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin.css">
-				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin_<?php echo $skin ?>.css">
-				<?php
-			}
-			if ($this->is_button_active('email_btn')) {
-				?>
-				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/email.css">
-				<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__) ?>css/email_<?php echo $skin ?>.css">
-				<?php
-			}
-		?>
-		<script src="<?php echo plugin_dir_url(__FILE__) ?>js/social-likes.min.js"></script>
-		<?php
-			if ($this->custom_buttons_enabled()) {
-				?>
-				<script src="<?php echo plugin_dir_url(__FILE__) ?>js/custom-buttons.js"></script>
-				<?php
-			}
+		$this->enqueue_style_by_skin($skin);
+
+		if ($this->custom_buttons_enabled()) {
+			$this->enqueue_style_custom_buttons();
+			$this->enqueue_style_custom_buttons_by_skin($skin);
+		}
 	}
 
-	function header_scripts() {
-		wp_enqueue_script('jquery');
-	}
+	function admin_enqueue_scripts($hook) {
+		if ('settings_page_wp-social-likes' !== $hook) {
+			return;
+		}
 
-	function wpsociallikes_admin_scripts() {
 		wp_enqueue_script('jquery');
 		wp_enqueue_script('jquery-ui-sortable');
+
+		$this->enqueue_script_library();
+		wp_register_script('social_likes_admin_preview', plugins_url('js/preview.js', __FILE__));
+		wp_enqueue_script('social_likes_admin_preview');
+
+		wp_register_style('social_likes_admin', plugins_url('css/admin-page.css', __FILE__));
+		wp_enqueue_style('social_likes_admin');
+
+		$this->enqueue_style_custom_buttons();
+		foreach ($this->skins as $skin) {
+			$this->enqueue_style_by_skin($skin);
+			$this->enqueue_style_custom_buttons_by_skin($skin);
+		}
 	}
 
-	function wpsociallikes_menu() {
+	function enqueue_script_library() {
+		wp_register_script('social_likes_library', plugins_url('js/social-likes.min.js', __FILE__));
+		wp_enqueue_script('social_likes_library');
+	}
+
+	function enqueue_style_by_skin($skin) {
+		wp_register_style('social_likes_style_' . $skin, plugins_url('css/social-likes_' . $skin . '.css', __FILE__));
+		wp_enqueue_style('social_likes_style_' . $skin);
+	}
+
+	function enqueue_style_custom_buttons() {
+		wp_register_style('social_likes_custom_buttons', plugins_url('css/custom-buttons.css', __FILE__));
+		wp_enqueue_style('social_likes_custom_buttons');
+	}
+
+	function enqueue_style_custom_buttons_by_skin($skin) {
+		wp_register_style('social_likes_style_' . $skin . '_custom_buttons', plugins_url('css/custom-buttons_' . $skin . '.css', __FILE__));
+		wp_enqueue_style('social_likes_style_' . $skin . '_custom_buttons');
+	}
+
+	function admin_menu() {
 		$post_opt = $this->options->post;
 		$page_opt = $this->options->page;
 		add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), 'post', 'normal', 'default', array('default'=>$post_opt));
@@ -161,8 +181,7 @@ class wpsociallikes {
 	    	add_meta_box('wpsociallikes', 'Social Likes', array(&$this, 'wpsociallikes_meta'), $post_type, 'normal', 'default', array('default'=>$post_opt));
 	  	}
 
-		$plugin_page = add_options_page('Social Likes', 'Social Likes', 'administrator', basename(__FILE__), array (&$this, 'display_admin_form'));
-		add_action('admin_head-' . $plugin_page, array(&$this, 'admin_menu_head'));
+		$page = add_options_page('Social Likes', 'Social Likes', 'administrator', basename(__FILE__), array (&$this, 'display_admin_form'));
 	}
 
 	function wpsociallikes_meta($post, $metabox) {
@@ -377,49 +396,6 @@ class wpsociallikes {
 		$main_div .= '</div><form style="display: none;" class="sociallikes-livejournal-form"></form>';
 
 		return $main_div;
-	}
-
-	function admin_menu_head() {
-		?>
-			<link rel="stylesheet" id="sociallikes-style-classic"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_classic.css">
-		    <link rel="stylesheet" id="sociallikes-style-flat"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_flat.css">
-			<link rel="stylesheet" id="sociallikes-style-birman"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/social-likes_birman.css">
-
-			<link rel="stylesheet"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal.css">
-			<link rel="stylesheet" id="sociallikes-style-classic-livejournal"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_classic.css">
-		    <link rel="stylesheet" id="sociallikes-style-flat-livejournal"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_flat.css">
-			<link rel="stylesheet" id="sociallikes-style-birman-livejournal"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/livejournal_birman.css">
-
-			<link rel="stylesheet"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin.css">
-			<link rel="stylesheet" id="sociallikes-style-classic-linkedin"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin_classic.css">
-		    <link rel="stylesheet" id="sociallikes-style-flat-linkedin"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin_flat.css">
-			<link rel="stylesheet" id="sociallikes-style-birman-linkedin"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/linkedin_birman.css">
-
-			<link rel="stylesheet"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/email.css">
-			<link rel="stylesheet" id="sociallikes-style-classic-email"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/email_classic.css">
-		    <link rel="stylesheet" id="sociallikes-style-flat-email"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/email_flat.css">
-			<link rel="stylesheet" id="sociallikes-style-birman-email"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/email_birman.css">
-
-			<link rel="stylesheet"
-				href="<?php echo plugin_dir_url(__FILE__) ?>css/admin-page.css">
-			<script src="<?php echo plugin_dir_url(__FILE__) ?>js/social-likes.min.js"></script>
-			<script src="<?php echo plugin_dir_url(__FILE__) ?>js/preview.js"></script>
-		<?php
 	}
 
 	function display_admin_form() {

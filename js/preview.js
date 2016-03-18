@@ -77,15 +77,15 @@ jQuery(document).ready(function ($) {
 		};
 
 		var button = $('<div/>', {
-			class: 'social-likes__widget social-likes__widget_'.concat(social_network_name),
+			class: 'social-likes__widget social-likes__widget_' + social_network_name,
 			title: title[social_network_name]
 		}).append($('<span/>', {
-			class: 'social-likes__button social-likes__button_'.concat(social_network_name)
+			class: 'social-likes__button social-likes__button_' + social_network_name
 		}).append($('<span/>', {
-			class: 'social-likes__icon social-likes__icon_'.concat(social_network_name)
+			class: 'social-likes__icon social-likes__icon_' + social_network_name
 		})).append(label[social_network_name])
 		).append($('<span/>', {
-			class: 'social-likes__counter social-likes__counter_'.concat(social_network_name),
+			class: 'social-likes__counter social-likes__counter_' + social_network_name,
 			text: '0'
 		}));
 
@@ -245,11 +245,11 @@ jQuery(document).ready(function ($) {
 		{
 			styleName = "birman";
 		}
-		$("link[id^='sociallikes-style-classic']," +
-			"link[id^='sociallikes-style-flat']," +
-			"link[id^='sociallikes-style-birman']")
+		$("link[id^='social_likes_style_classic']," +
+			"link[id^='social_likes_style_flat']," +
+			"link[id^='social_likes_style_birman']")
 			.attr("disabled", true);
-		$("link[id^='sociallikes-style-" + styleName + "']").removeAttr("disabled");
+		$("link[id^='social_likes_style_" + styleName + "']").removeAttr("disabled");
 	}
 
 	changeStyle();

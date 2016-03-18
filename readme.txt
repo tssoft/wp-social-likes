@@ -2,8 +2,8 @@
 Contributors: tssoft
 Tags: facebook, twitter, vk.com, vkontakte, google+, pinterest, livejournal, linkedin, odnoklassniki, mail.ru, social links, share buttons, social, social buttons, jquery
 Requires at least: 3.0
-Tested Up To: 4.4.1
-Stable tag: 6.1.11
+Tested Up To: 4.4.2
+Stable tag: 6.3.18
 License: MIT
 License URI: https://raw.github.com/tssoft/wp-social-likes/master/license.md
 
@@ -109,6 +109,10 @@ $post_id is an optional argument. You can use it to get buttons for a specific p
 
 
 == Changelog ==
+
+= 6.3.18 =
+ * Fixed: loading JS and CSS files in wrong way (Reported by gaswirth)
+ * Fixed: LinkedIn security error (Thanks to ottomek)
 
 = 6.1.11 =
  * Fixed message "Undefined offset: 0" appearing when creating new post (Reported by steve82)
