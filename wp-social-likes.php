@@ -2,7 +2,7 @@
 /*
 Plugin Name: Social Likes
 Description: Wordpress plugin for Social Likes library by Artem Sapegin (http://sapegin.me/projects/social-likes)
-Version: 6.9.12
+Version: 6.9.16
 Author: TS Soft
 Author URI: http://ts-soft.ru/en/
 License: MIT
@@ -65,6 +65,8 @@ class wpsociallikes {
 		add_action('admin_menu', array(&$this, 'admin_menu'));
 		add_action('save_post', array(&$this, 'save_post_meta'));
 		add_filter('the_content', array(&$this, 'add_social_likes'));
+		add_filter('get_the_excerpt', array(&$this, 'set_excerpt_true'), 0);
+		add_filter('wp_trim_excerpt', array(&$this, 'set_excerpt_false'));
 
 		add_filter('plugin_action_links', array(&$this, 'add_action_links'), 10, 2);
 
@@ -277,7 +279,7 @@ class wpsociallikes {
 
 	function add_social_likes($content = '') {
 		global $post;
-		if (in_the_loop() && !is_feed() && get_post_meta($post->ID, 'sociallikes', true)
+		if (in_the_loop() && !is_feed() && !$this->is_excerpt && get_post_meta($post->ID, 'sociallikes', true)
 				&& (is_page() || is_single() || $this->options->excerpts || !$this->is_post_with_excerpt())) {
 			$this->lang = get_bloginfo('language');
 			$buttons = $this->build_buttons($post);
@@ -396,6 +398,15 @@ class wpsociallikes {
 		$main_div .= '</div><form style="display: none;" class="sociallikes-livejournal-form"></form>';
 
 		return $main_div;
+	}
+
+	function set_excerpt_true() {
+		$this->is_excerpt = true;
+	}
+
+	function set_excerpt_false($text) {
+		$this->is_excerpt = false;
+		return $text;
 	}
 
 	function display_admin_form() {

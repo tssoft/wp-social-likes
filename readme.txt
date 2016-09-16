@@ -3,7 +3,7 @@ Contributors: tssoft
 Tags: facebook, twitter, vk.com, vkontakte, google+, pinterest, livejournal, linkedin, odnoklassniki, mail.ru, social links, share buttons, social, social buttons, jquery
 Requires at least: 3.0
 Tested Up To: 4.6.1
-Stable tag: 6.9.12
+Stable tag: 6.9.16
 License: MIT
 License URI: https://raw.github.com/tssoft/wp-social-likes/master/license.md
 
@@ -49,21 +49,23 @@ Based on the [Social Likes library](http://sapegin.me/projects/social-likes) by 
 
 = 1. Is it possible to place social buttons above the content of the page/post? =
 
-Yes. By default plugin places social buttons after page/post content. We find it reasonable to view content before sharing it with others. 
-But you could place buttons before or even before-and-after page/post content using hidden feature:
+Yes. By default plugin places social buttons after page/post content. We find it reasonable to view a post before sharing it with others. 
+But you can place buttons before or even before-and-after page/post content using hidden feature:
 
 1. Go to options list of your WordPress site: /wp-admin/options.php
 2. Find 'sociallikes_placement' option
 3. Assign one of these values to it: before, after, before-after
 4. Don't forget to apply changes with 'Save Changes' button
 
-Also you could insert buttons in an excerpt, see question 4 for details.
+Sometimes WordPress options don't save because of a WP bug. To fix it, you may need to set the max_input_vars PHP variable to a greater value.
+
+Also you can insert buttons in post excerpts, see question 4 for details.
 
 = 2. Is it possible to use different language (locale) for plugin than the default locale of Wordpress? =
 
 Yes. By default plugin uses the same language (locale) as Wordpress does. 
 If there is no translation for this locale, plugin would use English as a default language. We find it suitable for most cases. 
-But you could change plugin language (locale) using hidden feature:
+But you can change plugin language (locale) using hidden feature:
 
 1. First of all check whether plugin has translation to your language or not. If it does, go further. If not, contribute translation! :)
 2. Go to options list of your WordPress site: /wp-admin/options.php
@@ -109,6 +111,9 @@ $post_id is an optional argument. You can use it to get buttons for a specific p
 
 
 == Changelog ==
+
+= 6.9.16 =
+ * Fixed: when calling the_excerpt() WP function, social button titles are incorrectly appended to the post text
 
 = 6.9.12 =
  * Social Likes library updated to version 3.1.1 (Released 2016/08/19)
