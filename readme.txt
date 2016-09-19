@@ -3,7 +3,7 @@ Contributors: tssoft
 Tags: facebook, twitter, vk.com, vkontakte, google+, pinterest, livejournal, linkedin, odnoklassniki, mail.ru, social links, share buttons, social, social buttons, jquery
 Requires at least: 3.0
 Tested Up To: 4.6.1
-Stable tag: 6.9.16
+Stable tag: 6.9.19
 License: MIT
 License URI: https://raw.github.com/tssoft/wp-social-likes/master/license.md
 
@@ -111,6 +111,9 @@ $post_id is an optional argument. You can use it to get buttons for a specific p
 
 
 == Changelog ==
+
+= 6.9.19 =
+ * Fixed: problems with post excerpts happening in some of themes or plugins (Reported by steelinside)
 
 = 6.9.16 =
  * Fixed: when calling the_excerpt() WP function, social button titles are incorrectly appended to the post text
